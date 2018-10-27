@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="AutoParts" Class="autopartsDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=ORANGE\MSSQLEXPRESS2017;Initial Catalog=AutoParts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False" SettingsObjectName="DB.Properties.Settings" SettingsPropertyName="AutoPartsConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.bridge_providers_parts" Member="bridge_providers_parts">
+    <Type Name="bridge_providers_parts">
+      <Column Name="providers_title" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="parts_article" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="parts_bridge_providers_parts" Member="parts" ThisKey="parts_article" OtherKey="article" Type="parts" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="providers_bridge_providers_parts" Member="providers" ThisKey="providers_title" OtherKey="title" Type="providers" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.deals" Member="deals">
+    <Type Name="deals">
+      <Column Name="deal_date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="parts_article" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="deal_parts_count" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="parts_deals" Member="parts" ThisKey="parts_article" OtherKey="article" Type="parts" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.parts" Member="parts">
+    <Type Name="parts">
+      <Column Name="title" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="article" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="manufacturer" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="price" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="parts_bridge_providers_parts" Member="bridge_providers_parts" ThisKey="article" OtherKey="parts_article" Type="bridge_providers_parts" />
+      <Association Name="parts_deals" Member="deals" ThisKey="article" OtherKey="parts_article" Type="deals" />
+      <Association Name="parts_priceHistory" Member="priceHistory" ThisKey="article" OtherKey="parts_article" Type="priceHistory" />
+    </Type>
+  </Table>
+  <Table Name="dbo.priceHistory" Member="priceHistory">
+    <Type Name="priceHistory">
+      <Column Name="parts_article" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="price_date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="price" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="parts_priceHistory" Member="parts" ThisKey="parts_article" OtherKey="article" Type="parts" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.providers" Member="providers">
+    <Type Name="providers">
+      <Column Name="title" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="provider_address" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="phone" Type="System.String" DbType="NVarChar(12)" CanBeNull="true" />
+      <Association Name="providers_bridge_providers_parts" Member="bridge_providers_parts" ThisKey="title" OtherKey="providers_title" Type="bridge_providers_parts" />
+    </Type>
+  </Table>
+</Database>

@@ -113,10 +113,18 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="resources\refresh-button.png" />
+    <EmbeddedResource Include="resources\refresh.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="resources\forbidden.png" />
+    <EmbeddedResource Include="resources\clear2.png" />
+    <EmbeddedResource Include="resources\clear.png" />
+    <EmbeddedResource Include="resources\cancel.png" />
+    <EmbeddedResource Include="resources\add.png" />
+    <EmbeddedResource Include="resources\add2.png" />
+    <EmbeddedResource Include="resources\add3.png" />
+    <EmbeddedResource Include="resources\delete2.png" />
+    <EmbeddedResource Include="resources\delete1.png" />
+    <EmbeddedResource Include="resources\request.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

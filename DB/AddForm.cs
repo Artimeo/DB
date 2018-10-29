@@ -15,6 +15,12 @@ namespace DB
         public AddForm()
         {
             InitializeComponent();
+            dateTimePicker.Value = System.DateTime.Now;
+        }
+
+        private void buttonSetCurrentDate_Click(object sender, EventArgs e)
+        {
+            dateTimePicker.Value = System.DateTime.Now;
         }
     }
 }

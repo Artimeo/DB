@@ -39,6 +39,10 @@ namespace DB
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // TODO: данная строка кода позволяет загрузить данные в таблицу "autoPartsDataSet.parts". При необходимости она может быть перемещена или удалена.
+            this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
+            // TODO: данная строка кода позволяет загрузить данные в таблицу "autoPartsDataSet.providers". При необходимости она может быть перемещена или удалена.
+            this.providersTableAdapter.Fill(this.autoPartsDataSet.providers);
             try
             {
                 // TODO: данная строка кода позволяет загрузить данные в таблицу "autoPartsDataSet.storehouse". При необходимости она может быть перемещена или удалена.
@@ -226,8 +230,18 @@ namespace DB
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            string[] providers;
             AddForm addForm = new AddForm();
+
+            foreach (DataRow row in this.autoPartsDataSet.parts.Select())
+            {
+                addForm.textBoxManufacturer.AutoCompleteCustomSource.Add(
+                    row.ItemArray[2].ToString());
+            }
+            foreach (DataRow row in this.autoPartsDataSet.providers.Select())
+            {
+                addForm.comboBoxProvider.Items.Add(
+                    row.ItemArray[0].ToString());
+            }
             addForm.Show();
         }
     }

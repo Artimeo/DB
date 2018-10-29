@@ -34,12 +34,13 @@
             this.textBoxManufacturer = new System.Windows.Forms.TextBox();
             this.textBoxPrice = new System.Windows.Forms.TextBox();
             this.labelPrice = new System.Windows.Forms.Label();
-            this.textBoxDate = new System.Windows.Forms.TextBox();
             this.labelDate = new System.Windows.Forms.Label();
             this.textBoxCount = new System.Windows.Forms.TextBox();
             this.labelCount = new System.Windows.Forms.Label();
             this.labelProvider = new System.Windows.Forms.Label();
             this.comboBoxProvider = new System.Windows.Forms.ComboBox();
+            this.buttonSetCurrentDate = new System.Windows.Forms.Button();
+            this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // textBoxTitle
@@ -92,13 +93,6 @@
             this.labelPrice.TabIndex = 4;
             this.labelPrice.Text = "Цена:";
             // 
-            // textBoxDate
-            // 
-            this.textBoxDate.Location = new System.Drawing.Point(132, 127);
-            this.textBoxDate.Name = "textBoxDate";
-            this.textBoxDate.Size = new System.Drawing.Size(182, 20);
-            this.textBoxDate.TabIndex = 3;
-            // 
             // labelDate
             // 
             this.labelDate.AutoSize = true;
@@ -135,23 +129,42 @@
             // 
             // comboBoxProvider
             // 
-            this.comboBoxProvider.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxProvider.FormattingEnabled = true;
             this.comboBoxProvider.Location = new System.Drawing.Point(132, 199);
             this.comboBoxProvider.Name = "comboBoxProvider";
             this.comboBoxProvider.Size = new System.Drawing.Size(182, 21);
             this.comboBoxProvider.TabIndex = 5;
             // 
+            // buttonSetCurrentDate
+            // 
+            this.buttonSetCurrentDate.Location = new System.Drawing.Point(342, 125);
+            this.buttonSetCurrentDate.Name = "buttonSetCurrentDate";
+            this.buttonSetCurrentDate.Size = new System.Drawing.Size(136, 23);
+            this.buttonSetCurrentDate.TabIndex = 11;
+            this.buttonSetCurrentDate.Text = "Сегодня";
+            this.buttonSetCurrentDate.UseVisualStyleBackColor = true;
+            this.buttonSetCurrentDate.Click += new System.EventHandler(this.buttonSetCurrentDate_Click);
+            // 
+            // dateTimePicker
+            // 
+            this.dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePicker.Location = new System.Drawing.Point(132, 127);
+            this.dateTimePicker.Name = "dateTimePicker";
+            this.dateTimePicker.Size = new System.Drawing.Size(182, 20);
+            this.dateTimePicker.TabIndex = 12;
+            this.dateTimePicker.Value = new System.DateTime(2018, 10, 30, 0, 5, 20, 0);
+            // 
             // AddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(601, 362);
+            this.Controls.Add(this.dateTimePicker);
+            this.Controls.Add(this.buttonSetCurrentDate);
             this.Controls.Add(this.comboBoxProvider);
             this.Controls.Add(this.labelProvider);
             this.Controls.Add(this.textBoxCount);
             this.Controls.Add(this.labelCount);
-            this.Controls.Add(this.textBoxDate);
             this.Controls.Add(this.labelDate);
             this.Controls.Add(this.textBoxPrice);
             this.Controls.Add(this.labelPrice);
@@ -171,14 +184,15 @@
         private System.Windows.Forms.TextBox textBoxTitle;
         private System.Windows.Forms.Label labelTitle;
         private System.Windows.Forms.Label labelManufacturer;
-        private System.Windows.Forms.TextBox textBoxManufacturer;
         private System.Windows.Forms.TextBox textBoxPrice;
         private System.Windows.Forms.Label labelPrice;
-        private System.Windows.Forms.TextBox textBoxDate;
         private System.Windows.Forms.Label labelDate;
         private System.Windows.Forms.TextBox textBoxCount;
         private System.Windows.Forms.Label labelCount;
         private System.Windows.Forms.Label labelProvider;
-        private System.Windows.Forms.ComboBox comboBoxProvider;
+        public System.Windows.Forms.TextBox textBoxManufacturer;
+        public System.Windows.Forms.ComboBox comboBoxProvider;
+        private System.Windows.Forms.Button buttonSetCurrentDate;
+        private System.Windows.Forms.DateTimePicker dateTimePicker;
     }
 }

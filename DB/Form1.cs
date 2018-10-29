@@ -52,6 +52,98 @@ namespace DB
 
         }
 
+        private void Search(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && textBoxSearch.Text != "")
+            {
+                bool getEntryInRow = false;
+                dataGridViewStorehouse.ClearSelection();
+
+                if (comboboxSearchBy.Text == "Все")
+                {
+                    for (int i = 0; i < dataGridViewStorehouse.RowCount; i++)
+                    {
+                        dataGridViewStorehouse.Rows[i].Selected = false;
+                        for (int j = 0; j < dataGridViewStorehouse.ColumnCount; j++)
+                        {
+                            if (dataGridViewStorehouse.Rows[i].Cells[j].Value != null)
+                            {
+                                if (dataGridViewStorehouse.Rows[i].Cells[j].Value.ToString().ToLower().Contains(textBoxSearch.Text.ToLower()))
+                                {
+                                    if (getEntryInRow == false)
+                                    {
+                                        getEntryInRow = true;
+                                        dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = i;
+                                    }
+                                    dataGridViewStorehouse.Rows[i].Selected = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (getEntryInRow == false) MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    int columnSearchBy;
+
+                    switch (comboboxSearchBy.Text)
+                    {
+                        case "Код":
+                            columnSearchBy = 0;
+                            break;
+                        case "Название":
+                            columnSearchBy = 1;
+                            break;
+                        case "Цена":
+                            columnSearchBy = 2;
+                            break;
+                        case "Количество":
+                            columnSearchBy = 3;
+                            break;
+                        case "Производитель":
+                            columnSearchBy = 4;
+                            break;
+                        case "Цена закупки":
+                            columnSearchBy = 5;
+                            break;
+                        case "Дата закупки":
+                            columnSearchBy = 6;
+                            break;
+                        case "Поставщик":
+                            columnSearchBy = 7;
+                            break;
+                        default:
+                            MessageBox.Show("Ошибка поиска! Выбранное поле отсутствует в таблице. Поиск будет произведен по названию.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            columnSearchBy = 1;
+                            break;
+                    }
+
+                    for (int i = 0; i < dataGridViewStorehouse.RowCount; i++)
+                    {
+                        dataGridViewStorehouse.Rows[i].Selected = false;
+                        if (dataGridViewStorehouse.Rows[i].Cells[columnSearchBy].Value != null)
+                        {
+                            if (dataGridViewStorehouse.Rows[i].Cells[columnSearchBy].Value.ToString().ToLower().Contains(textBoxSearch.Text.ToLower()))
+                            {
+                                if (getEntryInRow == false)
+                                {
+                                    getEntryInRow = true;
+                                    dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = i;
+                                }
+                                dataGridViewStorehouse.Rows[i].Cells[columnSearchBy].Selected = true;
+                            }
+                        }
+                    }
+                    if (getEntryInRow == false) MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else if (e.KeyCode == Keys.Enter && textBoxSearch.Text == "")
+            {
+                MessageBox.Show("Введите данные для поиска", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
         private void textBoxSearch_Enter(object sender, EventArgs e)
         {
             if (textBoxSearchActive == false)
@@ -91,35 +183,96 @@ namespace DB
 
         private void textBoxSearch_KeyDown(object sender, KeyEventArgs e) 
         {
+            Search(sender, e);
+            /*
             if (e.KeyCode == Keys.Enter && textBoxSearch.Text != "")
             {
                 bool getEntryInRow = false;
-                for (int i = 0; i < dataGridViewStorehouse.RowCount; i++)
+                dataGridViewStorehouse.ClearSelection();
+
+                if (comboboxSearchBy.Text == "Все")
                 {
-                    dataGridViewStorehouse.Rows[i].Selected = false;
-                    for (int j = 0; j < dataGridViewStorehouse.ColumnCount; j++)
+                    for (int i = 0; i < dataGridViewStorehouse.RowCount; i++)
                     {
-                        if (dataGridViewStorehouse.Rows[i].Cells[j].Value != null)
+                        dataGridViewStorehouse.Rows[i].Selected = false;
+                        for (int j = 0; j < dataGridViewStorehouse.ColumnCount; j++)
                         {
-                            if (dataGridViewStorehouse.Rows[i].Cells[j].Value.ToString().ToLower().Contains(textBoxSearch.Text.ToLower()))
+                            if (dataGridViewStorehouse.Rows[i].Cells[j].Value != null)
+                            {
+                                if (dataGridViewStorehouse.Rows[i].Cells[j].Value.ToString().ToLower().Contains(textBoxSearch.Text.ToLower()))
+                                {
+                                    if (getEntryInRow == false)
+                                    {
+                                        getEntryInRow = true;
+                                        dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = i;
+                                    }
+                                    dataGridViewStorehouse.Rows[i].Selected = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (getEntryInRow == false) MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    int columnSearchBy;
+
+                    switch (comboboxSearchBy.Text)
+                    {
+                        case "Код":
+                            columnSearchBy = 0;
+                            break;
+                        case "Название":
+                            columnSearchBy = 1;
+                            break;
+                        case "Цена":
+                            columnSearchBy = 2;
+                            break;
+                        case "Количество":
+                            columnSearchBy = 3;
+                            break;
+                        case "Производитель":
+                            columnSearchBy = 4;
+                            break;
+                        case "Цена закупки":
+                            columnSearchBy = 5;
+                            break;
+                        case "Дата закупки":
+                            columnSearchBy = 6;
+                            break;
+                        case "Поставщик":
+                            columnSearchBy = 7;
+                            break;
+                        default:
+                            MessageBox.Show("Неизвестная ошибка поиска! Поиск будет произведен по названию.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            columnSearchBy = 1;
+                            break;
+                    }
+
+                    for (int i = 0; i < dataGridViewStorehouse.RowCount; i++)
+                    {
+                        dataGridViewStorehouse.Rows[i].Selected = false;
+                        if (dataGridViewStorehouse.Rows[i].Cells[columnSearchBy].Value != null)
+                        {
+                            if (dataGridViewStorehouse.Rows[i].Cells[columnSearchBy].Value.ToString().ToLower().Contains(textBoxSearch.Text.ToLower()))
                             {
                                 if (getEntryInRow == false)
                                 {
                                     getEntryInRow = true;
                                     dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = i;
                                 }
-                                dataGridViewStorehouse.Rows[i].Selected = true;
-                                break;
+                                dataGridViewStorehouse.Rows[i].Cells[columnSearchBy].Selected = true;
                             }
                         }
                     }
+                    if (getEntryInRow == false) MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                if (getEntryInRow == false) MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else if (e.KeyCode == Keys.Enter && textBoxSearch.Text == "")
             {
                 MessageBox.Show("Введите данные для поиска", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            }*/
         }
 
         private void buttonSearchClear_Click(object sender, EventArgs e)
@@ -127,6 +280,11 @@ namespace DB
             textBoxSearch.ForeColor = Color.Gray;
             textBoxSearch.Text = "Поиск🔍";
             textBoxSearchActive = false;
+        }
+
+        private void comboBoxSearchBy_RunSearch(object sender, KeyEventArgs e)
+        {
+            Search(sender, e);
         }
     }
 }

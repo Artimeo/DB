@@ -30,12 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.autoPartsDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.autoPartsDataSet = new DB.AutoPartsDataSet();
             this.tabs = new System.Windows.Forms.TabControl();
             this.storehouseTab = new System.Windows.Forms.TabPage();
+            this.flowLayoutPanelRowCount = new System.Windows.Forms.FlowLayoutPanel();
+            this.labelRowCount = new System.Windows.Forms.Label();
+            this.buttonRequest = new System.Windows.Forms.Button();
+            this.buttonSearchClear = new System.Windows.Forms.Button();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewStorehouse = new System.Windows.Forms.DataGridView();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -46,24 +48,26 @@
             this.partsTab = new System.Windows.Forms.TabPage();
             this.providersTab = new System.Windows.Forms.TabPage();
             this.pricehistoryTab = new System.Windows.Forms.TabPage();
-            this.buttonSearchClear = new System.Windows.Forms.Button();
-            this.buttonRequest = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSetBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).BeginInit();
+            this.autoPartsDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.autoPartsDataSet = new DB.AutoPartsDataSet();
+            this.storehouseBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.storehouseTableAdapter = new DB.AutoPartsDataSetTableAdapters.storehouseTableAdapter();
+            this.кодDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.названиеDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ценаDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.количествоDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.производительDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ценаЗакупкиDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.датаЗакупкиDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.поставщикDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabs.SuspendLayout();
             this.storehouseTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.flowLayoutPanelRowCount.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStorehouse)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSetBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.storehouseBindingSource)).BeginInit();
             this.SuspendLayout();
-            // 
-            // autoPartsDataSetBindingSource
-            // 
-            this.autoPartsDataSetBindingSource.DataSource = this.autoPartsDataSet;
-            this.autoPartsDataSetBindingSource.Position = 0;
-            // 
-            // autoPartsDataSet
-            // 
-            this.autoPartsDataSet.DataSetName = "AutoPartsDataSet";
-            this.autoPartsDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // tabs
             // 
@@ -80,10 +84,11 @@
             // 
             // storehouseTab
             // 
+            this.storehouseTab.Controls.Add(this.flowLayoutPanelRowCount);
             this.storehouseTab.Controls.Add(this.buttonRequest);
             this.storehouseTab.Controls.Add(this.buttonSearchClear);
             this.storehouseTab.Controls.Add(this.textBoxSearch);
-            this.storehouseTab.Controls.Add(this.dataGridView1);
+            this.storehouseTab.Controls.Add(this.dataGridViewStorehouse);
             this.storehouseTab.Controls.Add(this.buttonDelete);
             this.storehouseTab.Controls.Add(this.buttonAdd);
             this.storehouseTab.Controls.Add(this.button2);
@@ -98,6 +103,50 @@
             this.storehouseTab.TabIndex = 0;
             this.storehouseTab.Text = "Склад";
             this.storehouseTab.UseVisualStyleBackColor = true;
+            // 
+            // flowLayoutPanelRowCount
+            // 
+            this.flowLayoutPanelRowCount.Controls.Add(this.labelRowCount);
+            this.flowLayoutPanelRowCount.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanelRowCount.Location = new System.Drawing.Point(566, 401);
+            this.flowLayoutPanelRowCount.Name = "flowLayoutPanelRowCount";
+            this.flowLayoutPanelRowCount.Padding = new System.Windows.Forms.Padding(4, 4, 0, 4);
+            this.flowLayoutPanelRowCount.Size = new System.Drawing.Size(231, 22);
+            this.flowLayoutPanelRowCount.TabIndex = 12;
+            // 
+            // labelRowCount
+            // 
+            this.labelRowCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelRowCount.AutoSize = true;
+            this.labelRowCount.Location = new System.Drawing.Point(107, 4);
+            this.labelRowCount.Name = "labelRowCount";
+            this.labelRowCount.Size = new System.Drawing.Size(117, 13);
+            this.labelRowCount.TabIndex = 11;
+            this.labelRowCount.Text = "Количество записей: ";
+            this.labelRowCount.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // buttonRequest
+            // 
+            this.buttonRequest.Image = ((System.Drawing.Image)(resources.GetObject("buttonRequest.Image")));
+            this.buttonRequest.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonRequest.Location = new System.Drawing.Point(493, 40);
+            this.buttonRequest.Name = "buttonRequest";
+            this.buttonRequest.Padding = new System.Windows.Forms.Padding(2);
+            this.buttonRequest.Size = new System.Drawing.Size(110, 28);
+            this.buttonRequest.TabIndex = 10;
+            this.buttonRequest.Text = "Ручной запрос";
+            this.buttonRequest.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonRequest.UseVisualStyleBackColor = true;
+            // 
+            // buttonSearchClear
+            // 
+            this.buttonSearchClear.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearchClear.Image")));
+            this.buttonSearchClear.Location = new System.Drawing.Point(765, 10);
+            this.buttonSearchClear.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonSearchClear.Name = "buttonSearchClear";
+            this.buttonSearchClear.Size = new System.Drawing.Size(22, 22);
+            this.buttonSearchClear.TabIndex = 9;
+            this.buttonSearchClear.UseVisualStyleBackColor = true;
             // 
             // textBoxSearch
             // 
@@ -114,15 +163,28 @@
             this.textBoxSearch.Enter += new System.EventHandler(this.textBoxSearch_Enter);
             this.textBoxSearch.Leave += new System.EventHandler(this.textBoxSearch_Leave);
             // 
-            // dataGridView1
+            // dataGridViewStorehouse
             // 
-            this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.DataSource = this.autoPartsDataSetBindingSource;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 84);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(797, 317);
-            this.dataGridView1.TabIndex = 7;
+            this.dataGridViewStorehouse.AllowUserToAddRows = false;
+            this.dataGridViewStorehouse.AllowUserToDeleteRows = false;
+            this.dataGridViewStorehouse.AutoGenerateColumns = false;
+            this.dataGridViewStorehouse.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewStorehouse.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.кодDataGridViewTextBoxColumn,
+            this.названиеDataGridViewTextBoxColumn,
+            this.ценаDataGridViewTextBoxColumn,
+            this.количествоDataGridViewTextBoxColumn,
+            this.производительDataGridViewTextBoxColumn,
+            this.ценаЗакупкиDataGridViewTextBoxColumn,
+            this.датаЗакупкиDataGridViewTextBoxColumn,
+            this.поставщикDataGridViewTextBoxColumn});
+            this.dataGridViewStorehouse.DataMember = "storehouse";
+            this.dataGridViewStorehouse.DataSource = this.autoPartsDataSetBindingSource;
+            this.dataGridViewStorehouse.Location = new System.Drawing.Point(0, 84);
+            this.dataGridViewStorehouse.Name = "dataGridViewStorehouse";
+            this.dataGridViewStorehouse.ReadOnly = true;
+            this.dataGridViewStorehouse.Size = new System.Drawing.Size(797, 317);
+            this.dataGridViewStorehouse.TabIndex = 7;
             // 
             // buttonDelete
             // 
@@ -177,13 +239,20 @@
             this.comboboxSearchBy.FormattingEnabled = true;
             this.comboboxSearchBy.ItemHeight = 13;
             this.comboboxSearchBy.Items.AddRange(new object[] {
-            "По цене",
-            "По ...",
-            "По ..."});
-            this.comboboxSearchBy.Location = new System.Drawing.Point(406, 11);
+            "Все",
+            "Код",
+            "Название",
+            "Цена",
+            "Количество",
+            "Производитель",
+            "Цена закупки",
+            "Дата закупки",
+            "Поставщик"});
+            this.comboboxSearchBy.Location = new System.Drawing.Point(522, 11);
             this.comboboxSearchBy.Name = "comboboxSearchBy";
-            this.comboboxSearchBy.Size = new System.Drawing.Size(121, 21);
+            this.comboboxSearchBy.Size = new System.Drawing.Size(81, 21);
             this.comboboxSearchBy.TabIndex = 2;
+            this.comboboxSearchBy.Text = "Все";
             // 
             // buttonClean
             // 
@@ -210,6 +279,7 @@
             this.buttonRefresh.Text = "Обновить";
             this.buttonRefresh.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonRefresh.UseVisualStyleBackColor = true;
+            this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
             // 
             // partsTab
             // 
@@ -240,28 +310,89 @@
             this.pricehistoryTab.Text = "История цен";
             this.pricehistoryTab.UseVisualStyleBackColor = true;
             // 
-            // buttonSearchClear
+            // autoPartsDataSetBindingSource
             // 
-            this.buttonSearchClear.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearchClear.Image")));
-            this.buttonSearchClear.Location = new System.Drawing.Point(765, 10);
-            this.buttonSearchClear.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonSearchClear.Name = "buttonSearchClear";
-            this.buttonSearchClear.Size = new System.Drawing.Size(22, 22);
-            this.buttonSearchClear.TabIndex = 9;
-            this.buttonSearchClear.UseVisualStyleBackColor = true;
+            this.autoPartsDataSetBindingSource.DataSource = this.autoPartsDataSet;
+            this.autoPartsDataSetBindingSource.Position = 0;
             // 
-            // buttonRequest
+            // autoPartsDataSet
             // 
-            this.buttonRequest.Image = ((System.Drawing.Image)(resources.GetObject("buttonRequest.Image")));
-            this.buttonRequest.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonRequest.Location = new System.Drawing.Point(483, 40);
-            this.buttonRequest.Name = "buttonRequest";
-            this.buttonRequest.Padding = new System.Windows.Forms.Padding(2);
-            this.buttonRequest.Size = new System.Drawing.Size(110, 28);
-            this.buttonRequest.TabIndex = 10;
-            this.buttonRequest.Text = "Ручной запрос";
-            this.buttonRequest.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonRequest.UseVisualStyleBackColor = true;
+            this.autoPartsDataSet.DataSetName = "AutoPartsDataSet";
+            this.autoPartsDataSet.EnforceConstraints = false;
+            this.autoPartsDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // storehouseBindingSource
+            // 
+            this.storehouseBindingSource.AllowNew = false;
+            this.storehouseBindingSource.DataMember = "storehouse";
+            this.storehouseBindingSource.DataSource = this.autoPartsDataSet;
+            // 
+            // storehouseTableAdapter
+            // 
+            this.storehouseTableAdapter.ClearBeforeFill = true;
+            // 
+            // кодDataGridViewTextBoxColumn
+            // 
+            this.кодDataGridViewTextBoxColumn.DataPropertyName = "Код";
+            this.кодDataGridViewTextBoxColumn.HeaderText = "Код";
+            this.кодDataGridViewTextBoxColumn.Name = "кодDataGridViewTextBoxColumn";
+            this.кодDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // названиеDataGridViewTextBoxColumn
+            // 
+            this.названиеDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.названиеDataGridViewTextBoxColumn.DataPropertyName = "Название";
+            this.названиеDataGridViewTextBoxColumn.HeaderText = "Название";
+            this.названиеDataGridViewTextBoxColumn.Name = "названиеDataGridViewTextBoxColumn";
+            this.названиеDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // ценаDataGridViewTextBoxColumn
+            // 
+            this.ценаDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ценаDataGridViewTextBoxColumn.DataPropertyName = "Цена";
+            this.ценаDataGridViewTextBoxColumn.HeaderText = "Цена";
+            this.ценаDataGridViewTextBoxColumn.Name = "ценаDataGridViewTextBoxColumn";
+            this.ценаDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // количествоDataGridViewTextBoxColumn
+            // 
+            this.количествоDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.количествоDataGridViewTextBoxColumn.DataPropertyName = "Количество";
+            this.количествоDataGridViewTextBoxColumn.HeaderText = "Количество";
+            this.количествоDataGridViewTextBoxColumn.Name = "количествоDataGridViewTextBoxColumn";
+            this.количествоDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // производительDataGridViewTextBoxColumn
+            // 
+            this.производительDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.производительDataGridViewTextBoxColumn.DataPropertyName = "Производитель";
+            this.производительDataGridViewTextBoxColumn.HeaderText = "Производитель";
+            this.производительDataGridViewTextBoxColumn.Name = "производительDataGridViewTextBoxColumn";
+            this.производительDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // ценаЗакупкиDataGridViewTextBoxColumn
+            // 
+            this.ценаЗакупкиDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ценаЗакупкиDataGridViewTextBoxColumn.DataPropertyName = "Цена закупки";
+            this.ценаЗакупкиDataGridViewTextBoxColumn.HeaderText = "Цена закупки";
+            this.ценаЗакупкиDataGridViewTextBoxColumn.Name = "ценаЗакупкиDataGridViewTextBoxColumn";
+            this.ценаЗакупкиDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // датаЗакупкиDataGridViewTextBoxColumn
+            // 
+            this.датаЗакупкиDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.датаЗакупкиDataGridViewTextBoxColumn.DataPropertyName = "Дата закупки";
+            this.датаЗакупкиDataGridViewTextBoxColumn.HeaderText = "Дата закупки";
+            this.датаЗакупкиDataGridViewTextBoxColumn.Name = "датаЗакупкиDataGridViewTextBoxColumn";
+            this.датаЗакупкиDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // поставщикDataGridViewTextBoxColumn
+            // 
+            this.поставщикDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.поставщикDataGridViewTextBoxColumn.DataPropertyName = "Поставщик";
+            this.поставщикDataGridViewTextBoxColumn.HeaderText = "Поставщик";
+            this.поставщикDataGridViewTextBoxColumn.Name = "поставщикDataGridViewTextBoxColumn";
+            this.поставщикDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // Form1
             // 
@@ -272,19 +403,20 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSetBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).EndInit();
             this.tabs.ResumeLayout(false);
             this.storehouseTab.ResumeLayout(false);
             this.storehouseTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.flowLayoutPanelRowCount.ResumeLayout(false);
+            this.flowLayoutPanelRowCount.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStorehouse)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSetBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.storehouseBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.BindingSource autoPartsDataSetBindingSource;
-        private AutoPartsDataSet autoPartsDataSet;
         private System.Windows.Forms.TabControl tabs;
         private System.Windows.Forms.TabPage storehouseTab;
         private System.Windows.Forms.Button buttonClean;
@@ -297,10 +429,24 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox comboboxSearchBy;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridViewStorehouse;
         private System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.Button buttonSearchClear;
         private System.Windows.Forms.Button buttonRequest;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelRowCount;
+        private System.Windows.Forms.Label labelRowCount;
+        private AutoPartsDataSet autoPartsDataSet;
+        private System.Windows.Forms.BindingSource storehouseBindingSource;
+        private AutoPartsDataSetTableAdapters.storehouseTableAdapter storehouseTableAdapter;
+        private System.Windows.Forms.BindingSource autoPartsDataSetBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn кодDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn названиеDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ценаDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn количествоDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn производительDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ценаЗакупкиDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn датаЗакупкиDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn поставщикDataGridViewTextBoxColumn;
     }
 }
 

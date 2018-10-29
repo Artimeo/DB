@@ -18,15 +18,38 @@ namespace DB
         //42880b - зеленые иконки
         //1568A3 синие 
         //db342d красные
+        //E8C538 желтые
 
         public Form1()
         {
+            //autopartsDataContext dc = new autopartsDataContext(Properties.Settings.Default.AutoPartsConnectionString);
+            /*
+            if (dc.DatabaseExists())
+            {
+                dataGridViewStorehouse.DataSource = dc.storehouse;
+            }
+            else
+            {
+                MessageBox.Show("Не удалось загрузить базу данных.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }*/
+
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            try
+            {
+                // TODO: данная строка кода позволяет загрузить данные в таблицу "autoPartsDataSet.storehouse". При необходимости она может быть перемещена или удалена.
+                //this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            labelRowCount.Text += dataGridViewStorehouse.RowCount.ToString();
+
         }
 
         private void textBoxSearch_Enter(object sender, EventArgs e)
@@ -52,6 +75,18 @@ namespace DB
             }
         }
 
-
+        private void buttonRefresh_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // TODO: данная строка кода позволяет загрузить данные в таблицу "autoPartsDataSet.storehouse". При необходимости она может быть перемещена или удалена.
+                this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            labelRowCount.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
+        }
     }
 }

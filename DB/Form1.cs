@@ -173,106 +173,18 @@ namespace DB
             {
                 // TODO: данная строка кода позволяет загрузить данные в таблицу "autoPartsDataSet.storehouse". При необходимости она может быть перемещена или удалена.
                 this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
+                foreach (DataGridViewColumn column in dataGridViewStorehouse.Columns)
+                {
+                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    column.SortMode = DataGridViewColumnSortMode.Automatic;
+                }
+                dataGridViewStorehouse.ClearSelection();
             }
             catch (Exception err)
             {
                 MessageBox.Show(err.ToString(), "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             labelRowCount.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
-        }
-
-        private void textBoxSearch_KeyDown(object sender, KeyEventArgs e) 
-        {
-            Search(sender, e);
-            /*
-            if (e.KeyCode == Keys.Enter && textBoxSearch.Text != "")
-            {
-                bool getEntryInRow = false;
-                dataGridViewStorehouse.ClearSelection();
-
-                if (comboboxSearchBy.Text == "Все")
-                {
-                    for (int i = 0; i < dataGridViewStorehouse.RowCount; i++)
-                    {
-                        dataGridViewStorehouse.Rows[i].Selected = false;
-                        for (int j = 0; j < dataGridViewStorehouse.ColumnCount; j++)
-                        {
-                            if (dataGridViewStorehouse.Rows[i].Cells[j].Value != null)
-                            {
-                                if (dataGridViewStorehouse.Rows[i].Cells[j].Value.ToString().ToLower().Contains(textBoxSearch.Text.ToLower()))
-                                {
-                                    if (getEntryInRow == false)
-                                    {
-                                        getEntryInRow = true;
-                                        dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = i;
-                                    }
-                                    dataGridViewStorehouse.Rows[i].Selected = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    if (getEntryInRow == false) MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    int columnSearchBy;
-
-                    switch (comboboxSearchBy.Text)
-                    {
-                        case "Код":
-                            columnSearchBy = 0;
-                            break;
-                        case "Название":
-                            columnSearchBy = 1;
-                            break;
-                        case "Цена":
-                            columnSearchBy = 2;
-                            break;
-                        case "Количество":
-                            columnSearchBy = 3;
-                            break;
-                        case "Производитель":
-                            columnSearchBy = 4;
-                            break;
-                        case "Цена закупки":
-                            columnSearchBy = 5;
-                            break;
-                        case "Дата закупки":
-                            columnSearchBy = 6;
-                            break;
-                        case "Поставщик":
-                            columnSearchBy = 7;
-                            break;
-                        default:
-                            MessageBox.Show("Неизвестная ошибка поиска! Поиск будет произведен по названию.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            columnSearchBy = 1;
-                            break;
-                    }
-
-                    for (int i = 0; i < dataGridViewStorehouse.RowCount; i++)
-                    {
-                        dataGridViewStorehouse.Rows[i].Selected = false;
-                        if (dataGridViewStorehouse.Rows[i].Cells[columnSearchBy].Value != null)
-                        {
-                            if (dataGridViewStorehouse.Rows[i].Cells[columnSearchBy].Value.ToString().ToLower().Contains(textBoxSearch.Text.ToLower()))
-                            {
-                                if (getEntryInRow == false)
-                                {
-                                    getEntryInRow = true;
-                                    dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = i;
-                                }
-                                dataGridViewStorehouse.Rows[i].Cells[columnSearchBy].Selected = true;
-                            }
-                        }
-                    }
-                    if (getEntryInRow == false) MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            else if (e.KeyCode == Keys.Enter && textBoxSearch.Text == "")
-            {
-                MessageBox.Show("Введите данные для поиска", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }*/
         }
 
         private void buttonSearchClear_Click(object sender, EventArgs e)
@@ -282,9 +194,33 @@ namespace DB
             textBoxSearchActive = false;
         }
 
-        private void comboBoxSearchBy_RunSearch(object sender, KeyEventArgs e)
+        private void textBoxSearch_KeyDown(object sender, KeyEventArgs e)
         {
             Search(sender, e);
+        }
+
+        private void comboBoxSearchBy_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) Search(sender, e);
+        }
+
+        private void buttonClean_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewStorehouse.RowCount > 0)
+            {
+                dataGridViewStorehouse.Sort(dataGridViewStorehouse.Columns[0], ListSortDirection.Ascending);
+                foreach (DataGridViewColumn column in dataGridViewStorehouse.Columns)
+                {
+                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    column.SortMode = DataGridViewColumnSortMode.Automatic;
+                }
+                dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = 0;
+                dataGridViewStorehouse.ClearSelection();
+            }
+            else
+            {
+                MessageBox.Show("Отсутствуют данные, сначала обновите таблицу.", "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

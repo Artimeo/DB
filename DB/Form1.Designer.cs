@@ -329,7 +329,7 @@
             this.comboboxSearchBy.Size = new System.Drawing.Size(81, 21);
             this.comboboxSearchBy.TabIndex = 2;
             this.comboboxSearchBy.Text = "Все";
-            this.comboboxSearchBy.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxSearchBy_RunSearch);
+            this.comboboxSearchBy.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxSearchBy_KeyDown);
             // 
             // buttonClean
             // 
@@ -343,6 +343,7 @@
             this.buttonClean.Text = "Очистить";
             this.buttonClean.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonClean.UseVisualStyleBackColor = true;
+            this.buttonClean.Click += new System.EventHandler(this.buttonClean_Click);
             // 
             // buttonRefresh
             // 

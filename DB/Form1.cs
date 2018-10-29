@@ -88,5 +88,45 @@ namespace DB
             }
             labelRowCount.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
         }
+
+        private void textBoxSearch_KeyDown(object sender, KeyEventArgs e) 
+        {
+            if (e.KeyCode == Keys.Enter && textBoxSearch.Text != "")
+            {
+                bool getEntryInRow = false;
+                for (int i = 0; i < dataGridViewStorehouse.RowCount; i++)
+                {
+                    dataGridViewStorehouse.Rows[i].Selected = false;
+                    for (int j = 0; j < dataGridViewStorehouse.ColumnCount; j++)
+                    {
+                        if (dataGridViewStorehouse.Rows[i].Cells[j].Value != null)
+                        {
+                            if (dataGridViewStorehouse.Rows[i].Cells[j].Value.ToString().ToLower().Contains(textBoxSearch.Text.ToLower()))
+                            {
+                                if (getEntryInRow == false)
+                                {
+                                    getEntryInRow = true;
+                                    dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = i;
+                                }
+                                dataGridViewStorehouse.Rows[i].Selected = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (getEntryInRow == false) MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (e.KeyCode == Keys.Enter && textBoxSearch.Text == "")
+            {
+                MessageBox.Show("Введите данные для поиска", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void buttonSearchClear_Click(object sender, EventArgs e)
+        {
+            textBoxSearch.ForeColor = Color.Gray;
+            textBoxSearch.Text = "Поиск🔍";
+            textBoxSearchActive = false;
+        }
     }
 }

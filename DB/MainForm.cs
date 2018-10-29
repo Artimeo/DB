@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace DB
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         bool textBoxSearchActive = false;
         //записки
@@ -20,7 +20,7 @@ namespace DB
         //db342d красные
         //E8C538 желтые
 
-        public Form1()
+        public MainForm()
         {
             //autopartsDataContext dc = new autopartsDataContext(Properties.Settings.Default.AutoPartsConnectionString);
             /*
@@ -216,11 +216,19 @@ namespace DB
                 }
                 dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = 0;
                 dataGridViewStorehouse.ClearSelection();
+                labelRowCount.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
             }
             else
             {
                 MessageBox.Show("Отсутствуют данные, сначала обновите таблицу.", "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            string[] providers;
+            AddForm addForm = new AddForm();
+            addForm.Show();
         }
     }
 }

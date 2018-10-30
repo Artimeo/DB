@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.textBoxTitle = new System.Windows.Forms.TextBox();
             this.labelTitle = new System.Windows.Forms.Label();
             this.labelManufacturer = new System.Windows.Forms.Label();
@@ -41,10 +42,29 @@
             this.comboBoxProvider = new System.Windows.Forms.ComboBox();
             this.buttonSetCurrentDate = new System.Windows.Forms.Button();
             this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.buttonAddProvider = new System.Windows.Forms.Button();
+            this.buttonRecordRow = new System.Windows.Forms.Button();
+            this.buttonCloseForm = new System.Windows.Forms.Button();
+            this.autoPartsDataSet = new DB.AutoPartsDataSet();
+            this.partsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.partsTableAdapter = new DB.AutoPartsDataSetTableAdapters.partsTableAdapter();
+            this.bridgeproviderspartsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.bridge_providers_partsTableAdapter = new DB.AutoPartsDataSetTableAdapters.bridge_providers_partsTableAdapter();
+            this.dealsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dealsTableAdapter = new DB.AutoPartsDataSetTableAdapters.dealsTableAdapter();
+            this.providersBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.providersTableAdapter = new DB.AutoPartsDataSetTableAdapters.providersTableAdapter();
+            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bridgeproviderspartsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dealsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxTitle
             // 
+            this.textBoxTitle.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.textBoxTitle.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBoxTitle.Location = new System.Drawing.Point(132, 24);
             this.textBoxTitle.Name = "textBoxTitle";
             this.textBoxTitle.Size = new System.Drawing.Size(182, 20);
@@ -147,18 +167,92 @@
             // 
             // dateTimePicker
             // 
-            this.dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePicker.CustomFormat = "yyyy.MM.dd";
+            this.dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePicker.Location = new System.Drawing.Point(132, 127);
             this.dateTimePicker.Name = "dateTimePicker";
             this.dateTimePicker.Size = new System.Drawing.Size(182, 20);
             this.dateTimePicker.TabIndex = 12;
             this.dateTimePicker.Value = new System.DateTime(2018, 10, 30, 0, 5, 20, 0);
             // 
+            // buttonAddProvider
+            // 
+            this.buttonAddProvider.Location = new System.Drawing.Point(342, 197);
+            this.buttonAddProvider.Name = "buttonAddProvider";
+            this.buttonAddProvider.Size = new System.Drawing.Size(136, 23);
+            this.buttonAddProvider.TabIndex = 13;
+            this.buttonAddProvider.Text = "Добавить поставщика";
+            this.buttonAddProvider.UseVisualStyleBackColor = true;
+            // 
+            // buttonRecordRow
+            // 
+            this.buttonRecordRow.Location = new System.Drawing.Point(132, 254);
+            this.buttonRecordRow.Name = "buttonRecordRow";
+            this.buttonRecordRow.Size = new System.Drawing.Size(117, 23);
+            this.buttonRecordRow.TabIndex = 14;
+            this.buttonRecordRow.Text = "Добавить запись";
+            this.buttonRecordRow.UseVisualStyleBackColor = true;
+            this.buttonRecordRow.Click += new System.EventHandler(this.buttonRecordRow_Click);
+            // 
+            // buttonCloseForm
+            // 
+            this.buttonCloseForm.Location = new System.Drawing.Point(284, 254);
+            this.buttonCloseForm.Name = "buttonCloseForm";
+            this.buttonCloseForm.Size = new System.Drawing.Size(117, 23);
+            this.buttonCloseForm.TabIndex = 15;
+            this.buttonCloseForm.Text = "Закрыть";
+            this.buttonCloseForm.UseVisualStyleBackColor = true;
+            this.buttonCloseForm.Click += new System.EventHandler(this.buttonCloseForm_Click);
+            // 
+            // autoPartsDataSet
+            // 
+            this.autoPartsDataSet.DataSetName = "AutoPartsDataSet";
+            this.autoPartsDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // partsBindingSource
+            // 
+            this.partsBindingSource.DataMember = "parts";
+            this.partsBindingSource.DataSource = this.autoPartsDataSet;
+            // 
+            // partsTableAdapter
+            // 
+            this.partsTableAdapter.ClearBeforeFill = true;
+            // 
+            // bridgeproviderspartsBindingSource
+            // 
+            this.bridgeproviderspartsBindingSource.DataMember = "bridge_providers_parts";
+            this.bridgeproviderspartsBindingSource.DataSource = this.autoPartsDataSet;
+            // 
+            // bridge_providers_partsTableAdapter
+            // 
+            this.bridge_providers_partsTableAdapter.ClearBeforeFill = true;
+            // 
+            // dealsBindingSource
+            // 
+            this.dealsBindingSource.DataMember = "deals";
+            this.dealsBindingSource.DataSource = this.autoPartsDataSet;
+            // 
+            // dealsTableAdapter
+            // 
+            this.dealsTableAdapter.ClearBeforeFill = true;
+            // 
+            // providersBindingSource
+            // 
+            this.providersBindingSource.DataMember = "providers";
+            this.providersBindingSource.DataSource = this.autoPartsDataSet;
+            // 
+            // providersTableAdapter
+            // 
+            this.providersTableAdapter.ClearBeforeFill = true;
+            // 
             // AddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(601, 362);
+            this.ClientSize = new System.Drawing.Size(536, 299);
+            this.Controls.Add(this.buttonCloseForm);
+            this.Controls.Add(this.buttonRecordRow);
+            this.Controls.Add(this.buttonAddProvider);
             this.Controls.Add(this.dateTimePicker);
             this.Controls.Add(this.buttonSetCurrentDate);
             this.Controls.Add(this.comboBoxProvider);
@@ -174,14 +268,18 @@
             this.Controls.Add(this.textBoxTitle);
             this.Name = "AddForm";
             this.Text = "Добавление записи";
+            this.Load += new System.EventHandler(this.AddForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bridgeproviderspartsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dealsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox textBoxTitle;
         private System.Windows.Forms.Label labelTitle;
         private System.Windows.Forms.Label labelManufacturer;
         private System.Windows.Forms.TextBox textBoxPrice;
@@ -194,5 +292,18 @@
         public System.Windows.Forms.ComboBox comboBoxProvider;
         private System.Windows.Forms.Button buttonSetCurrentDate;
         private System.Windows.Forms.DateTimePicker dateTimePicker;
+        public System.Windows.Forms.TextBox textBoxTitle;
+        private System.Windows.Forms.Button buttonAddProvider;
+        private System.Windows.Forms.Button buttonRecordRow;
+        private System.Windows.Forms.Button buttonCloseForm;
+        private AutoPartsDataSet autoPartsDataSet;
+        private System.Windows.Forms.BindingSource partsBindingSource;
+        private AutoPartsDataSetTableAdapters.partsTableAdapter partsTableAdapter;
+        private System.Windows.Forms.BindingSource bridgeproviderspartsBindingSource;
+        private AutoPartsDataSetTableAdapters.bridge_providers_partsTableAdapter bridge_providers_partsTableAdapter;
+        private System.Windows.Forms.BindingSource dealsBindingSource;
+        private AutoPartsDataSetTableAdapters.dealsTableAdapter dealsTableAdapter;
+        private System.Windows.Forms.BindingSource providersBindingSource;
+        private AutoPartsDataSetTableAdapters.providersTableAdapter providersTableAdapter;
     }
 }

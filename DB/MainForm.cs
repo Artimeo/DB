@@ -234,6 +234,11 @@ namespace DB
 
             foreach (DataRow row in this.autoPartsDataSet.parts.Select())
             {
+                addForm.textBoxTitle.AutoCompleteCustomSource.Add(
+                    row.ItemArray[0].ToString());
+            }
+            foreach (DataRow row in this.autoPartsDataSet.parts.Select())
+            {
                 addForm.textBoxManufacturer.AutoCompleteCustomSource.Add(
                     row.ItemArray[2].ToString());
             }

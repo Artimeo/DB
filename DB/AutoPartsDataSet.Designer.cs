@@ -40,9 +40,9 @@ namespace DB {
         
         private global::System.Data.DataRelation relationFK__bridge_pr__provi__2BFE89A6;
         
-        private global::System.Data.DataRelation relationFK__deals__parts_art__2EDAF651;
-        
         private global::System.Data.DataRelation relationFK__priceHist__parts__32AB8735;
+        
+        private global::System.Data.DataRelation relationFK__deals__bridge_id__4F47C5E3;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -324,8 +324,8 @@ namespace DB {
             }
             this.relationFK__bridge_pr__parts__2CF2ADDF = this.Relations["FK__bridge_pr__parts__2CF2ADDF"];
             this.relationFK__bridge_pr__provi__2BFE89A6 = this.Relations["FK__bridge_pr__provi__2BFE89A6"];
-            this.relationFK__deals__parts_art__2EDAF651 = this.Relations["FK__deals__parts_art__2EDAF651"];
             this.relationFK__priceHist__parts__32AB8735 = this.Relations["FK__priceHist__parts__32AB8735"];
+            this.relationFK__deals__bridge_id__4F47C5E3 = this.Relations["FK__deals__bridge_id__4F47C5E3"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -356,14 +356,14 @@ namespace DB {
                         this.tableproviders.titleColumn}, new global::System.Data.DataColumn[] {
                         this.tablebridge_providers_parts.providers_titleColumn}, false);
             this.Relations.Add(this.relationFK__bridge_pr__provi__2BFE89A6);
-            this.relationFK__deals__parts_art__2EDAF651 = new global::System.Data.DataRelation("FK__deals__parts_art__2EDAF651", new global::System.Data.DataColumn[] {
-                        this.tableparts.articleColumn}, new global::System.Data.DataColumn[] {
-                        this.tabledeals.parts_articleColumn}, false);
-            this.Relations.Add(this.relationFK__deals__parts_art__2EDAF651);
             this.relationFK__priceHist__parts__32AB8735 = new global::System.Data.DataRelation("FK__priceHist__parts__32AB8735", new global::System.Data.DataColumn[] {
                         this.tableparts.articleColumn}, new global::System.Data.DataColumn[] {
                         this.tablepriceHistory.parts_articleColumn}, false);
             this.Relations.Add(this.relationFK__priceHist__parts__32AB8735);
+            this.relationFK__deals__bridge_id__4F47C5E3 = new global::System.Data.DataRelation("FK__deals__bridge_id__4F47C5E3", new global::System.Data.DataColumn[] {
+                        this.tablebridge_providers_parts.idColumn}, new global::System.Data.DataColumn[] {
+                        this.tabledeals.bridge_idColumn}, false);
+            this.Relations.Add(this.relationFK__deals__bridge_id__4F47C5E3);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -486,6 +486,8 @@ namespace DB {
             
             private global::System.Data.DataColumn columnparts_article;
             
+            private global::System.Data.DataColumn columnid;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bridge_providers_partsDataTable() {
@@ -537,6 +539,14 @@ namespace DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn idColumn {
+                get {
+                    return this.columnid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -576,6 +586,7 @@ namespace DB {
                 bridge_providers_partsRow rowbridge_providers_partsRow = ((bridge_providers_partsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
+                        null,
                         null};
                 if ((parentprovidersRowByFK__bridge_pr__provi__2BFE89A6 != null)) {
                     columnValuesArray[0] = parentprovidersRowByFK__bridge_pr__provi__2BFE89A6[0];
@@ -586,6 +597,13 @@ namespace DB {
                 rowbridge_providers_partsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowbridge_providers_partsRow);
                 return rowbridge_providers_partsRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bridge_providers_partsRow FindByid(int id) {
+                return ((bridge_providers_partsRow)(this.Rows.Find(new object[] {
+                            id})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -607,6 +625,7 @@ namespace DB {
             internal void InitVars() {
                 this.columnproviders_title = base.Columns["providers_title"];
                 this.columnparts_article = base.Columns["parts_article"];
+                this.columnid = base.Columns["id"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -616,9 +635,19 @@ namespace DB {
                 base.Columns.Add(this.columnproviders_title);
                 this.columnparts_article = new global::System.Data.DataColumn("parts_article", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnparts_article);
+                this.columnid = new global::System.Data.DataColumn("id", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnid);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnid}, true));
                 this.columnproviders_title.AllowDBNull = false;
                 this.columnproviders_title.MaxLength = 50;
                 this.columnparts_article.AllowDBNull = false;
+                this.columnid.AutoIncrement = true;
+                this.columnid.AutoIncrementSeed = -1;
+                this.columnid.AutoIncrementStep = -1;
+                this.columnid.AllowDBNull = false;
+                this.columnid.ReadOnly = true;
+                this.columnid.Unique = true;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -754,9 +783,11 @@ namespace DB {
             
             private global::System.Data.DataColumn columndeal_date;
             
-            private global::System.Data.DataColumn columnparts_article;
+            private global::System.Data.DataColumn columnid;
             
-            private global::System.Data.DataColumn columndeal_parts_count;
+            private global::System.Data.DataColumn columnbridge_id;
+            
+            private global::System.Data.DataColumn columnparts_count;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -801,17 +832,25 @@ namespace DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn parts_articleColumn {
+            public global::System.Data.DataColumn idColumn {
                 get {
-                    return this.columnparts_article;
+                    return this.columnid;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn deal_parts_countColumn {
+            public global::System.Data.DataColumn bridge_idColumn {
                 get {
-                    return this.columndeal_parts_count;
+                    return this.columnbridge_id;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn parts_countColumn {
+                get {
+                    return this.columnparts_count;
                 }
             }
             
@@ -852,18 +891,26 @@ namespace DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public dealsRow AdddealsRow(System.DateTime deal_date, partsRow parentpartsRowByFK__deals__parts_art__2EDAF651, int deal_parts_count) {
+            public dealsRow AdddealsRow(System.DateTime deal_date, bridge_providers_partsRow parentbridge_providers_partsRowByFK__deals__bridge_id__4F47C5E3, int parts_count) {
                 dealsRow rowdealsRow = ((dealsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         deal_date,
                         null,
-                        deal_parts_count};
-                if ((parentpartsRowByFK__deals__parts_art__2EDAF651 != null)) {
-                    columnValuesArray[1] = parentpartsRowByFK__deals__parts_art__2EDAF651[1];
+                        null,
+                        parts_count};
+                if ((parentbridge_providers_partsRowByFK__deals__bridge_id__4F47C5E3 != null)) {
+                    columnValuesArray[2] = parentbridge_providers_partsRowByFK__deals__bridge_id__4F47C5E3[2];
                 }
                 rowdealsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowdealsRow);
                 return rowdealsRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public dealsRow FindByid(int id) {
+                return ((dealsRow)(this.Rows.Find(new object[] {
+                            id})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -884,8 +931,9 @@ namespace DB {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             internal void InitVars() {
                 this.columndeal_date = base.Columns["deal_date"];
-                this.columnparts_article = base.Columns["parts_article"];
-                this.columndeal_parts_count = base.Columns["deal_parts_count"];
+                this.columnid = base.Columns["id"];
+                this.columnbridge_id = base.Columns["bridge_id"];
+                this.columnparts_count = base.Columns["parts_count"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -893,13 +941,23 @@ namespace DB {
             private void InitClass() {
                 this.columndeal_date = new global::System.Data.DataColumn("deal_date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndeal_date);
-                this.columnparts_article = new global::System.Data.DataColumn("parts_article", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnparts_article);
-                this.columndeal_parts_count = new global::System.Data.DataColumn("deal_parts_count", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columndeal_parts_count);
+                this.columnid = new global::System.Data.DataColumn("id", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnid);
+                this.columnbridge_id = new global::System.Data.DataColumn("bridge_id", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnbridge_id);
+                this.columnparts_count = new global::System.Data.DataColumn("parts_count", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnparts_count);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnid}, true));
                 this.columndeal_date.AllowDBNull = false;
-                this.columnparts_article.AllowDBNull = false;
-                this.columndeal_parts_count.AllowDBNull = false;
+                this.columnid.AutoIncrement = true;
+                this.columnid.AutoIncrementSeed = -1;
+                this.columnid.AutoIncrementStep = -1;
+                this.columnid.AllowDBNull = false;
+                this.columnid.ReadOnly = true;
+                this.columnid.Unique = true;
+                this.columnbridge_id.AllowDBNull = false;
+                this.columnparts_count.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1341,13 +1399,13 @@ namespace DB {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class priceHistoryDataTable : global::System.Data.TypedTableBase<priceHistoryRow> {
             
-            private global::System.Data.DataColumn columnprice_order;
-            
             private global::System.Data.DataColumn columnparts_article;
             
             private global::System.Data.DataColumn columnprice_date;
             
             private global::System.Data.DataColumn columnprice;
+            
+            private global::System.Data.DataColumn columnprice_id;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -1384,14 +1442,6 @@ namespace DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn price_orderColumn {
-                get {
-                    return this.columnprice_order;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public global::System.Data.DataColumn parts_articleColumn {
                 get {
                     return this.columnparts_article;
@@ -1411,6 +1461,14 @@ namespace DB {
             public global::System.Data.DataColumn priceColumn {
                 get {
                     return this.columnprice;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn price_idColumn {
+                get {
+                    return this.columnprice_id;
                 }
             }
             
@@ -1455,11 +1513,11 @@ namespace DB {
                 priceHistoryRow rowpriceHistoryRow = ((priceHistoryRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
-                        null,
                         price_date,
-                        price};
+                        price,
+                        null};
                 if ((parentpartsRowByFK__priceHist__parts__32AB8735 != null)) {
-                    columnValuesArray[1] = parentpartsRowByFK__priceHist__parts__32AB8735[1];
+                    columnValuesArray[0] = parentpartsRowByFK__priceHist__parts__32AB8735[1];
                 }
                 rowpriceHistoryRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowpriceHistoryRow);
@@ -1468,9 +1526,9 @@ namespace DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public priceHistoryRow FindByprice_order(int price_order) {
+            public priceHistoryRow FindByprice_id(int price_id) {
                 return ((priceHistoryRow)(this.Rows.Find(new object[] {
-                            price_order})));
+                            price_id})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1490,34 +1548,34 @@ namespace DB {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             internal void InitVars() {
-                this.columnprice_order = base.Columns["price_order"];
                 this.columnparts_article = base.Columns["parts_article"];
                 this.columnprice_date = base.Columns["price_date"];
                 this.columnprice = base.Columns["price"];
+                this.columnprice_id = base.Columns["price_id"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             private void InitClass() {
-                this.columnprice_order = new global::System.Data.DataColumn("price_order", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnprice_order);
                 this.columnparts_article = new global::System.Data.DataColumn("parts_article", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnparts_article);
                 this.columnprice_date = new global::System.Data.DataColumn("price_date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnprice_date);
                 this.columnprice = new global::System.Data.DataColumn("price", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnprice);
+                this.columnprice_id = new global::System.Data.DataColumn("price_id", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnprice_id);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnprice_order}, true));
-                this.columnprice_order.AutoIncrement = true;
-                this.columnprice_order.AutoIncrementSeed = -1;
-                this.columnprice_order.AutoIncrementStep = -1;
-                this.columnprice_order.AllowDBNull = false;
-                this.columnprice_order.ReadOnly = true;
-                this.columnprice_order.Unique = true;
+                                this.columnprice_id}, true));
                 this.columnparts_article.AllowDBNull = false;
                 this.columnprice_date.AllowDBNull = false;
                 this.columnprice.AllowDBNull = false;
+                this.columnprice_id.AutoIncrement = true;
+                this.columnprice_id.AutoIncrementSeed = -1;
+                this.columnprice_id.AutoIncrementStep = -1;
+                this.columnprice_id.AllowDBNull = false;
+                this.columnprice_id.ReadOnly = true;
+                this.columnprice_id.Unique = true;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2338,6 +2396,17 @@ namespace DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int id {
+                get {
+                    return ((int)(this[this.tablebridge_providers_parts.idColumn]));
+                }
+                set {
+                    this[this.tablebridge_providers_parts.idColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public partsRow partsRow {
                 get {
                     return ((partsRow)(this.GetParentRow(this.Table.ParentRelations["FK__bridge_pr__parts__2CF2ADDF"])));
@@ -2355,6 +2424,17 @@ namespace DB {
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK__bridge_pr__provi__2BFE89A6"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public dealsRow[] GetdealsRows() {
+                if ((this.Table.ChildRelations["FK__deals__bridge_id__4F47C5E3"] == null)) {
+                    return new dealsRow[0];
+                }
+                else {
+                    return ((dealsRow[])(base.GetChildRows(this.Table.ChildRelations["FK__deals__bridge_id__4F47C5E3"])));
                 }
             }
         }
@@ -2386,34 +2466,45 @@ namespace DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int parts_article {
+            public int id {
                 get {
-                    return ((int)(this[this.tabledeals.parts_articleColumn]));
+                    return ((int)(this[this.tabledeals.idColumn]));
                 }
                 set {
-                    this[this.tabledeals.parts_articleColumn] = value;
+                    this[this.tabledeals.idColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int deal_parts_count {
+            public int bridge_id {
                 get {
-                    return ((int)(this[this.tabledeals.deal_parts_countColumn]));
+                    return ((int)(this[this.tabledeals.bridge_idColumn]));
                 }
                 set {
-                    this[this.tabledeals.deal_parts_countColumn] = value;
+                    this[this.tabledeals.bridge_idColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public partsRow partsRow {
+            public int parts_count {
                 get {
-                    return ((partsRow)(this.GetParentRow(this.Table.ParentRelations["FK__deals__parts_art__2EDAF651"])));
+                    return ((int)(this[this.tabledeals.parts_countColumn]));
                 }
                 set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK__deals__parts_art__2EDAF651"]);
+                    this[this.tabledeals.parts_countColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bridge_providers_partsRow bridge_providers_partsRow {
+                get {
+                    return ((bridge_providers_partsRow)(this.GetParentRow(this.Table.ParentRelations["FK__deals__bridge_id__4F47C5E3"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK__deals__bridge_id__4F47C5E3"]);
                 }
             }
         }
@@ -2506,17 +2597,6 @@ namespace DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public dealsRow[] GetdealsRows() {
-                if ((this.Table.ChildRelations["FK__deals__parts_art__2EDAF651"] == null)) {
-                    return new dealsRow[0];
-                }
-                else {
-                    return ((dealsRow[])(base.GetChildRows(this.Table.ChildRelations["FK__deals__parts_art__2EDAF651"])));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public priceHistoryRow[] GetpriceHistoryRows() {
                 if ((this.Table.ChildRelations["FK__priceHist__parts__32AB8735"] == null)) {
                     return new priceHistoryRow[0];
@@ -2539,17 +2619,6 @@ namespace DB {
             internal priceHistoryRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
                 this.tablepriceHistory = ((priceHistoryDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int price_order {
-                get {
-                    return ((int)(this[this.tablepriceHistory.price_orderColumn]));
-                }
-                set {
-                    this[this.tablepriceHistory.price_orderColumn] = value;
-                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2582,6 +2651,17 @@ namespace DB {
                 }
                 set {
                     this[this.tablepriceHistory.priceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int price_id {
+                get {
+                    return ((int)(this[this.tablepriceHistory.price_idColumn]));
+                }
+                set {
+                    this[this.tablepriceHistory.price_idColumn] = value;
                 }
             }
             
@@ -3141,7 +3221,17 @@ namespace DB.AutoPartsDataSetTableAdapters {
             tableMapping.DataSetTable = "bridge_providers_parts";
             tableMapping.ColumnMappings.Add("providers_title", "providers_title");
             tableMapping.ColumnMappings.Add("parts_article", "parts_article");
+            tableMapping.ColumnMappings.Add("id", "id");
             this._adapter.TableMappings.Add(tableMapping);
+            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.DeleteCommand.Connection = this.Connection;
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[bridge_providers_parts] WHERE (([id] = @Original_id) AND ([pro" +
+                "viders_title] = @Original_providers_title) AND ([parts_article] = @Original_part" +
+                "s_article))";
+            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_providers_title", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "providers_title", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_parts_article", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "parts_article", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[bridge_providers_parts] ([providers_title], [parts_article]) V" +
@@ -3149,6 +3239,18 @@ namespace DB.AutoPartsDataSetTableAdapters {
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@providers_title", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "providers_title", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@parts_article", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "parts_article", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.UpdateCommand.Connection = this.Connection;
+            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[bridge_providers_parts] SET [providers_title] = @providers_title, [" +
+                "parts_article] = @parts_article WHERE (([id] = @Original_id) AND ([providers_tit" +
+                "le] = @Original_providers_title) AND ([parts_article] = @Original_parts_article)" +
+                ")";
+            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@providers_title", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "providers_title", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@parts_article", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "parts_article", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_providers_title", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "providers_title", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_parts_article", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "parts_article", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3164,7 +3266,7 @@ namespace DB.AutoPartsDataSetTableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT providers_title, parts_article FROM dbo.bridge_providers_parts";
+            this._commandCollection[0].CommandText = "SELECT * FROM dbo.bridge_providers_parts";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -3224,6 +3326,35 @@ namespace DB.AutoPartsDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
+        public virtual int Delete(int Original_id, string Original_providers_title, int Original_parts_article) {
+            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_id));
+            if ((Original_providers_title == null)) {
+                throw new global::System.ArgumentNullException("Original_providers_title");
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[1].Value = ((string)(Original_providers_title));
+            }
+            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(Original_parts_article));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.DeleteCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.DeleteCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
         public virtual int Insert(string providers_title, int parts_article) {
             if ((providers_title == null)) {
@@ -3245,6 +3376,42 @@ namespace DB.AutoPartsDataSetTableAdapters {
             finally {
                 if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
                     this.Adapter.InsertCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(string providers_title, int parts_article, int Original_id, string Original_providers_title, int Original_parts_article) {
+            if ((providers_title == null)) {
+                throw new global::System.ArgumentNullException("providers_title");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(providers_title));
+            }
+            this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(parts_article));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(Original_id));
+            if ((Original_providers_title == null)) {
+                throw new global::System.ArgumentNullException("Original_providers_title");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Original_providers_title));
+            }
+            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(Original_parts_article));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.UpdateCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.UpdateCommand.Connection.Close();
                 }
             }
         }
@@ -3372,17 +3539,39 @@ namespace DB.AutoPartsDataSetTableAdapters {
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "deals";
             tableMapping.ColumnMappings.Add("deal_date", "deal_date");
-            tableMapping.ColumnMappings.Add("parts_article", "parts_article");
-            tableMapping.ColumnMappings.Add("deal_parts_count", "deal_parts_count");
+            tableMapping.ColumnMappings.Add("id", "id");
+            tableMapping.ColumnMappings.Add("bridge_id", "bridge_id");
+            tableMapping.ColumnMappings.Add("parts_count", "parts_count");
             this._adapter.TableMappings.Add(tableMapping);
+            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.DeleteCommand.Connection = this.Connection;
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[deals] WHERE (([id] = @Original_id) AND ([deal_date] = @Origin" +
+                "al_deal_date) AND ([bridge_id] = @Original_bridge_id) AND ([parts_count] = @Orig" +
+                "inal_parts_count))";
+            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_deal_date", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "deal_date", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_bridge_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "bridge_id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_parts_count", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "parts_count", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[deals] ([deal_date], [parts_article], [deal_parts_count]) VALU" +
-                "ES (@deal_date, @parts_article, @deal_parts_count)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[deals] ([deal_date], [bridge_id], [parts_count]) VALUES (@deal" +
+                "_date, @bridge_id, @parts_count)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@deal_date", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "deal_date", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@parts_article", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "parts_article", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@deal_parts_count", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "deal_parts_count", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@bridge_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "bridge_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@parts_count", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "parts_count", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.UpdateCommand.Connection = this.Connection;
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[deals] SET [deal_date] = @deal_date, [bridge_id] = @bridge_id, [parts_count] = @parts_count WHERE (([id] = @Original_id) AND ([deal_date] = @Original_deal_date) AND ([bridge_id] = @Original_bridge_id) AND ([parts_count] = @Original_parts_count))";
+            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@deal_date", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "deal_date", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@bridge_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "bridge_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@parts_count", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "parts_count", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_deal_date", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "deal_date", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_bridge_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "bridge_id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_parts_count", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "parts_count", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3398,7 +3587,7 @@ namespace DB.AutoPartsDataSetTableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT deal_date, parts_article, deal_parts_count FROM dbo.deals";
+            this._commandCollection[0].CommandText = "SELECT * FROM dbo.deals";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -3453,30 +3642,6 @@ namespace DB.AutoPartsDataSetTableAdapters {
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         public virtual int Update(global::System.Data.DataRow[] dataRows) {
             return this.Adapter.Update(dataRows);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(System.DateTime deal_date, int parts_article, int deal_parts_count) {
-            this.Adapter.InsertCommand.Parameters[0].Value = ((System.DateTime)(deal_date));
-            this.Adapter.InsertCommand.Parameters[1].Value = ((int)(parts_article));
-            this.Adapter.InsertCommand.Parameters[2].Value = ((int)(deal_parts_count));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
-            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.InsertCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.InsertCommand.Connection.Close();
-                }
-            }
         }
     }
     
@@ -3655,7 +3820,7 @@ SELECT title, article, manufacturer, price FROM parts WHERE (article = @article)
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT title, article, manufacturer, price FROM dbo.parts";
+            this._commandCollection[0].CommandText = "SELECT * FROM dbo.parts";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -3964,43 +4129,43 @@ SELECT title, article, manufacturer, price FROM parts WHERE (article = @article)
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "priceHistory";
-            tableMapping.ColumnMappings.Add("price_order", "price_order");
             tableMapping.ColumnMappings.Add("parts_article", "parts_article");
             tableMapping.ColumnMappings.Add("price_date", "price_date");
             tableMapping.ColumnMappings.Add("price", "price");
+            tableMapping.ColumnMappings.Add("price_id", "price_id");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[priceHistory] WHERE (([price_order] = @Original_price_order) A" +
-                "ND ([parts_article] = @Original_parts_article) AND ([price_date] = @Original_pri" +
-                "ce_date) AND ([price] = @Original_price))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[priceHistory] WHERE (([price_id] = @Original_price_id) AND ([p" +
+                "arts_article] = @Original_parts_article) AND ([price_date] = @Original_price_dat" +
+                "e) AND ([price] = @Original_price))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_price_order", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "price_order", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_price_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "price_id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_parts_article", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "parts_article", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_price_date", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "price_date", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_price", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "price", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[priceHistory] ([parts_article], [price_date], [price]) VALUES " +
-                "(@parts_article, @price_date, @price);\r\nSELECT price_order, parts_article, price" +
-                "_date, price FROM priceHistory WHERE (price_order = SCOPE_IDENTITY())";
+                "(@parts_article, @price_date, @price);\r\nSELECT price_id, parts_article, price_da" +
+                "te, price FROM priceHistory WHERE (price_id = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@parts_article", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "parts_article", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@price_date", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "price_date", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@price", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "price", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[priceHistory] SET [parts_article] = @parts_article, [price_date] = @price_date, [price] = @price WHERE (([price_order] = @Original_price_order) AND ([parts_article] = @Original_parts_article) AND ([price_date] = @Original_price_date) AND ([price] = @Original_price));
-SELECT price_order, parts_article, price_date, price FROM priceHistory WHERE (price_order = @price_order)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[priceHistory] SET [parts_article] = @parts_article, [price_date] = @price_date, [price] = @price WHERE (([price_id] = @Original_price_id) AND ([parts_article] = @Original_parts_article) AND ([price_date] = @Original_price_date) AND ([price] = @Original_price));
+SELECT price_id, parts_article, price_date, price FROM priceHistory WHERE (price_id = @price_id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@parts_article", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "parts_article", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@price_date", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "price_date", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@price", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "price", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_price_order", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "price_order", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_price_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "price_id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_parts_article", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "parts_article", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_price_date", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "price_date", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_price", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "price", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@price_order", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "price_order", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@price_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "price_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4016,7 +4181,7 @@ SELECT price_order, parts_article, price_date, price FROM priceHistory WHERE (pr
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT price_order, parts_article, price_date, price FROM dbo.priceHistory";
+            this._commandCollection[0].CommandText = "SELECT * FROM dbo.priceHistory";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -4077,8 +4242,8 @@ SELECT price_order, parts_article, price_date, price FROM priceHistory WHERE (pr
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_price_order, int Original_parts_article, System.DateTime Original_price_date, int Original_price) {
-            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_price_order));
+        public virtual int Delete(int Original_price_id, int Original_parts_article, System.DateTime Original_price_date, int Original_price) {
+            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_price_id));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(Original_parts_article));
             this.Adapter.DeleteCommand.Parameters[2].Value = ((System.DateTime)(Original_price_date));
             this.Adapter.DeleteCommand.Parameters[3].Value = ((int)(Original_price));
@@ -4126,15 +4291,15 @@ SELECT price_order, parts_article, price_date, price FROM priceHistory WHERE (pr
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int parts_article, System.DateTime price_date, int price, int Original_price_order, int Original_parts_article, System.DateTime Original_price_date, int Original_price, int price_order) {
+        public virtual int Update(int parts_article, System.DateTime price_date, int price, int Original_price_id, int Original_parts_article, System.DateTime Original_price_date, int Original_price, int price_id) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(parts_article));
             this.Adapter.UpdateCommand.Parameters[1].Value = ((System.DateTime)(price_date));
             this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(price));
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Original_price_order));
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Original_price_id));
             this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(Original_parts_article));
             this.Adapter.UpdateCommand.Parameters[5].Value = ((System.DateTime)(Original_price_date));
             this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_price));
-            this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(price_order));
+            this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(price_id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -4155,8 +4320,8 @@ SELECT price_order, parts_article, price_date, price FROM priceHistory WHERE (pr
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int parts_article, System.DateTime price_date, int price, int Original_price_order, int Original_parts_article, System.DateTime Original_price_date, int Original_price) {
-            return this.Update(parts_article, price_date, price, Original_price_order, Original_parts_article, Original_price_date, Original_price, Original_price_order);
+        public virtual int Update(int parts_article, System.DateTime price_date, int price, int Original_price_id, int Original_parts_article, System.DateTime Original_price_date, int Original_price) {
+            return this.Update(parts_article, price_date, price, Original_price_id, Original_parts_article, Original_price_date, Original_price, Original_price_id);
         }
     }
     
@@ -4331,7 +4496,7 @@ SELECT title, provider_address, phone FROM providers WHERE (title = @title)";
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT title, provider_address, phone FROM dbo.providers";
+            this._commandCollection[0].CommandText = "SELECT * FROM dbo.providers";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -4681,8 +4846,7 @@ SELECT title, provider_address, phone FROM providers WHERE (title = @title)";
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT Код, Название, Цена, Количество, Производитель, [Цена закупки], [Дата заку" +
-                "пки], Поставщик FROM dbo.storehouse";
+            this._commandCollection[0].CommandText = "SELECT * FROM dbo.storehouse";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         

@@ -22,8 +22,8 @@ namespace DB
 
         public MainForm()
         {
-            //autopartsDataContext dc = new autopartsDataContext(Properties.Settings.Default.AutoPartsConnectionString);
-            /*
+            /*autopartsDataContext dc = new autopartsDataContext(Properties.Settings.Default.AutoPartsConnectionString);
+            
             if (dc.DatabaseExists())
             {
                 dataGridViewStorehouse.DataSource = dc.storehouse;
@@ -37,20 +37,31 @@ namespace DB
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
-            // TODO: данная строка кода позволяет загрузить данные в таблицу "autoPartsDataSet.parts". При необходимости она может быть перемещена или удалена.
-            this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
-            // TODO: данная строка кода позволяет загрузить данные в таблицу "autoPartsDataSet.providers". При необходимости она может быть перемещена или удалена.
-            this.providersTableAdapter.Fill(this.autoPartsDataSet.providers);
             try
             {
-                // TODO: данная строка кода позволяет загрузить данные в таблицу "autoPartsDataSet.storehouse". При необходимости она может быть перемещена или удалена.
+                this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из таблицы parts", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            try
+            {
+                this.providersTableAdapter.Fill(this.autoPartsDataSet.providers);
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из таблицы providers", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            try
+            {
                 //this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления storehouse", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             labelRowCount.Text += dataGridViewStorehouse.RowCount.ToString();
 
@@ -175,7 +186,6 @@ namespace DB
         {
             try
             {
-                // TODO: данная строка кода позволяет загрузить данные в таблицу "autoPartsDataSet.storehouse". При необходимости она может быть перемещена или удалена.
                 this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
                 foreach (DataGridViewColumn column in dataGridViewStorehouse.Columns)
                 {
@@ -186,7 +196,7 @@ namespace DB
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления storehouse", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             labelRowCount.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
         }
@@ -210,21 +220,27 @@ namespace DB
 
         private void buttonClean_Click(object sender, EventArgs e)
         {
-            if (dataGridViewStorehouse.RowCount > 0)
+            try
             {
-                dataGridViewStorehouse.Sort(dataGridViewStorehouse.Columns[0], ListSortDirection.Ascending);
-                foreach (DataGridViewColumn column in dataGridViewStorehouse.Columns)
+                if (dataGridViewStorehouse.RowCount > 0)
                 {
-                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    column.SortMode = DataGridViewColumnSortMode.Automatic;
+                    dataGridViewStorehouse.Sort(dataGridViewStorehouse.Columns[0], ListSortDirection.Ascending);
+                    foreach (DataGridViewColumn column in dataGridViewStorehouse.Columns)
+                    {
+                        column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        column.SortMode = DataGridViewColumnSortMode.Automatic;
+                    }
+                    dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = 0;
+                    dataGridViewStorehouse.ClearSelection();
+                    labelRowCount.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
                 }
-                dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = 0;
-                dataGridViewStorehouse.ClearSelection();
-                labelRowCount.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
-            }
-            else
+                else
+                {
+                    MessageBox.Show("Отсутствуют данные, сначала обновите таблицу.", "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            } catch (Exception err)
             {
-                MessageBox.Show("Отсутствуют данные, сначала обновите таблицу.", "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления storehouse", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

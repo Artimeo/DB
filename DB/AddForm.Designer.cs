@@ -29,10 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.textBoxTitle = new System.Windows.Forms.TextBox();
             this.labelTitle = new System.Windows.Forms.Label();
-            this.labelManufacturer = new System.Windows.Forms.Label();
-            this.textBoxManufacturer = new System.Windows.Forms.TextBox();
             this.textBoxPrice = new System.Windows.Forms.TextBox();
             this.labelPrice = new System.Windows.Forms.Label();
             this.labelDate = new System.Windows.Forms.Label();
@@ -54,21 +51,16 @@
             this.dealsTableAdapter = new DB.AutoPartsDataSetTableAdapters.dealsTableAdapter();
             this.providersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.providersTableAdapter = new DB.AutoPartsDataSetTableAdapters.providersTableAdapter();
+            this.buttonAddPart = new System.Windows.Forms.Button();
+            this.textBoxTitle = new System.Windows.Forms.TextBox();
+            this.labelManufacturer = new System.Windows.Forms.Label();
+            this.textBoxManufacturer = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bridgeproviderspartsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dealsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).BeginInit();
             this.SuspendLayout();
-            // 
-            // textBoxTitle
-            // 
-            this.textBoxTitle.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.textBoxTitle.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.textBoxTitle.Location = new System.Drawing.Point(132, 24);
-            this.textBoxTitle.Name = "textBoxTitle";
-            this.textBoxTitle.Size = new System.Drawing.Size(182, 20);
-            this.textBoxTitle.TabIndex = 0;
             // 
             // labelTitle
             // 
@@ -78,24 +70,6 @@
             this.labelTitle.Size = new System.Drawing.Size(109, 13);
             this.labelTitle.TabIndex = 1;
             this.labelTitle.Text = "Название запчасти:";
-            // 
-            // labelManufacturer
-            // 
-            this.labelManufacturer.AutoSize = true;
-            this.labelManufacturer.Location = new System.Drawing.Point(37, 60);
-            this.labelManufacturer.Name = "labelManufacturer";
-            this.labelManufacturer.Size = new System.Drawing.Size(89, 13);
-            this.labelManufacturer.TabIndex = 2;
-            this.labelManufacturer.Text = "Производитель:";
-            // 
-            // textBoxManufacturer
-            // 
-            this.textBoxManufacturer.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.textBoxManufacturer.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.textBoxManufacturer.Location = new System.Drawing.Point(132, 57);
-            this.textBoxManufacturer.Name = "textBoxManufacturer";
-            this.textBoxManufacturer.Size = new System.Drawing.Size(182, 20);
-            this.textBoxManufacturer.TabIndex = 1;
             // 
             // textBoxPrice
             // 
@@ -245,11 +219,48 @@
             // 
             this.providersTableAdapter.ClearBeforeFill = true;
             // 
+            // buttonAddPart
+            // 
+            this.buttonAddPart.Location = new System.Drawing.Point(342, 22);
+            this.buttonAddPart.Name = "buttonAddPart";
+            this.buttonAddPart.Size = new System.Drawing.Size(136, 23);
+            this.buttonAddPart.TabIndex = 16;
+            this.buttonAddPart.Text = "Добавить запчасть";
+            this.buttonAddPart.UseVisualStyleBackColor = true;
+            // 
+            // textBoxTitle
+            // 
+            this.textBoxTitle.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.textBoxTitle.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.textBoxTitle.Location = new System.Drawing.Point(132, 24);
+            this.textBoxTitle.Name = "textBoxTitle";
+            this.textBoxTitle.Size = new System.Drawing.Size(182, 20);
+            this.textBoxTitle.TabIndex = 0;
+            // 
+            // labelManufacturer
+            // 
+            this.labelManufacturer.AutoSize = true;
+            this.labelManufacturer.Location = new System.Drawing.Point(37, 60);
+            this.labelManufacturer.Name = "labelManufacturer";
+            this.labelManufacturer.Size = new System.Drawing.Size(89, 13);
+            this.labelManufacturer.TabIndex = 2;
+            this.labelManufacturer.Text = "Производитель:";
+            // 
+            // textBoxManufacturer
+            // 
+            this.textBoxManufacturer.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.textBoxManufacturer.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.textBoxManufacturer.Location = new System.Drawing.Point(132, 57);
+            this.textBoxManufacturer.Name = "textBoxManufacturer";
+            this.textBoxManufacturer.Size = new System.Drawing.Size(182, 20);
+            this.textBoxManufacturer.TabIndex = 1;
+            // 
             // AddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(536, 299);
+            this.Controls.Add(this.buttonAddPart);
             this.Controls.Add(this.buttonCloseForm);
             this.Controls.Add(this.buttonRecordRow);
             this.Controls.Add(this.buttonAddProvider);
@@ -281,18 +292,15 @@
 
         #endregion
         private System.Windows.Forms.Label labelTitle;
-        private System.Windows.Forms.Label labelManufacturer;
         private System.Windows.Forms.TextBox textBoxPrice;
         private System.Windows.Forms.Label labelPrice;
         private System.Windows.Forms.Label labelDate;
         private System.Windows.Forms.TextBox textBoxCount;
         private System.Windows.Forms.Label labelCount;
         private System.Windows.Forms.Label labelProvider;
-        public System.Windows.Forms.TextBox textBoxManufacturer;
         public System.Windows.Forms.ComboBox comboBoxProvider;
         private System.Windows.Forms.Button buttonSetCurrentDate;
         private System.Windows.Forms.DateTimePicker dateTimePicker;
-        public System.Windows.Forms.TextBox textBoxTitle;
         private System.Windows.Forms.Button buttonAddProvider;
         private System.Windows.Forms.Button buttonRecordRow;
         private System.Windows.Forms.Button buttonCloseForm;
@@ -305,5 +313,9 @@
         private AutoPartsDataSetTableAdapters.dealsTableAdapter dealsTableAdapter;
         private System.Windows.Forms.BindingSource providersBindingSource;
         private AutoPartsDataSetTableAdapters.providersTableAdapter providersTableAdapter;
+        private System.Windows.Forms.Button buttonAddPart;
+        public System.Windows.Forms.TextBox textBoxTitle;
+        private System.Windows.Forms.Label labelManufacturer;
+        public System.Windows.Forms.TextBox textBoxManufacturer;
     }
 }

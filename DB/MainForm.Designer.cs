@@ -38,7 +38,7 @@
             this.buttonSearchClear = new System.Windows.Forms.Button();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.dataGridViewStorehouse = new System.Windows.Forms.DataGridView();
-            this.autoPartsDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.storehouseBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.autoPartsDataSet = new DB.AutoPartsDataSet();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
@@ -50,7 +50,7 @@
             this.partsTab = new System.Windows.Forms.TabPage();
             this.providersTab = new System.Windows.Forms.TabPage();
             this.pricehistoryTab = new System.Windows.Forms.TabPage();
-            this.storehouseBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.autoPartsDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.storehouseTableAdapter = new DB.AutoPartsDataSetTableAdapters.storehouseTableAdapter();
             this.providersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.providersTableAdapter = new DB.AutoPartsDataSetTableAdapters.providersTableAdapter();
@@ -68,9 +68,9 @@
             this.storehouseTab.SuspendLayout();
             this.flowLayoutPanelRowCount.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStorehouse)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSetBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.storehouseBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -193,10 +193,11 @@
             this.dataGridViewStorehouse.Size = new System.Drawing.Size(797, 317);
             this.dataGridViewStorehouse.TabIndex = 7;
             // 
-            // autoPartsDataSetBindingSource
+            // storehouseBindingSource
             // 
-            this.autoPartsDataSetBindingSource.DataSource = this.autoPartsDataSet;
-            this.autoPartsDataSetBindingSource.Position = 0;
+            this.storehouseBindingSource.AllowNew = false;
+            this.storehouseBindingSource.DataMember = "storehouse";
+            this.storehouseBindingSource.DataSource = this.autoPartsDataSet;
             // 
             // autoPartsDataSet
             // 
@@ -331,11 +332,10 @@
             this.pricehistoryTab.Text = "История цен";
             this.pricehistoryTab.UseVisualStyleBackColor = true;
             // 
-            // storehouseBindingSource
+            // autoPartsDataSetBindingSource
             // 
-            this.storehouseBindingSource.AllowNew = false;
-            this.storehouseBindingSource.DataMember = "storehouse";
-            this.storehouseBindingSource.DataSource = this.autoPartsDataSet;
+            this.autoPartsDataSetBindingSource.DataSource = this.autoPartsDataSet;
+            this.autoPartsDataSetBindingSource.Position = 0;
             // 
             // storehouseTableAdapter
             // 
@@ -414,6 +414,7 @@
             this.поставщикDataGridViewTextBoxColumn.HeaderText = "Поставщик";
             this.поставщикDataGridViewTextBoxColumn.Name = "поставщикDataGridViewTextBoxColumn";
             this.поставщикDataGridViewTextBoxColumn.ReadOnly = true;
+            this.поставщикDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // MainForm
             // 
@@ -423,16 +424,16 @@
             this.Controls.Add(this.tabs);
             this.Name = "MainForm";
             this.Text = "Запчасти";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.tabs.ResumeLayout(false);
             this.storehouseTab.ResumeLayout(false);
             this.storehouseTab.PerformLayout();
             this.flowLayoutPanelRowCount.ResumeLayout(false);
             this.flowLayoutPanelRowCount.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStorehouse)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSetBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.storehouseBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSetBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).EndInit();
             this.ResumeLayout(false);

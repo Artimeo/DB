@@ -75,6 +75,7 @@
             // 
             this.textBoxPrice.Location = new System.Drawing.Point(132, 92);
             this.textBoxPrice.Name = "textBoxPrice";
+            this.textBoxPrice.ReadOnly = true;
             this.textBoxPrice.Size = new System.Drawing.Size(182, 20);
             this.textBoxPrice.TabIndex = 2;
             // 
@@ -236,6 +237,8 @@
             this.textBoxTitle.Name = "textBoxTitle";
             this.textBoxTitle.Size = new System.Drawing.Size(182, 20);
             this.textBoxTitle.TabIndex = 0;
+            this.textBoxTitle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxTitle_KeyDown);
+            this.textBoxTitle.Leave += new System.EventHandler(this.textBoxTitle_Leave);
             // 
             // labelManufacturer
             // 
@@ -252,6 +255,7 @@
             this.textBoxManufacturer.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBoxManufacturer.Location = new System.Drawing.Point(132, 57);
             this.textBoxManufacturer.Name = "textBoxManufacturer";
+            this.textBoxManufacturer.ReadOnly = true;
             this.textBoxManufacturer.Size = new System.Drawing.Size(182, 20);
             this.textBoxManufacturer.TabIndex = 1;
             // 

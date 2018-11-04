@@ -13,10 +13,17 @@ namespace DB
 {
     public partial class AddForm : Form
     {
+        public static string sqlExpression;
+        public static string connectionString = "Data Source=ORANGE\\MSSQLEXPRESS2017;Initial Catalog=AutoParts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        SqlCommand request = new SqlCommand();
+
         public AddForm()
         {
             InitializeComponent();
             dateTimePicker.Value = System.DateTime.Now;
+            connection.Open();
         }
 
         private void buttonSetCurrentDate_Click(object sender, EventArgs e)
@@ -26,6 +33,7 @@ namespace DB
 
         private void buttonCloseForm_Click(object sender, EventArgs e)
         {
+            connection.Close();
             this.Close();
         }
 
@@ -54,52 +62,77 @@ namespace DB
             } 
             else
             {
-                string sqlExpressionInsertValues;
-                string connectionString = "Data Source=ORANGE\\MSSQLEXPRESS2017;Initial Catalog=AutoParts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
-
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                if (textBoxManufacturer.Text != "")
                 {
-                    connection.Open();
-
-                    SqlCommand request;
-
-                    if (textBoxManufacturer.Text != "")
-                    {
-                        sqlExpressionInsertValues = "insert into parts (title, manufacturer, price) values ";
-                        request = new SqlCommand(
-                        sqlExpressionInsertValues + "('" + textBoxTitle.Text + "', '" + textBoxManufacturer.Text + "', " + textBoxPrice.Text + ");",
+                    sqlExpression = "insert into parts (title, manufacturer, price) values ";
+                    request = new SqlCommand(
+                        sqlExpression + "('" + textBoxTitle.Text + "', '" + textBoxManufacturer.Text + "', " + textBoxPrice.Text + ");",
                         connection);
-                    } 
-                    else
-                    {
-                        sqlExpressionInsertValues = "insert into parts (title, price) values ";
-                        request = new SqlCommand(
-                        sqlExpressionInsertValues + "('" + textBoxTitle.Text + "', '" + textBoxManufacturer.Text + "', " + textBoxPrice.Text + ");",
+                } 
+                else
+                {
+                    sqlExpression = "insert into parts (title, price) values ";
+                    request = new SqlCommand(
+                        sqlExpression + "('" + textBoxTitle.Text + "', '" + textBoxManufacturer.Text + "', " + textBoxPrice.Text + ");",
                         connection);
-                    }
+                }
                     
-                    request.ExecuteNonQuery();
+                request.ExecuteNonQuery();
                     
-                    string addedPartArticle;
-                    request.CommandText = "select max(article) from parts;";
+                string addedPartArticle;
+                request.CommandText = "select max(article) from parts;";
+                using (SqlDataReader reader = request.ExecuteReader())
+                {
+                    addedPartArticle = reader.GetString(2);
+                };
+
+                request.CommandText = "insert into deals values ('" + dateTimePicker.Text + "', " + addedPartArticle + ", " + textBoxCount.Text + ");";
+                request.ExecuteNonQuery();
+
+                request.CommandText = "insert into bridge_providers_parts values('" + comboBoxProvider.Text + "', " + addedPartArticle + ");";
+                request.ExecuteNonQuery();
+
+
+                connection.Close();
+                    
+            }
+        }
+
+        private void textBoxTitle_Leave(object sender, EventArgs e)
+        {
+            if (textBoxTitle.Text == "")
+            {
+                MessageBox.Show("Деталь отсутствует в спике доступных. Необходимо ее добавить, или выбрать из доступных.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            } else
+            {
+                request.CommandText = "select * from parts where title = " + textBoxTitle.Text + ";";
+
+                using (SqlDataReader reader = request.ExecuteReader())
+                {
+                    textBoxManufacturer.Text = reader.GetString(2);
+                    textBoxPrice.Text = reader.GetString(3);
+                }
+            }
+        }
+
+        private void textBoxTitle_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (textBoxTitle.Text == "")
+                {
+                    MessageBox.Show("Деталь отсутствует в спике доступных. Необходимо ее добавить, или выбрать из доступных.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    request.CommandText = "select * from parts where title = " + textBoxTitle.Text + ";";
+
                     using (SqlDataReader reader = request.ExecuteReader())
                     {
-                        addedPartArticle = reader.GetString(2);
-                    };
-
-                    request.CommandText = "insert into deals values ('" + dateTimePicker.Text + "', " + addedPartArticle + ", " + textBoxCount.Text + ");";
-                    request.ExecuteNonQuery();
-
-                    request.CommandText = "insert into bridge_providers_parts values('" + comboBoxProvider.Text + "', " + addedPartArticle + ");";
-                    request.ExecuteNonQuery();
-
-
-                    connection.Close();
-                    
+                        textBoxManufacturer.Text = reader.GetString(2);
+                        textBoxPrice.Text = reader.GetString(3);
+                    }
                 }
-
-
-
             }
         }
     }

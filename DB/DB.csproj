@@ -122,5 +122,8 @@
     <EmbeddedResource Include="resources\delete1.png" />
     <EmbeddedResource Include="resources\request.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="resources\error.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

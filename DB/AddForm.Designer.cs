@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddForm));
             this.labelTitle = new System.Windows.Forms.Label();
             this.textBoxPrice = new System.Windows.Forms.TextBox();
             this.labelPrice = new System.Windows.Forms.Label();
@@ -55,11 +56,15 @@
             this.textBoxTitle = new System.Windows.Forms.TextBox();
             this.labelManufacturer = new System.Windows.Forms.Label();
             this.textBoxManufacturer = new System.Windows.Forms.TextBox();
+            this.pictureTitleError = new System.Windows.Forms.PictureBox();
+            this.picturePartsCountError = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bridgeproviderspartsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dealsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureTitleError)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picturePartsCountError)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTitle
@@ -103,6 +108,8 @@
             this.textBoxCount.Name = "textBoxCount";
             this.textBoxCount.Size = new System.Drawing.Size(182, 20);
             this.textBoxCount.TabIndex = 4;
+            this.textBoxCount.TextChanged += new System.EventHandler(this.textBoxCount_TextChanged);
+            this.textBoxCount.Leave += new System.EventHandler(this.textBoxCount_Leave);
             // 
             // labelCount
             // 
@@ -259,11 +266,33 @@
             this.textBoxManufacturer.Size = new System.Drawing.Size(182, 20);
             this.textBoxManufacturer.TabIndex = 1;
             // 
+            // pictureTitleError
+            // 
+            this.pictureTitleError.Image = ((System.Drawing.Image)(resources.GetObject("pictureTitleError.Image")));
+            this.pictureTitleError.Location = new System.Drawing.Point(321, 26);
+            this.pictureTitleError.Name = "pictureTitleError";
+            this.pictureTitleError.Size = new System.Drawing.Size(16, 16);
+            this.pictureTitleError.TabIndex = 17;
+            this.pictureTitleError.TabStop = false;
+            this.pictureTitleError.Visible = false;
+            // 
+            // picturePartsCountError
+            // 
+            this.picturePartsCountError.Image = ((System.Drawing.Image)(resources.GetObject("picturePartsCountError.Image")));
+            this.picturePartsCountError.Location = new System.Drawing.Point(320, 164);
+            this.picturePartsCountError.Name = "picturePartsCountError";
+            this.picturePartsCountError.Size = new System.Drawing.Size(16, 16);
+            this.picturePartsCountError.TabIndex = 18;
+            this.picturePartsCountError.TabStop = false;
+            this.picturePartsCountError.Visible = false;
+            // 
             // AddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(536, 299);
+            this.Controls.Add(this.picturePartsCountError);
+            this.Controls.Add(this.pictureTitleError);
             this.Controls.Add(this.buttonAddPart);
             this.Controls.Add(this.buttonCloseForm);
             this.Controls.Add(this.buttonRecordRow);
@@ -289,6 +318,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.bridgeproviderspartsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dealsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureTitleError)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picturePartsCountError)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -321,5 +352,7 @@
         public System.Windows.Forms.TextBox textBoxTitle;
         private System.Windows.Forms.Label labelManufacturer;
         public System.Windows.Forms.TextBox textBoxManufacturer;
+        private System.Windows.Forms.PictureBox pictureTitleError;
+        private System.Windows.Forms.PictureBox picturePartsCountError;
     }
 }

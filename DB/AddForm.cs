@@ -45,17 +45,23 @@ namespace DB
 
         }
 
+        public bool isAllowedRecordRow()
+        {
+            if (pictureTitleError.Visible == false && picturePartsCountError.Visible == false && pictureProviderError.Visible == false)
+            {
+                buttonRecordRow.Enabled = true;
+                return true;
+            }
+            else
+            {
+                buttonRecordRow.Enabled = false;
+                return false;
+            }
+        }
+
         private void buttonRecordRow_Click(object sender, EventArgs e)
         {
-            if (textBoxTitle.Text == "" || 
-                textBoxPrice.Text == "" || 
-                dateTimePicker.Text == "" || 
-                textBoxCount.Text == "" || 
-                comboBoxProvider.Text == "")
-            {
-                MessageBox.Show("Невозможно провести запись, не все необходимые поля заполены.", "Ошибка записи данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } 
-            else
+            if (isAllowedRecordRow())
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
@@ -99,13 +105,18 @@ namespace DB
                 }
 
             }
+            else
+            {
+                MessageBox.Show("Не все ограничения удовлетворяют условиям добавления записи.", "Ошибка записи данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void partsAutocomplete (object sender, EventArgs e)
         {
             if (textBoxTitle.Text == "")
             {
-                MessageBox.Show("Деталь отсутствует в спике доступных. Необходимо ее добавить, или выбрать из доступных.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                pictureTitleError.Show();
+                pictureProviderError.Show();
             }
             else
             {
@@ -120,6 +131,8 @@ namespace DB
 
                     request.ExecuteNonQuery();
 
+                    int partArticle = -1;
+
                     using (SqlDataReader reader = request.ExecuteReader())
                     {
                         if (reader.HasRows)
@@ -127,6 +140,7 @@ namespace DB
                             pictureTitleError.Hide();
                             while (reader.Read())
                             {
+                                partArticle = reader.GetInt32(1);
                                 textBoxManufacturer.Text = reader.GetString(2);
                                 textBoxPrice.Text = reader.GetInt32(3).ToString();
                             }
@@ -134,15 +148,45 @@ namespace DB
                         else
                         {
                             pictureTitleError.Show();
+                            comboBoxProvider.Text = "";
+                            comboBoxProvider.Items.Clear();
+                            pictureProviderError.Show();
                             textBoxManufacturer.Text = "";
                             textBoxPrice.Text = "";
                         }
                     }
+
+                    if (partArticle != -1)
+                    {
+                        request = new SqlCommand(
+                            "select * from bridge_providers_parts where parts_article = " + partArticle.ToString() + ";",
+                            connection);
+                        request.ExecuteNonQuery();
+
+                        using (SqlDataReader reader = request.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                comboBoxProvider.Items.Clear();
+
+                                while (reader.Read())
+                                {
+                                    comboBoxProvider.Items.Add(reader.GetString(1));
+                                }
+                            }
+                            else
+                            {
+                                pictureProviderError.Show();
+                            }
+                        }
+                    }
+
                     connection.Close();
+
+                    isAllowedRecordRow();
                 }
             }
         }
-
         private void textBoxTitle_Leave(object sender, EventArgs e)
         {
             partsAutocomplete(sender, e);
@@ -158,10 +202,17 @@ namespace DB
 
         private void textBoxCount_TextChanged(object sender, EventArgs e)
         {
+
             foreach (char ch in textBoxCount.Text)
             {
-                if (!char.IsDigit(ch)) picturePartsCountError.Show();
+                if (char.IsDigit(ch)) picturePartsCountError.Hide();
+                else
+                {
+                    picturePartsCountError.Show();
+                    break;
+                };
             }
+            isAllowedRecordRow();
         }
 
         private void textBoxCount_Leave(object sender, EventArgs e)
@@ -169,12 +220,27 @@ namespace DB
             try
             {
                 int partsCount = Int32.Parse(textBoxCount.Text);
-                if (partsCount < 0) picturePartsCountError.Show(); else picturePartsCountError.Hide();
+                if (partsCount <= 0) picturePartsCountError.Show(); else picturePartsCountError.Hide();
+                isAllowedRecordRow();
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.ToString(), "Ошибка ввода числа", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                picturePartsCountError.Show();
+                isAllowedRecordRow();
             }
         }
+
+        private void comboBoxProvider_TextChanged(object sender, EventArgs e)
+        {
+            if (comboBoxProvider.Text == "")
+            {
+                pictureProviderError.Show();
+            }
+            else pictureProviderError.Hide();
+
+            isAllowedRecordRow();
+        }
+
+        
     }
 }

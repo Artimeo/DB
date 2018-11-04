@@ -58,6 +58,8 @@
             this.textBoxManufacturer = new System.Windows.Forms.TextBox();
             this.pictureTitleError = new System.Windows.Forms.PictureBox();
             this.picturePartsCountError = new System.Windows.Forms.PictureBox();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.pictureProviderError = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bridgeproviderspartsBindingSource)).BeginInit();
@@ -65,6 +67,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureTitleError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturePartsCountError)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureProviderError)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTitle
@@ -131,11 +134,13 @@
             // 
             // comboBoxProvider
             // 
+            this.comboBoxProvider.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxProvider.FormattingEnabled = true;
             this.comboBoxProvider.Location = new System.Drawing.Point(132, 199);
             this.comboBoxProvider.Name = "comboBoxProvider";
             this.comboBoxProvider.Size = new System.Drawing.Size(182, 21);
             this.comboBoxProvider.TabIndex = 5;
+            this.comboBoxProvider.TextChanged += new System.EventHandler(this.comboBoxProvider_TextChanged);
             // 
             // buttonSetCurrentDate
             // 
@@ -168,6 +173,7 @@
             // 
             // buttonRecordRow
             // 
+            this.buttonRecordRow.Enabled = false;
             this.buttonRecordRow.Location = new System.Drawing.Point(132, 254);
             this.buttonRecordRow.Name = "buttonRecordRow";
             this.buttonRecordRow.Size = new System.Drawing.Size(117, 23);
@@ -245,7 +251,6 @@
             this.textBoxTitle.Size = new System.Drawing.Size(182, 20);
             this.textBoxTitle.TabIndex = 0;
             this.textBoxTitle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxTitle_KeyDown);
-            this.textBoxTitle.Leave += new System.EventHandler(this.textBoxTitle_Leave);
             // 
             // labelManufacturer
             // 
@@ -274,7 +279,8 @@
             this.pictureTitleError.Size = new System.Drawing.Size(16, 16);
             this.pictureTitleError.TabIndex = 17;
             this.pictureTitleError.TabStop = false;
-            this.pictureTitleError.Visible = false;
+            this.toolTip.SetToolTip(this.pictureTitleError, "Эта деталь отсутствует в спике доступных. Необходимо ее добавить, или выбрать из " +
+        "доступных");
             // 
             // picturePartsCountError
             // 
@@ -284,13 +290,25 @@
             this.picturePartsCountError.Size = new System.Drawing.Size(16, 16);
             this.picturePartsCountError.TabIndex = 18;
             this.picturePartsCountError.TabStop = false;
-            this.picturePartsCountError.Visible = false;
+            this.toolTip.SetToolTip(this.picturePartsCountError, "Введенное значение не может быть преобразовано в число, менее нуля, либо является" +
+        " отрицательным");
+            // 
+            // pictureProviderError
+            // 
+            this.pictureProviderError.Image = ((System.Drawing.Image)(resources.GetObject("pictureProviderError.Image")));
+            this.pictureProviderError.Location = new System.Drawing.Point(321, 202);
+            this.pictureProviderError.Name = "pictureProviderError";
+            this.pictureProviderError.Size = new System.Drawing.Size(16, 16);
+            this.pictureProviderError.TabIndex = 19;
+            this.pictureProviderError.TabStop = false;
+            this.toolTip.SetToolTip(this.pictureProviderError, "Для этой запчасти отсутствуют поставщики. Добавьте их или проверьте данные");
             // 
             // AddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(536, 299);
+            this.Controls.Add(this.pictureProviderError);
             this.Controls.Add(this.picturePartsCountError);
             this.Controls.Add(this.pictureTitleError);
             this.Controls.Add(this.buttonAddPart);
@@ -320,6 +338,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureTitleError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturePartsCountError)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureProviderError)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -354,5 +373,7 @@
         public System.Windows.Forms.TextBox textBoxManufacturer;
         private System.Windows.Forms.PictureBox pictureTitleError;
         private System.Windows.Forms.PictureBox picturePartsCountError;
+        private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.PictureBox pictureProviderError;
     }
 }

@@ -13,7 +13,6 @@ namespace DB
 {
     public partial class AddForm : Form
     {
-        public static string sqlExpression;
         public static string connectionString = "Data Source=ORANGE\\MSSQLEXPRESS2017;Initial Catalog=AutoParts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
 
         private static Dictionary<string, int> bridge_id = new Dictionary<string, int> ();
@@ -63,124 +62,103 @@ namespace DB
             {
                 pictureTitleError.Show();
                 pictureProviderError.Show();
+                return;
             }
-            else
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                connection.Open();
+
+                SqlCommand request;
+                request = new SqlCommand(
+                    "select * from parts where title = '" + textBoxTitle.Text + "';",
+                    connection);
+
+                request.ExecuteNonQuery();
+
+                int partArticle = -1;
+                bridge_id.Clear();
+
+                using (SqlDataReader reader = request.ExecuteReader())
                 {
-                    connection.Open();
+                    if (reader.HasRows)
+                    {
+                        pictureTitleError.Hide();
+                        while (reader.Read())
+                        {
+                            partArticle = reader.GetInt32(1);
+                            textBoxManufacturer.Text = reader.GetString(2);
+                            textBoxPrice.Text = reader.GetInt32(3).ToString();
+                        }
+                    }
+                    else
+                    {
+                        pictureTitleError.Show();
+                        comboBoxProvider.Text = "";
+                        comboBoxProvider.Items.Clear();
+                        pictureProviderError.Show();
+                        textBoxManufacturer.Text = "";
+                        textBoxPrice.Text = "";
+                    }
+                }
 
-                    SqlCommand request;
+                if (partArticle != -1)
+                {
                     request = new SqlCommand(
-                        "select * from parts where title = '" + textBoxTitle.Text + "';",
+                        "select * from bridge_providers_parts where parts_article = " + partArticle.ToString() + ";",
                         connection);
-
                     request.ExecuteNonQuery();
-
-                    int partArticle = -1;
 
                     using (SqlDataReader reader = request.ExecuteReader())
                     {
                         if (reader.HasRows)
                         {
-                            pictureTitleError.Hide();
+                            comboBoxProvider.Items.Clear();
+
                             while (reader.Read())
                             {
-                                partArticle = reader.GetInt32(1);
-                                textBoxManufacturer.Text = reader.GetString(2);
-                                textBoxPrice.Text = reader.GetInt32(3).ToString();
+                                comboBoxProvider.Items.Add(reader.GetString(1));
+                                bridge_id.Add(reader.GetString(1), reader.GetInt32(0));
                             }
                         }
                         else
                         {
-                            pictureTitleError.Show();
-                            comboBoxProvider.Text = "";
-                            comboBoxProvider.Items.Clear();
-                            bridge_id.Clear();
                             pictureProviderError.Show();
-                            textBoxManufacturer.Text = "";
-                            textBoxPrice.Text = "";
                         }
                     }
-
-                    if (partArticle != -1)
-                    {
-                        request = new SqlCommand(
-                            "select * from bridge_providers_parts where parts_article = " + partArticle.ToString() + ";",
-                            connection);
-                        request.ExecuteNonQuery();
-
-                        using (SqlDataReader reader = request.ExecuteReader())
-                        {
-                            if (reader.HasRows)
-                            {
-                                comboBoxProvider.Items.Clear();
-
-                                while (reader.Read())
-                                {
-                                    comboBoxProvider.Items.Add(reader.GetString(1));
-                                    bridge_id.Add(reader.GetString(1), reader.GetInt32(2));
-                                }
-                            }
-                            else
-                            {
-                                pictureProviderError.Show();
-                            }
-                        }
-                    }
-
-                    connection.Close();
-
-                    isAllowedRecordRow();
                 }
+
+                connection.Close();
+
+                isAllowedRecordRow();
             }
+            
+        }
+
+        private void tmp()
+        {
+            
         }
 
         private void buttonRecordRow_Click(object sender, EventArgs e)
         {
             if (isAllowedRecordRow() && bridge_id.Count > 0)
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                string expression = "insert into deals (deal_date, bridge_id, parts_count) values ('" + dateTimePicker.Text.ToString() + "', " + bridge_id[comboBoxProvider.Text] + ", " + textBoxCount.Text + ");";
+                if (MessageBox.Show(expression, "SQL выражение", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
                 {
-                    connection.Open();
 
-                    SqlCommand request;
-
-                    if (textBoxManufacturer.Text != "")
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
-                        sqlExpression = "insert into parts (title, manufacturer, price) values ";
-                        request = new SqlCommand(
-                        sqlExpression + "('" + textBoxTitle.Text + "', '" + textBoxManufacturer.Text + "', " + textBoxPrice.Text + ");",
-                        connection);
+                        connection.Open();
+
+                        SqlCommand request = new SqlCommand(expression, connection);
+                        request.ExecuteNonQuery();
+
+                        connection.Close();
+
                     }
-                    else
-                    {
-                        sqlExpression = "insert into parts (title, price) values ";
-                        request = new SqlCommand(
-                        sqlExpression + "('" + textBoxTitle.Text + "', '" + textBoxManufacturer.Text + "', " + textBoxPrice.Text + ");",
-                        connection);
-                    }
-
-                    request.ExecuteNonQuery();
-
-                    string addedPartArticle;
-                    request.CommandText = "select max(article) from parts;";
-                    using (SqlDataReader reader = request.ExecuteReader())
-                    {
-                        addedPartArticle = reader.GetString(2);
-                    };
-
-                    request.CommandText = "insert into deals values ('" + dateTimePicker.Text + "', " + addedPartArticle + ", " + textBoxCount.Text + ");";
-                    request.ExecuteNonQuery();
-
-                    request.CommandText = "insert into bridge_providers_parts values('" + comboBoxProvider.Text + "', " + addedPartArticle + ");";
-                    request.ExecuteNonQuery();
-
-
-                    connection.Close();
-
                 }
-
             }
             else
             {

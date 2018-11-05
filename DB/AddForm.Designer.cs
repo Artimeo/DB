@@ -251,6 +251,7 @@
             this.textBoxTitle.Size = new System.Drawing.Size(182, 20);
             this.textBoxTitle.TabIndex = 0;
             this.textBoxTitle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxTitle_KeyDown);
+            this.textBoxTitle.Leave += new System.EventHandler(this.textBoxTitle_Leave);
             // 
             // labelManufacturer
             // 

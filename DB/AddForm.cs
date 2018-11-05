@@ -16,6 +16,8 @@ namespace DB
         public static string sqlExpression;
         public static string connectionString = "Data Source=ORANGE\\MSSQLEXPRESS2017;Initial Catalog=AutoParts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
 
+        private static Dictionary<string, int> bridge_id = new Dictionary<string, int> ();
+
         public AddForm()
         {
             InitializeComponent();
@@ -34,13 +36,9 @@ namespace DB
 
         private void AddForm_Load(object sender, EventArgs e)
         {
-            // TODO: данная строка кода позволяет загрузить данные в таблицу "autoPartsDataSet.providers". При необходимости она может быть перемещена или удалена.
             this.providersTableAdapter.Fill(this.autoPartsDataSet.providers);
-            // TODO: данная строка кода позволяет загрузить данные в таблицу "autoPartsDataSet.deals". При необходимости она может быть перемещена или удалена.
             this.dealsTableAdapter.Fill(this.autoPartsDataSet.deals);
-            // TODO: данная строка кода позволяет загрузить данные в таблицу "autoPartsDataSet.bridge_providers_parts". При необходимости она может быть перемещена или удалена.
             this.bridge_providers_partsTableAdapter.Fill(this.autoPartsDataSet.bridge_providers_parts);
-            // TODO: данная строка кода позволяет загрузить данные в таблицу "autoPartsDataSet.parts". При необходимости она может быть перемещена или удалена.
             this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
 
         }
@@ -59,9 +57,88 @@ namespace DB
             }
         }
 
+        private void partsAutocomplete (object sender, EventArgs e)
+        {
+            if (textBoxTitle.Text == "")
+            {
+                pictureTitleError.Show();
+                pictureProviderError.Show();
+            }
+            else
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    SqlCommand request;
+                    request = new SqlCommand(
+                        "select * from parts where title = '" + textBoxTitle.Text + "';",
+                        connection);
+
+                    request.ExecuteNonQuery();
+
+                    int partArticle = -1;
+
+                    using (SqlDataReader reader = request.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            pictureTitleError.Hide();
+                            while (reader.Read())
+                            {
+                                partArticle = reader.GetInt32(1);
+                                textBoxManufacturer.Text = reader.GetString(2);
+                                textBoxPrice.Text = reader.GetInt32(3).ToString();
+                            }
+                        }
+                        else
+                        {
+                            pictureTitleError.Show();
+                            comboBoxProvider.Text = "";
+                            comboBoxProvider.Items.Clear();
+                            bridge_id.Clear();
+                            pictureProviderError.Show();
+                            textBoxManufacturer.Text = "";
+                            textBoxPrice.Text = "";
+                        }
+                    }
+
+                    if (partArticle != -1)
+                    {
+                        request = new SqlCommand(
+                            "select * from bridge_providers_parts where parts_article = " + partArticle.ToString() + ";",
+                            connection);
+                        request.ExecuteNonQuery();
+
+                        using (SqlDataReader reader = request.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                comboBoxProvider.Items.Clear();
+
+                                while (reader.Read())
+                                {
+                                    comboBoxProvider.Items.Add(reader.GetString(1));
+                                    bridge_id.Add(reader.GetString(1), reader.GetInt32(2));
+                                }
+                            }
+                            else
+                            {
+                                pictureProviderError.Show();
+                            }
+                        }
+                    }
+
+                    connection.Close();
+
+                    isAllowedRecordRow();
+                }
+            }
+        }
+
         private void buttonRecordRow_Click(object sender, EventArgs e)
         {
-            if (isAllowedRecordRow())
+            if (isAllowedRecordRow() && bridge_id.Count > 0)
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
@@ -111,82 +188,6 @@ namespace DB
             }
         }
 
-        private void partsAutocomplete (object sender, EventArgs e)
-        {
-            if (textBoxTitle.Text == "")
-            {
-                pictureTitleError.Show();
-                pictureProviderError.Show();
-            }
-            else
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    SqlCommand request;
-                    request = new SqlCommand(
-                        "select * from parts where title = '" + textBoxTitle.Text + "';",
-                        connection);
-
-                    request.ExecuteNonQuery();
-
-                    int partArticle = -1;
-
-                    using (SqlDataReader reader = request.ExecuteReader())
-                    {
-                        if (reader.HasRows)
-                        {
-                            pictureTitleError.Hide();
-                            while (reader.Read())
-                            {
-                                partArticle = reader.GetInt32(1);
-                                textBoxManufacturer.Text = reader.GetString(2);
-                                textBoxPrice.Text = reader.GetInt32(3).ToString();
-                            }
-                        }
-                        else
-                        {
-                            pictureTitleError.Show();
-                            comboBoxProvider.Text = "";
-                            comboBoxProvider.Items.Clear();
-                            pictureProviderError.Show();
-                            textBoxManufacturer.Text = "";
-                            textBoxPrice.Text = "";
-                        }
-                    }
-
-                    if (partArticle != -1)
-                    {
-                        request = new SqlCommand(
-                            "select * from bridge_providers_parts where parts_article = " + partArticle.ToString() + ";",
-                            connection);
-                        request.ExecuteNonQuery();
-
-                        using (SqlDataReader reader = request.ExecuteReader())
-                        {
-                            if (reader.HasRows)
-                            {
-                                comboBoxProvider.Items.Clear();
-
-                                while (reader.Read())
-                                {
-                                    comboBoxProvider.Items.Add(reader.GetString(1));
-                                }
-                            }
-                            else
-                            {
-                                pictureProviderError.Show();
-                            }
-                        }
-                    }
-
-                    connection.Close();
-
-                    isAllowedRecordRow();
-                }
-            }
-        }
         private void textBoxTitle_Leave(object sender, EventArgs e)
         {
             partsAutocomplete(sender, e);

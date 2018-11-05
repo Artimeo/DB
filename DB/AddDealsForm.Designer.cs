@@ -1,6 +1,6 @@
 ﻿namespace DB
 {
-    partial class AddForm
+    partial class AddDealsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddDealsForm));
             this.labelTitle = new System.Windows.Forms.Label();
             this.textBoxPrice = new System.Windows.Forms.TextBox();
             this.labelPrice = new System.Windows.Forms.Label();
@@ -304,7 +304,7 @@
             this.pictureProviderError.TabStop = false;
             this.toolTip.SetToolTip(this.pictureProviderError, "Для этой запчасти отсутствуют поставщики. Добавьте их или проверьте данные");
             // 
-            // AddForm
+            // AddDealsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -329,7 +329,7 @@
             this.Controls.Add(this.labelManufacturer);
             this.Controls.Add(this.labelTitle);
             this.Controls.Add(this.textBoxTitle);
-            this.Name = "AddForm";
+            this.Name = "AddDealsForm";
             this.Text = "Добавление записи";
             this.Load += new System.EventHandler(this.AddForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).EndInit();

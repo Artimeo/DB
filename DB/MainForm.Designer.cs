@@ -64,6 +64,7 @@
             this.ценаЗакупкиDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.датаЗакупкиDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.поставщикDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.buttonSelectRow = new System.Windows.Forms.Button();
             this.tabs.SuspendLayout();
             this.storehouseTab.SuspendLayout();
             this.flowLayoutPanelRowCount.SuspendLayout();
@@ -90,6 +91,7 @@
             // 
             // storehouseTab
             // 
+            this.storehouseTab.Controls.Add(this.buttonSelectRow);
             this.storehouseTab.Controls.Add(this.flowLayoutPanelRowCount);
             this.storehouseTab.Controls.Add(this.buttonRequest);
             this.storehouseTab.Controls.Add(this.buttonSearchClear);
@@ -361,6 +363,7 @@
             // 
             // кодDataGridViewTextBoxColumn
             // 
+            this.кодDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.кодDataGridViewTextBoxColumn.DataPropertyName = "Код";
             this.кодDataGridViewTextBoxColumn.HeaderText = "Код";
             this.кодDataGridViewTextBoxColumn.Name = "кодDataGridViewTextBoxColumn";
@@ -368,6 +371,7 @@
             // 
             // названиеDataGridViewTextBoxColumn
             // 
+            this.названиеDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.названиеDataGridViewTextBoxColumn.DataPropertyName = "Название";
             this.названиеDataGridViewTextBoxColumn.HeaderText = "Название";
             this.названиеDataGridViewTextBoxColumn.Name = "названиеDataGridViewTextBoxColumn";
@@ -375,6 +379,7 @@
             // 
             // ценаDataGridViewTextBoxColumn
             // 
+            this.ценаDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.ценаDataGridViewTextBoxColumn.DataPropertyName = "Цена";
             this.ценаDataGridViewTextBoxColumn.HeaderText = "Цена";
             this.ценаDataGridViewTextBoxColumn.Name = "ценаDataGridViewTextBoxColumn";
@@ -382,6 +387,7 @@
             // 
             // количествоDataGridViewTextBoxColumn
             // 
+            this.количествоDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.количествоDataGridViewTextBoxColumn.DataPropertyName = "Количество";
             this.количествоDataGridViewTextBoxColumn.HeaderText = "Количество";
             this.количествоDataGridViewTextBoxColumn.Name = "количествоDataGridViewTextBoxColumn";
@@ -389,6 +395,7 @@
             // 
             // производительDataGridViewTextBoxColumn
             // 
+            this.производительDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.производительDataGridViewTextBoxColumn.DataPropertyName = "Производитель";
             this.производительDataGridViewTextBoxColumn.HeaderText = "Производитель";
             this.производительDataGridViewTextBoxColumn.Name = "производительDataGridViewTextBoxColumn";
@@ -396,6 +403,7 @@
             // 
             // ценаЗакупкиDataGridViewTextBoxColumn
             // 
+            this.ценаЗакупкиDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.ценаЗакупкиDataGridViewTextBoxColumn.DataPropertyName = "Цена закупки";
             this.ценаЗакупкиDataGridViewTextBoxColumn.HeaderText = "Цена закупки";
             this.ценаЗакупкиDataGridViewTextBoxColumn.Name = "ценаЗакупкиDataGridViewTextBoxColumn";
@@ -403,6 +411,7 @@
             // 
             // датаЗакупкиDataGridViewTextBoxColumn
             // 
+            this.датаЗакупкиDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.датаЗакупкиDataGridViewTextBoxColumn.DataPropertyName = "Дата закупки";
             this.датаЗакупкиDataGridViewTextBoxColumn.HeaderText = "Дата закупки";
             this.датаЗакупкиDataGridViewTextBoxColumn.Name = "датаЗакупкиDataGridViewTextBoxColumn";
@@ -410,11 +419,22 @@
             // 
             // поставщикDataGridViewTextBoxColumn
             // 
+            this.поставщикDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.поставщикDataGridViewTextBoxColumn.DataPropertyName = "Поставщик";
             this.поставщикDataGridViewTextBoxColumn.HeaderText = "Поставщик";
             this.поставщикDataGridViewTextBoxColumn.Name = "поставщикDataGridViewTextBoxColumn";
             this.поставщикDataGridViewTextBoxColumn.ReadOnly = true;
             this.поставщикDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // buttonSelectRow
+            // 
+            this.buttonSelectRow.Location = new System.Drawing.Point(343, 40);
+            this.buttonSelectRow.Name = "buttonSelectRow";
+            this.buttonSelectRow.Size = new System.Drawing.Size(109, 28);
+            this.buttonSelectRow.TabIndex = 13;
+            this.buttonSelectRow.Text = "Выделить строку";
+            this.buttonSelectRow.UseVisualStyleBackColor = true;
+            this.buttonSelectRow.Click += new System.EventHandler(this.buttonSelectRow_Click);
             // 
             // MainForm
             // 
@@ -475,6 +495,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ценаЗакупкиDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn датаЗакупкиDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn поставщикDataGridViewTextBoxColumn;
+        private System.Windows.Forms.Button buttonSelectRow;
     }
 }
 

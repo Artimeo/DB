@@ -246,7 +246,7 @@ namespace DB
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            AddForm addForm = new AddForm();
+            AddDealsForm addForm = new AddDealsForm();
 
             foreach (DataRow row in this.autoPartsDataSet.parts.Select())
             {
@@ -264,6 +264,16 @@ namespace DB
                     row.ItemArray[0].ToString());
             }
             addForm.Show();
+        }
+
+        private void buttonSelectRow_Click(object sender, EventArgs e)
+        {
+            var selectedCells = dataGridViewStorehouse.SelectedCells;
+
+            foreach (DataGridViewCell cell in selectedCells)
+            {
+                dataGridViewStorehouse.Rows[cell.RowIndex].Selected = true;
+            }
         }
     }
 }

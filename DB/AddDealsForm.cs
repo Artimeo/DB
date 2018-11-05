@@ -11,13 +11,13 @@ using System.Windows.Forms;
 
 namespace DB
 {
-    public partial class AddForm : Form
+    public partial class AddDealsForm : Form
     {
         public static string connectionString = "Data Source=ORANGE\\MSSQLEXPRESS2017;Initial Catalog=AutoParts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
 
         private static Dictionary<string, int> bridge_id = new Dictionary<string, int> ();
 
-        public AddForm()
+        public AddDealsForm()
         {
             InitializeComponent();
             dateTimePicker.Value = System.DateTime.Now;

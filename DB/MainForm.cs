@@ -72,7 +72,12 @@ namespace DB
             if (e.KeyCode == Keys.Enter && textBoxSearch.Text != "")
             {
                 bool getEntryInRow = false;
+                foreach (DataGridViewRow row in dataGridViewStorehouse.Rows)
+                {
+                    row.Visible = true;
+                }
                 dataGridViewStorehouse.ClearSelection();
+                dataGridViewStorehouse.CurrentCell = null;
 
                 if (comboboxSearchBy.Text == "Все")
                 {
@@ -96,7 +101,18 @@ namespace DB
                             }
                         }
                     }
-                    if (getEntryInRow == false) MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (getEntryInRow == false) {
+                        MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    } else
+                    {
+                        foreach (DataGridViewRow row in dataGridViewStorehouse.Rows)
+                        {
+                            if (!row.Selected) row.Visible = false;
+                        }
+                        dataGridViewStorehouse.ClearSelection();
+                    }
+                    
                 }
                 else
                 {

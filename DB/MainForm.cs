@@ -22,18 +22,6 @@ namespace DB
 
         public MainForm()
         {
-            /*autopartsDataContext dc = new autopartsDataContext(Properties.Settings.Default.AutoPartsConnectionString);
-            
-            if (dc.DatabaseExists())
-            {
-                dataGridViewStorehouse.DataSource = dc.storehouse;
-            }
-            else
-            {
-                MessageBox.Show("Не удалось загрузить базу данных.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.Exit();
-            }*/
-
             InitializeComponent();
         }
 
@@ -104,15 +92,29 @@ namespace DB
                     if (getEntryInRow == false) {
                         MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
-                    } else
+                    }
+                    else
                     {
                         foreach (DataGridViewRow row in dataGridViewStorehouse.Rows)
                         {
                             if (!row.Selected) row.Visible = false;
                         }
                         dataGridViewStorehouse.ClearSelection();
+                        
+                        for (int i = 0; i < dataGridViewStorehouse.RowCount; i++)
+                        {
+                            if (dataGridViewStorehouse.Rows[i].Visible)
+                            {
+                                for (int j = 0; j < dataGridViewStorehouse.ColumnCount; j++)
+                                {
+                                    if (dataGridViewStorehouse.Rows[i].Cells[j].Value.ToString().ToLower().Contains(textBoxSearch.Text.ToLower()))
+                                    {
+                                        dataGridViewStorehouse.Rows[i].Cells[j].Selected = true;
+                                    }
+                                }
+                            }
+                        }
                     }
-                    
                 }
                 else
                 {

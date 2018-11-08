@@ -55,13 +55,13 @@ namespace DB
             {
                 MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления storehouse", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            labelRowCount.Text += dataGridViewStorehouse.RowCount.ToString();
+            labelRowCountStorehouse.Text += dataGridViewStorehouse.RowCount.ToString();
 
         }
 
         private void Search(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter && textBoxSearch.Text != "")
+            if (e.KeyCode == Keys.Enter && textBoxSearchStorehouse.Text != "")
             {
                 bool getEntryInRow = false;
                 foreach (DataGridViewRow row in dataGridViewStorehouse.Rows)
@@ -71,7 +71,7 @@ namespace DB
                 dataGridViewStorehouse.ClearSelection();
                 dataGridViewStorehouse.CurrentCell = null;
 
-                if (comboboxSearchBy.Text == "Все")
+                if (comboboxSearchByStorehouse.Text == "Все")
                 {
                     for (int i = 0; i < dataGridViewStorehouse.RowCount; i++)
                     {
@@ -80,7 +80,7 @@ namespace DB
                         {
                             if (dataGridViewStorehouse.Rows[i].Cells[j].Value != null)
                             {
-                                if (dataGridViewStorehouse.Rows[i].Cells[j].Value.ToString().ToLower().Contains(textBoxSearch.Text.ToLower()))
+                                if (dataGridViewStorehouse.Rows[i].Cells[j].Value.ToString().ToLower().Contains(textBoxSearchStorehouse.Text.ToLower()))
                                 {
                                     if (getEntryInRow == false)
                                     {
@@ -111,7 +111,7 @@ namespace DB
                             {
                                 for (int j = 0; j < dataGridViewStorehouse.ColumnCount; j++)
                                 {
-                                    if (dataGridViewStorehouse.Rows[i].Cells[j].Value.ToString().ToLower().Contains(textBoxSearch.Text.ToLower()))
+                                    if (dataGridViewStorehouse.Rows[i].Cells[j].Value.ToString().ToLower().Contains(textBoxSearchStorehouse.Text.ToLower()))
                                     {
                                         dataGridViewStorehouse.Rows[i].Cells[j].Selected = true;
                                     }
@@ -124,7 +124,7 @@ namespace DB
                 {
                     int columnSearchBy;
 
-                    switch (comboboxSearchBy.Text)
+                    switch (comboboxSearchByStorehouse.Text)
                     {
                         case "id":
                             columnSearchBy = 0;
@@ -164,7 +164,7 @@ namespace DB
                         dataGridViewStorehouse.Rows[i].Selected = false;
                         if (dataGridViewStorehouse.Rows[i].Cells[columnSearchBy].Value != null)
                         {
-                            if (dataGridViewStorehouse.Rows[i].Cells[columnSearchBy].Value.ToString().ToLower().Contains(textBoxSearch.Text.ToLower()))
+                            if (dataGridViewStorehouse.Rows[i].Cells[columnSearchBy].Value.ToString().ToLower().Contains(textBoxSearchStorehouse.Text.ToLower()))
                             {
                                 if (getEntryInRow == false)
                                 {
@@ -178,7 +178,7 @@ namespace DB
                     if (getEntryInRow == false) MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            else if (e.KeyCode == Keys.Enter && textBoxSearch.Text == "")
+            else if (e.KeyCode == Keys.Enter && textBoxSearchStorehouse.Text == "")
             {
                 MessageBox.Show("Введите данные для поиска", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -188,18 +188,18 @@ namespace DB
         {
             if (textBoxSearchActive == false)
             {
-                textBoxSearch.Text = "";
-                textBoxSearch.ForeColor = Color.Black;
+                textBoxSearchStorehouse.Text = "";
+                textBoxSearchStorehouse.ForeColor = Color.Black;
                 textBoxSearchActive = true;
             }
         }
 
         private void textBoxSearch_Leave(object sender, EventArgs e)
         {
-            if (textBoxSearch.Text == "")
+            if (textBoxSearchStorehouse.Text == "")
             {
-                textBoxSearch.ForeColor = Color.Gray;
-                textBoxSearch.Text = "Поиск🔍";
+                textBoxSearchStorehouse.ForeColor = Color.Gray;
+                textBoxSearchStorehouse.Text = "Поиск🔍";
                 textBoxSearchActive = false;
             } else
             {
@@ -223,20 +223,20 @@ namespace DB
             {
                 MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления storehouse", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            labelRowCount.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
+            labelRowCountStorehouse.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
         }
 
         private void refreshAfterDelete()
         {
             dataGridViewStorehouse.ClearSelection();
             this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
-            labelRowCount.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
+            labelRowCountStorehouse.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
         }
 
         private void buttonSearchClear_Click(object sender, EventArgs e)
         {
-            textBoxSearch.ForeColor = Color.Gray;
-            textBoxSearch.Text = "Поиск🔍";
+            textBoxSearchStorehouse.ForeColor = Color.Gray;
+            textBoxSearchStorehouse.Text = "Поиск🔍";
             textBoxSearchActive = false;
         }
 
@@ -265,7 +265,7 @@ namespace DB
                     foreach (DataGridViewRow row in dataGridViewStorehouse.Rows) row.Visible = true;
                     dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = 0;
                     dataGridViewStorehouse.ClearSelection();
-                    labelRowCount.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
+                    labelRowCountStorehouse.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
                 }
                 else
                 {

@@ -14,7 +14,8 @@ namespace DB
     public partial class MainForm : Form
     {
         public static string connectionString = "Data Source=ORANGE\\MSSQLEXPRESS2017;Initial Catalog=AutoParts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
-        bool textBoxSearchActive = false;
+        bool textBoxSearchActiveStorehouse = false;
+        bool textBoxSearchActiveParts = false;
         //записки
         //https://www.flaticon.com/free-icon/plus_128575 иконка "назад"
         //42880b - зеленые иконки
@@ -59,7 +60,8 @@ namespace DB
 
         }
 
-        private void Search(object sender, KeyEventArgs e)
+
+        private void SearchStorehouse(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter && textBoxSearchStorehouse.Text != "")
             {
@@ -184,30 +186,30 @@ namespace DB
             }
         }
 
-        private void textBoxSearch_Enter(object sender, EventArgs e)
+        private void textBoxSearchStorehouse_Enter(object sender, EventArgs e)
         {
-            if (textBoxSearchActive == false)
+            if (textBoxSearchActiveStorehouse == false)
             {
                 textBoxSearchStorehouse.Text = "";
                 textBoxSearchStorehouse.ForeColor = Color.Black;
-                textBoxSearchActive = true;
+                textBoxSearchActiveStorehouse = true;
             }
         }
 
-        private void textBoxSearch_Leave(object sender, EventArgs e)
+        private void textBoxSearchStorehouse_Leave(object sender, EventArgs e)
         {
             if (textBoxSearchStorehouse.Text == "")
             {
                 textBoxSearchStorehouse.ForeColor = Color.Gray;
                 textBoxSearchStorehouse.Text = "Поиск🔍";
-                textBoxSearchActive = false;
+                textBoxSearchActiveStorehouse = false;
             } else
             {
-                textBoxSearchActive = true;
+                textBoxSearchActiveStorehouse = true;
             }
         }
 
-        private void buttonRefresh_Click(object sender, EventArgs e)
+        private void buttonRefreshStorehouse_Click(object sender, EventArgs e)
         {
             try
             {
@@ -226,31 +228,31 @@ namespace DB
             labelRowCountStorehouse.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
         }
 
-        private void refreshAfterDelete()
+        private void refreshAfterDeleteStorehouse()
         {
             dataGridViewStorehouse.ClearSelection();
             this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
             labelRowCountStorehouse.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
         }
 
-        private void buttonSearchClear_Click(object sender, EventArgs e)
+        private void buttonSearchClearStorehouse_Click(object sender, EventArgs e)
         {
             textBoxSearchStorehouse.ForeColor = Color.Gray;
             textBoxSearchStorehouse.Text = "Поиск🔍";
-            textBoxSearchActive = false;
+            textBoxSearchActiveStorehouse = false;
         }
 
-        private void textBoxSearch_KeyDown(object sender, KeyEventArgs e)
+        private void textBoxSearchStorehouse_KeyDown(object sender, KeyEventArgs e)
         {
-            Search(sender, e);
+            SearchStorehouse(sender, e);
         }
 
-        private void comboBoxSearchBy_KeyDown(object sender, KeyEventArgs e)
+        private void comboBoxSearchByStorehouse_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter) Search(sender, e);
+            if (e.KeyCode == Keys.Enter) SearchStorehouse(sender, e);
         }
 
-        private void buttonClean_Click(object sender, EventArgs e)
+        private void buttonCleanStorehouse_Click(object sender, EventArgs e)
         {
             try
             {
@@ -277,7 +279,7 @@ namespace DB
             }
         }
 
-        private void buttonAdd_Click(object sender, EventArgs e)
+        private void buttonAddStorehouse_Click(object sender, EventArgs e)
         {
             AddDealsForm addForm = new AddDealsForm();
 
@@ -296,7 +298,7 @@ namespace DB
             addForm.Show();
         }
 
-        private void buttonSelectRow_Click(object sender, EventArgs e)
+        private void buttonSelectRowStorehouse_Click(object sender, EventArgs e)
         {
             var selectedCells = dataGridViewStorehouse.SelectedCells;
 
@@ -306,7 +308,7 @@ namespace DB
             }
         }
 
-        private void buttonDelete_Click(object sender, EventArgs e)
+        private void buttonDeleteStorehouse_Click(object sender, EventArgs e)
         {
             var selectedCells = dataGridViewStorehouse.SelectedCells;
 
@@ -323,22 +325,307 @@ namespace DB
 
             if (MessageBox.Show("Выбранные строки удалятся из базы данных. Продолжить?", "Удалить запись", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                try
                 {
-                    connection.Open();
-
-                    foreach (DataGridViewRow selectedRow in dataGridViewStorehouse.SelectedRows)
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
-                        string expression = "delete from deals where id = " + selectedRow.Cells[0].Value;
+                        connection.Open();
 
-                        SqlCommand request = new SqlCommand(expression, connection);
-                        request.ExecuteNonQuery();
+                        foreach (DataGridViewRow selectedRow in dataGridViewStorehouse.SelectedRows)
+                        {
+                            string expression = "delete from deals where id = " + selectedRow.Cells[0].Value;
 
-                        if (dataGridViewStorehouse.SelectedRows.Count <= 1) break;
+                            SqlCommand request = new SqlCommand(expression, connection);
+                            request.ExecuteNonQuery();
+
+                            if (dataGridViewStorehouse.SelectedRows.Count <= 1) break;
+                        }
+
+                        this.refreshAfterDeleteStorehouse();
+                        connection.Close();
+                    }
+                } catch (Exception err)
+                {
+                    MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+
+        private void SearchParts(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && textBoxSearchParts.Text != "")
+            {
+                bool getEntryInRow = false;
+                foreach (DataGridViewRow row in dataGridViewParts.Rows)
+                {
+                    row.Visible = true;
+                }
+                dataGridViewParts.ClearSelection();
+                dataGridViewParts.CurrentCell = null;
+
+                if (comboboxSearchByParts.Text == "Все")
+                {
+                    for (int i = 0; i < dataGridViewParts.RowCount; i++)
+                    {
+                        dataGridViewParts.Rows[i].Selected = false;
+                        for (int j = 0; j < dataGridViewParts.ColumnCount; j++)
+                        {
+                            if (dataGridViewParts.Rows[i].Cells[j].Value != null)
+                            {
+                                if (dataGridViewParts.Rows[i].Cells[j].Value.ToString().ToLower().Contains(textBoxSearchParts.Text.ToLower()))
+                                {
+                                    if (getEntryInRow == false)
+                                    {
+                                        getEntryInRow = true;
+                                        dataGridViewParts.FirstDisplayedScrollingRowIndex = i;
+                                    }
+                                    dataGridViewParts.Rows[i].Selected = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (getEntryInRow == false)
+                    {
+                        MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    else
+                    {
+                        foreach (DataGridViewRow row in dataGridViewParts.Rows)
+                        {
+                            if (!row.Selected) row.Visible = false;
+                        }
+                        dataGridViewParts.ClearSelection();
+
+                        for (int i = 0; i < dataGridViewParts.RowCount; i++)
+                        {
+                            if (dataGridViewParts.Rows[i].Visible)
+                            {
+                                for (int j = 0; j < dataGridViewParts.ColumnCount; j++)
+                                {
+                                    if (dataGridViewParts.Rows[i].Cells[j].Value.ToString().ToLower().Contains(textBoxSearchParts.Text.ToLower()))
+                                    {
+                                        dataGridViewParts.Rows[i].Cells[j].Selected = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    int columnSearchBy;
+
+                    switch (comboboxSearchByParts.Text)
+                    {
+                        case "Название":
+                            columnSearchBy = 0;
+                            break;
+                        case "Код":
+                            columnSearchBy = 1;
+                            break;
+                        case "Производитель":
+                            columnSearchBy = 2;
+                            break;
+                        case "Цена":
+                            columnSearchBy = 3;
+                            break;
+                        default:
+                            MessageBox.Show("Ошибка поиска! Выбранное поле отсутствует в таблице. Поиск будет произведен по названию.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            columnSearchBy = 1;
+                            break;
                     }
 
-                    this.refreshAfterDelete();
-                    connection.Close();
+                    for (int i = 0; i < dataGridViewParts.RowCount; i++)
+                    {
+                        dataGridViewParts.Rows[i].Selected = false;
+                        if (dataGridViewParts.Rows[i].Cells[columnSearchBy].Value != null)
+                        {
+                            if (dataGridViewParts.Rows[i].Cells[columnSearchBy].Value.ToString().ToLower().Contains(textBoxSearchParts.Text.ToLower()))
+                            {
+                                if (getEntryInRow == false)
+                                {
+                                    getEntryInRow = true;
+                                    dataGridViewParts.FirstDisplayedScrollingRowIndex = i;
+                                }
+                                dataGridViewParts.Rows[i].Cells[columnSearchBy].Selected = true;
+                            }
+                        }
+                    }
+                    if (getEntryInRow == false) MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else if (e.KeyCode == Keys.Enter && textBoxSearchParts.Text == "")
+            {
+                MessageBox.Show("Введите данные для поиска", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void textBoxSearchParts_Enter(object sender, EventArgs e)
+        {
+            if (textBoxSearchActiveParts == false)
+            {
+                textBoxSearchParts.Text = "";
+                textBoxSearchParts.ForeColor = Color.Black;
+                textBoxSearchActiveParts = true;
+            }
+        }
+
+        private void textBoxSearchParts_Leave(object sender, EventArgs e)
+        {
+            if (textBoxSearchParts.Text == "")
+            {
+                textBoxSearchParts.ForeColor = Color.Gray;
+                textBoxSearchParts.Text = "Поиск🔍";
+                textBoxSearchActiveParts = false;
+            }
+            else
+            {
+                textBoxSearchActiveParts = true;
+            }
+        }
+
+        private void buttonRefreshParts_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
+                foreach (DataGridViewColumn column in dataGridViewParts.Columns)
+                {
+                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    column.SortMode = DataGridViewColumnSortMode.Automatic;
+                }
+                dataGridViewParts.ClearSelection();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления Parts", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
+        }
+
+        private void refreshAfterDeleteParts()
+        {
+            dataGridViewParts.ClearSelection();
+            this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
+            labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
+        }
+
+        private void buttonSearchClearParts_Click(object sender, EventArgs e)
+        {
+            textBoxSearchParts.ForeColor = Color.Gray;
+            textBoxSearchParts.Text = "Поиск🔍";
+            textBoxSearchActiveParts = false;
+        }
+
+        private void textBoxSearchParts_KeyDown(object sender, KeyEventArgs e)
+        {
+            SearchParts(sender, e);
+        }
+
+        private void comboBoxSearchByParts_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) SearchParts(sender, e);
+        }
+
+        private void buttonCleanParts_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridViewParts.RowCount > 0)
+                {
+                    dataGridViewParts.Sort(dataGridViewParts.Columns[0], ListSortDirection.Ascending);
+                    foreach (DataGridViewColumn column in dataGridViewParts.Columns)
+                    {
+                        column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        column.SortMode = DataGridViewColumnSortMode.Automatic;
+                    }
+                    foreach (DataGridViewRow row in dataGridViewParts.Rows) row.Visible = true;
+                    dataGridViewParts.FirstDisplayedScrollingRowIndex = 0;
+                    dataGridViewParts.ClearSelection();
+                    labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
+                }
+                else
+                {
+                    MessageBox.Show("Отсутствуют данные, сначала обновите таблицу.", "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления Parts", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonAddParts_Click(object sender, EventArgs e)
+        {
+            AddDealsForm addForm = new AddDealsForm();
+
+            foreach (DataRow row in this.autoPartsDataSet.parts.Select())
+            {
+                addForm.textBoxTitle.AutoCompleteCustomSource.Add(
+                    row.ItemArray[0].ToString());
+                addForm.textBoxManufacturer.AutoCompleteCustomSource.Add(
+                    row.ItemArray[2].ToString());
+            }
+            foreach (DataRow row in this.autoPartsDataSet.providers.Select())
+            {
+                addForm.comboBoxProvider.Items.Add(
+                    row.ItemArray[0].ToString());
+            }
+            addForm.Show();
+        }
+
+        private void buttonSelectRowParts_Click(object sender, EventArgs e)
+        {
+            var selectedCells = dataGridViewParts.SelectedCells;
+
+            foreach (DataGridViewCell cell in selectedCells)
+            {
+                dataGridViewParts.Rows[cell.RowIndex].Selected = true;
+            }
+        }
+
+        private void buttonDeleteParts_Click(object sender, EventArgs e)
+        {
+            var selectedCells = dataGridViewParts.SelectedCells;
+
+            if (selectedCells.Count == 0)
+            {
+                MessageBox.Show("Не выбраны строки для удаления", "Ошибка удаления", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            foreach (DataGridViewCell cell in selectedCells)
+            {
+                dataGridViewParts.Rows[cell.RowIndex].Selected = true;
+            }
+
+            if (MessageBox.Show("Выбранные строки удалятся из базы данных. Продолжить?", "Удалить запись", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+            {
+                try
+                {
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        connection.Open();
+
+                        foreach (DataGridViewRow selectedRow in dataGridViewParts.SelectedRows)
+                        {
+                            string expression = "delete from parts where title = '" + selectedRow.Cells[0].Value.ToString() + "'";
+
+                            SqlCommand request = new SqlCommand(expression, connection);
+                            request.ExecuteNonQuery();
+
+                            if (dataGridViewParts.SelectedRows.Count <= 1) break;
+                        }
+
+                        this.refreshAfterDeleteParts();
+                        connection.Close();
+                    }
+                } catch (Exception err)
+                {
+                    MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

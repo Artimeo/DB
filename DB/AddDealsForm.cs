@@ -13,12 +13,13 @@ namespace DB
 {
     public partial class AddDealsForm : Form
     {
-        public static string connectionString = "Data Source=ORANGE\\MSSQLEXPRESS2017;Initial Catalog=AutoParts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
-
+        public const string connectionString = "Data Source=ORANGE\\MSSQLEXPRESS2017;Initial Catalog=AutoParts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
+        MainForm parentForm;
         private static Dictionary<string, int> bridge_id = new Dictionary<string, int> ();
 
-        public AddDealsForm()
+        public AddDealsForm(MainForm mainForm)
         {
+            parentForm = mainForm;
             InitializeComponent();
             dateTimePicker.Value = System.DateTime.Now;
         }
@@ -137,28 +138,37 @@ namespace DB
 
         private void buttonRecordRow_Click(object sender, EventArgs e)
         {
-            if (isAllowedRecordRow() && bridge_id.Count > 0)
+            try
             {
-                string expression = "insert into deals (deal_date, bridge_id, parts_count) values ('" + dateTimePicker.Text.ToString() + "', " + bridge_id[comboBoxProvider.Text] + ", " + textBoxCount.Text + ");";
-                if (MessageBox.Show(expression, "SQL выражение", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+                if (isAllowedRecordRow() && bridge_id.Count > 0)
                 {
-
-                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    string expression = "insert into deals (deal_date, bridge_id, parts_count) values ('" + dateTimePicker.Text.ToString() + "', " + bridge_id[comboBoxProvider.Text] + ", " + textBoxCount.Text + ");";
+                    //if (MessageBox.Show(expression, "SQL выражение", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
                     {
-                        connection.Open();
 
-                        SqlCommand request = new SqlCommand(expression, connection);
-                        request.ExecuteNonQuery();
+                        using (SqlConnection connection = new SqlConnection(connectionString))
+                        {
+                            connection.Open();
 
-                        connection.Close();
+                            SqlCommand request = new SqlCommand(expression, connection);
+                            request.ExecuteNonQuery();
 
+                            connection.Close();
+
+                        }
                     }
                 }
-            }
-            else
+                else
+                {
+                    MessageBox.Show("Не все ограничения удовлетворяют условиям добавления записи.", "Ошибка записи данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            } catch (Exception err)
             {
-                MessageBox.Show("Не все ограничения удовлетворяют условиям добавления записи.", "Ошибка записи данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+            parentForm.refreshAfterInsertStorehouse();
+            MessageBox.Show("Запись успешно добавлена", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void textBoxTitle_Leave(object sender, EventArgs e)
@@ -199,6 +209,7 @@ namespace DB
             }
             catch (Exception err)
             {
+                MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 picturePartsCountError.Show();
                 isAllowedRecordRow();
             }

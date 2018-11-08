@@ -13,7 +13,7 @@ namespace DB
 {
     public partial class MainForm : Form
     {
-        public static string connectionString = "Data Source=ORANGE\\MSSQLEXPRESS2017;Initial Catalog=AutoParts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
+        public const string connectionString = "Data Source=ORANGE\\MSSQLEXPRESS2017;Initial Catalog=AutoParts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
         bool textBoxSearchActiveStorehouse = false;
         bool textBoxSearchActiveParts = false;
         //записки
@@ -57,7 +57,7 @@ namespace DB
                 MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления storehouse", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             labelRowCountStorehouse.Text += dataGridViewStorehouse.RowCount.ToString();
-
+            labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
         }
 
 
@@ -228,7 +228,15 @@ namespace DB
             labelRowCountStorehouse.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
         }
 
-        private void refreshAfterDeleteStorehouse()
+        public void refreshAfterInsertStorehouse()
+        {
+            dataGridViewStorehouse.ClearSelection();
+            this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
+            dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = dataGridViewStorehouse.RowCount - 1;
+            labelRowCountStorehouse.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
+        }
+
+        public void refreshAfterDeleteStorehouse()
         {
             dataGridViewStorehouse.ClearSelection();
             this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
@@ -281,21 +289,21 @@ namespace DB
 
         private void buttonAddStorehouse_Click(object sender, EventArgs e)
         {
-            AddDealsForm addForm = new AddDealsForm();
+            AddDealsForm addDealsForm = new AddDealsForm(this);
 
             foreach (DataRow row in this.autoPartsDataSet.parts.Select())
             {
-                addForm.textBoxTitle.AutoCompleteCustomSource.Add(
+                addDealsForm.textBoxTitle.AutoCompleteCustomSource.Add(
                     row.ItemArray[0].ToString());
-                addForm.textBoxManufacturer.AutoCompleteCustomSource.Add(
+                addDealsForm.textBoxManufacturer.AutoCompleteCustomSource.Add(
                     row.ItemArray[2].ToString());
             }
             foreach (DataRow row in this.autoPartsDataSet.providers.Select())
             {
-                addForm.comboBoxProvider.Items.Add(
+                addDealsForm.comboBoxProvider.Items.Add(
                     row.ItemArray[0].ToString());
             }
-            addForm.Show();
+            addDealsForm.Show();
         }
 
         private void buttonSelectRowStorehouse_Click(object sender, EventArgs e)
@@ -506,10 +514,18 @@ namespace DB
             labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
         }
 
-        private void refreshAfterDeleteParts()
+        public void refreshAfterDeleteParts()
         {
             dataGridViewParts.ClearSelection();
             this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
+            labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
+        }
+
+        public void refreshAfterInsertParts()
+        {
+            dataGridViewParts.ClearSelection();
+            this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
+            dataGridViewParts.FirstDisplayedScrollingRowIndex = dataGridViewParts.RowCount - 1;
             labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
         }
 
@@ -560,21 +576,8 @@ namespace DB
 
         private void buttonAddParts_Click(object sender, EventArgs e)
         {
-            AddDealsForm addForm = new AddDealsForm();
-
-            foreach (DataRow row in this.autoPartsDataSet.parts.Select())
-            {
-                addForm.textBoxTitle.AutoCompleteCustomSource.Add(
-                    row.ItemArray[0].ToString());
-                addForm.textBoxManufacturer.AutoCompleteCustomSource.Add(
-                    row.ItemArray[2].ToString());
-            }
-            foreach (DataRow row in this.autoPartsDataSet.providers.Select())
-            {
-                addForm.comboBoxProvider.Items.Add(
-                    row.ItemArray[0].ToString());
-            }
-            addForm.Show();
+            AddPartsForm addPartsForm = new AddPartsForm(this);
+            addPartsForm.Show();
         }
 
         private void buttonSelectRowParts_Click(object sender, EventArgs e)

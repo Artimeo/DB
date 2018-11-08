@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace DB
 {
     public partial class MainForm : Form
     {
+        public static string connectionString = "Data Source=ORANGE\\MSSQLEXPRESS2017;Initial Catalog=AutoParts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
         bool textBoxSearchActive = false;
         //записки
         //https://www.flaticon.com/free-icon/plus_128575 иконка "назад"
@@ -27,6 +29,8 @@ namespace DB
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            // TODO: данная строка кода позволяет загрузить данные в таблицу "autoPartsDataSet.deals". При необходимости она может быть перемещена или удалена.
+            this.dealsTableAdapter.Fill(this.autoPartsDataSet.deals);
             try
             {
                 this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
@@ -122,29 +126,32 @@ namespace DB
 
                     switch (comboboxSearchBy.Text)
                     {
-                        case "Код":
+                        case "id":
                             columnSearchBy = 0;
                             break;
                         case "Название":
                             columnSearchBy = 1;
                             break;
-                        case "Цена":
+                        case "Код":
                             columnSearchBy = 2;
                             break;
-                        case "Количество":
+                        case "Цена":
                             columnSearchBy = 3;
                             break;
-                        case "Производитель":
+                        case "Количество":
                             columnSearchBy = 4;
                             break;
-                        case "Цена закупки":
+                        case "Производитель":
                             columnSearchBy = 5;
                             break;
-                        case "Дата закупки":
+                        case "Цена закупки":
                             columnSearchBy = 6;
                             break;
-                        case "Поставщик":
+                        case "Дата закупки":
                             columnSearchBy = 7;
+                            break;
+                        case "Поставщик":
+                            columnSearchBy = 8;
                             break;
                         default:
                             MessageBox.Show("Ошибка поиска! Выбранное поле отсутствует в таблице. Поиск будет произведен по названию.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -219,6 +226,13 @@ namespace DB
             labelRowCount.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
         }
 
+        private void refreshAfterDelete()
+        {
+            dataGridViewStorehouse.ClearSelection();
+            this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
+            labelRowCount.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
+        }
+
         private void buttonSearchClear_Click(object sender, EventArgs e)
         {
             textBoxSearch.ForeColor = Color.Gray;
@@ -248,6 +262,7 @@ namespace DB
                         column.SortMode = DataGridViewColumnSortMode.NotSortable;
                         column.SortMode = DataGridViewColumnSortMode.Automatic;
                     }
+                    foreach (DataGridViewRow row in dataGridViewStorehouse.Rows) row.Visible = true;
                     dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = 0;
                     dataGridViewStorehouse.ClearSelection();
                     labelRowCount.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
@@ -270,9 +285,6 @@ namespace DB
             {
                 addForm.textBoxTitle.AutoCompleteCustomSource.Add(
                     row.ItemArray[0].ToString());
-            }
-            foreach (DataRow row in this.autoPartsDataSet.parts.Select())
-            {
                 addForm.textBoxManufacturer.AutoCompleteCustomSource.Add(
                     row.ItemArray[2].ToString());
             }
@@ -291,6 +303,43 @@ namespace DB
             foreach (DataGridViewCell cell in selectedCells)
             {
                 dataGridViewStorehouse.Rows[cell.RowIndex].Selected = true;
+            }
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            var selectedCells = dataGridViewStorehouse.SelectedCells;
+
+            if (selectedCells.Count == 0)
+            {
+                MessageBox.Show("Не выбраны строки для удаления", "Ошибка удаления", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            foreach (DataGridViewCell cell in selectedCells) 
+            {
+                dataGridViewStorehouse.Rows[cell.RowIndex].Selected = true;
+            }
+
+            if (MessageBox.Show("Выбранные строки удалятся из базы данных. Продолжить?", "Удалить запись", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    foreach (DataGridViewRow selectedRow in dataGridViewStorehouse.SelectedRows)
+                    {
+                        string expression = "delete from deals where id = " + selectedRow.Cells[0].Value;
+
+                        SqlCommand request = new SqlCommand(expression, connection);
+                        request.ExecuteNonQuery();
+
+                        if (dataGridViewStorehouse.SelectedRows.Count <= 1) break;
+                    }
+
+                    this.refreshAfterDelete();
+                    connection.Close();
+                }
             }
         }
     }

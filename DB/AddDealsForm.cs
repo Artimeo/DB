@@ -135,11 +135,6 @@ namespace DB
             
         }
 
-        private void tmp()
-        {
-            
-        }
-
         private void buttonRecordRow_Click(object sender, EventArgs e)
         {
             if (isAllowedRecordRow() && bridge_id.Count > 0)

@@ -2015,6 +2015,8 @@ namespace DB {
             
             private global::System.Data.DataColumn columnПоставщик;
             
+            private global::System.Data.DataColumn columnid;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public storehouseDataTable() {
@@ -2114,6 +2116,14 @@ namespace DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn idColumn {
+                get {
+                    return this.columnid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2149,7 +2159,7 @@ namespace DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public storehouseRow AddstorehouseRow(int Код, string Название, int Цена, int Количество, string Производитель, int Цена_закупки, System.DateTime Дата_закупки, string Поставщик) {
+            public storehouseRow AddstorehouseRow(int Код, string Название, int Цена, int Количество, string Производитель, int Цена_закупки, System.DateTime Дата_закупки, string Поставщик, int id) {
                 storehouseRow rowstorehouseRow = ((storehouseRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Код,
@@ -2159,7 +2169,8 @@ namespace DB {
                         Производитель,
                         Цена_закупки,
                         Дата_закупки,
-                        Поставщик};
+                        Поставщик,
+                        id};
                 rowstorehouseRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowstorehouseRow);
                 return rowstorehouseRow;
@@ -2198,6 +2209,7 @@ namespace DB {
                 this.columnЦена_закупки = base.Columns["Цена закупки"];
                 this.columnДата_закупки = base.Columns["Дата закупки"];
                 this.columnПоставщик = base.Columns["Поставщик"];
+                this.columnid = base.Columns["id"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2219,6 +2231,8 @@ namespace DB {
                 base.Columns.Add(this.columnДата_закупки);
                 this.columnПоставщик = new global::System.Data.DataColumn("Поставщик", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnПоставщик);
+                this.columnid = new global::System.Data.DataColumn("id", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnid);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnКод,
                                 this.columnПоставщик}, true));
@@ -2232,6 +2246,7 @@ namespace DB {
                 this.columnДата_закупки.AllowDBNull = false;
                 this.columnПоставщик.AllowDBNull = false;
                 this.columnПоставщик.MaxLength = 50;
+                this.columnid.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2862,6 +2877,17 @@ namespace DB {
                 }
                 set {
                     this[this.tablestorehouse.ПоставщикColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int id {
+                get {
+                    return ((int)(this[this.tablestorehouse.idColumn]));
+                }
+                set {
+                    this[this.tablestorehouse.idColumn] = value;
                 }
             }
             
@@ -4830,6 +4856,7 @@ SELECT title, provider_address, phone FROM providers WHERE (title = @title)";
             tableMapping.ColumnMappings.Add("Цена закупки", "Цена закупки");
             tableMapping.ColumnMappings.Add("Дата закупки", "Дата закупки");
             tableMapping.ColumnMappings.Add("Поставщик", "Поставщик");
+            tableMapping.ColumnMappings.Add("id", "id");
             this._adapter.TableMappings.Add(tableMapping);
         }
         

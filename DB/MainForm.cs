@@ -662,7 +662,7 @@ namespace DB
                 dataGridViewParts.Rows[cell.RowIndex].Selected = true;
             }
 
-            if (MessageBox.Show("Выбранные строки удалятся из базы данных. Продолжить?", "Удалить запись", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+            if (MessageBox.Show("Выбранные строки удалятся из базы данных. Продолжить? Будет затронута таблица истории цен для данной запчасти", "Удалить запись", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
             {
                 try
                 {
@@ -672,9 +672,14 @@ namespace DB
 
                         foreach (DataGridViewRow selectedRow in dataGridViewParts.SelectedRows)
                         {
-                            string expression = "delete from parts where title = '" + selectedRow.Cells[0].Value.ToString() + "'";
+                            string expression = "delete from priceHistory where parts_article = " + selectedRow.Cells[1].Value.ToString();
 
                             SqlCommand request = new SqlCommand(expression, connection);
+                            request.ExecuteNonQuery();
+
+                            expression = "delete from parts where title = '" + selectedRow.Cells[0].Value.ToString() + "'";
+
+                            request = new SqlCommand(expression, connection);
                             request.ExecuteNonQuery();
 
                             if (dataGridViewParts.SelectedRows.Count <= 1) break;

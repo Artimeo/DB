@@ -241,6 +241,7 @@
             this.buttonAddPart.TabIndex = 16;
             this.buttonAddPart.Text = "Добавить запчасть";
             this.buttonAddPart.UseVisualStyleBackColor = true;
+            this.buttonAddPart.Click += new System.EventHandler(this.buttonAddPart_Click);
             // 
             // textBoxTitle
             // 

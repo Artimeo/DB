@@ -14,11 +14,18 @@ namespace DB
     public partial class AddPartsForm : Form
     {
         public const string connectionString = "Data Source=ORANGE\\MSSQLEXPRESS2017;Initial Catalog=AutoParts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
-        MainForm parentForm;
+        MainForm parentMainForm;
+        AddDealsForm parentAddDealsForm;
 
         public AddPartsForm(MainForm mainForm)
         {
-            parentForm = mainForm;
+            parentMainForm = mainForm;
+            InitializeComponent();
+        }
+
+        public AddPartsForm(AddDealsForm addDealsForm)
+        {
+            parentAddDealsForm = addDealsForm;
             InitializeComponent();
         }
 
@@ -124,8 +131,15 @@ namespace DB
                     MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                parentForm.refreshAfterInsertParts();
                 MessageBox.Show("Запись успешно добавлена", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                if (parentMainForm != null) parentMainForm.refreshAfterInsertParts();
+                if (parentAddDealsForm != null)
+                {
+                    parentAddDealsForm.parentForm.refreshAfterInsertParts(parentAddDealsForm);
+                    parentAddDealsForm.Activate();
+                    this.Close();
+                }
             }
         }
 

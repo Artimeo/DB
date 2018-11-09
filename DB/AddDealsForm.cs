@@ -14,7 +14,7 @@ namespace DB
     public partial class AddDealsForm : Form
     {
         public const string connectionString = "Data Source=ORANGE\\MSSQLEXPRESS2017;Initial Catalog=AutoParts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
-        MainForm parentForm;
+        public MainForm parentForm;
         private static Dictionary<string, int> bridge_id = new Dictionary<string, int> ();
 
         public AddDealsForm(MainForm mainForm)
@@ -226,6 +226,10 @@ namespace DB
             isAllowedRecordRow();
         }
 
-        
+        private void buttonAddPart_Click(object sender, EventArgs e)
+        {
+            AddPartsForm addPartsForm = new AddPartsForm(this);
+            addPartsForm.Show();
+        }
     }
 }

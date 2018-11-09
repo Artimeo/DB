@@ -79,6 +79,26 @@ namespace DB
             dataGridViewParts.FirstDisplayedScrollingRowIndex = dataGridViewParts.RowCount - 1;
             labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
         }
+        public void refreshAfterInsertParts(AddDealsForm updateForm)
+        {
+            dataGridViewParts.ClearSelection();
+            this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
+            dataGridViewParts.FirstDisplayedScrollingRowIndex = dataGridViewParts.RowCount - 1;
+            labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
+
+            foreach (DataRow row in this.autoPartsDataSet.parts.Select())
+            {
+                updateForm.textBoxTitle.AutoCompleteCustomSource.Add(
+                    row.ItemArray[0].ToString());
+                updateForm.textBoxManufacturer.AutoCompleteCustomSource.Add(
+                    row.ItemArray[2].ToString());
+            }
+            foreach (DataRow row in this.autoPartsDataSet.providers.Select())
+            {
+                updateForm.comboBoxProvider.Items.Add(
+                    row.ItemArray[0].ToString());
+            }
+        }
         public void refreshAfterDeleteParts()
         {
             dataGridViewParts.ClearSelection();

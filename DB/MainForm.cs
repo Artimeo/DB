@@ -30,7 +30,6 @@ namespace DB
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            // TODO: данная строка кода позволяет загрузить данные в таблицу "autoPartsDataSet.deals". При необходимости она может быть перемещена или удалена.
             this.dealsTableAdapter.Fill(this.autoPartsDataSet.deals);
             try
             {
@@ -59,6 +58,34 @@ namespace DB
             labelRowCountStorehouse.Text += dataGridViewStorehouse.RowCount.ToString();
             labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
         }
+
+        public void refreshAfterInsertStorehouse()
+        {
+            dataGridViewStorehouse.ClearSelection();
+            this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
+            dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = dataGridViewStorehouse.RowCount - 1;
+            labelRowCountStorehouse.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
+        }
+        public void refreshAfterDeleteStorehouse()
+        {
+            dataGridViewStorehouse.ClearSelection();
+            this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
+            labelRowCountStorehouse.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
+        }
+        public void refreshAfterInsertParts()
+        {
+            dataGridViewParts.ClearSelection();
+            this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
+            dataGridViewParts.FirstDisplayedScrollingRowIndex = dataGridViewParts.RowCount - 1;
+            labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
+        }
+        public void refreshAfterDeleteParts()
+        {
+            dataGridViewParts.ClearSelection();
+            this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
+            labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
+        }
+
 
 
         private void SearchStorehouse(object sender, KeyEventArgs e)
@@ -186,29 +213,6 @@ namespace DB
             }
         }
 
-        private void textBoxSearchStorehouse_Enter(object sender, EventArgs e)
-        {
-            if (textBoxSearchActiveStorehouse == false)
-            {
-                textBoxSearchStorehouse.Text = "";
-                textBoxSearchStorehouse.ForeColor = Color.Black;
-                textBoxSearchActiveStorehouse = true;
-            }
-        }
-
-        private void textBoxSearchStorehouse_Leave(object sender, EventArgs e)
-        {
-            if (textBoxSearchStorehouse.Text == "")
-            {
-                textBoxSearchStorehouse.ForeColor = Color.Gray;
-                textBoxSearchStorehouse.Text = "Поиск🔍";
-                textBoxSearchActiveStorehouse = false;
-            } else
-            {
-                textBoxSearchActiveStorehouse = true;
-            }
-        }
-
         private void buttonRefreshStorehouse_Click(object sender, EventArgs e)
         {
             try
@@ -226,38 +230,6 @@ namespace DB
                 MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления storehouse", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             labelRowCountStorehouse.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
-        }
-
-        public void refreshAfterInsertStorehouse()
-        {
-            dataGridViewStorehouse.ClearSelection();
-            this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
-            dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = dataGridViewStorehouse.RowCount - 1;
-            labelRowCountStorehouse.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
-        }
-
-        public void refreshAfterDeleteStorehouse()
-        {
-            dataGridViewStorehouse.ClearSelection();
-            this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
-            labelRowCountStorehouse.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
-        }
-
-        private void buttonSearchClearStorehouse_Click(object sender, EventArgs e)
-        {
-            textBoxSearchStorehouse.ForeColor = Color.Gray;
-            textBoxSearchStorehouse.Text = "Поиск🔍";
-            textBoxSearchActiveStorehouse = false;
-        }
-
-        private void textBoxSearchStorehouse_KeyDown(object sender, KeyEventArgs e)
-        {
-            SearchStorehouse(sender, e);
-        }
-
-        private void comboBoxSearchByStorehouse_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter) SearchStorehouse(sender, e);
         }
 
         private void buttonCleanStorehouse_Click(object sender, EventArgs e)
@@ -287,6 +259,56 @@ namespace DB
             }
         }
 
+        private void comboBoxSearchByStorehouse_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) SearchStorehouse(sender, e);
+        }
+
+        private void textBoxSearchStorehouse_Enter(object sender, EventArgs e)
+        {
+            if (textBoxSearchActiveStorehouse == false)
+            {
+                textBoxSearchStorehouse.Text = "";
+                textBoxSearchStorehouse.ForeColor = Color.Black;
+                textBoxSearchActiveStorehouse = true;
+            }
+        }
+
+        private void textBoxSearchStorehouse_Leave(object sender, EventArgs e)
+        {
+            if (textBoxSearchStorehouse.Text == "")
+            {
+                textBoxSearchStorehouse.ForeColor = Color.Gray;
+                textBoxSearchStorehouse.Text = "Поиск🔍";
+                textBoxSearchActiveStorehouse = false;
+            } else
+            {
+                textBoxSearchActiveStorehouse = true;
+            }
+        }
+
+        private void textBoxSearchStorehouse_KeyDown(object sender, KeyEventArgs e)
+        {
+            SearchStorehouse(sender, e);
+        }
+
+        private void buttonSearchClearStorehouse_Click(object sender, EventArgs e)
+        {
+            textBoxSearchStorehouse.ForeColor = Color.Gray;
+            textBoxSearchStorehouse.Text = "Поиск🔍";
+            textBoxSearchActiveStorehouse = false;
+        }
+
+        private void buttonSelectRowStorehouse_Click(object sender, EventArgs e)
+        {
+            var selectedCells = dataGridViewStorehouse.SelectedCells;
+
+            foreach (DataGridViewCell cell in selectedCells)
+            {
+                dataGridViewStorehouse.Rows[cell.RowIndex].Selected = true;
+            }
+        }
+
         private void buttonAddStorehouse_Click(object sender, EventArgs e)
         {
             AddDealsForm addDealsForm = new AddDealsForm(this);
@@ -304,16 +326,6 @@ namespace DB
                     row.ItemArray[0].ToString());
             }
             addDealsForm.Show();
-        }
-
-        private void buttonSelectRowStorehouse_Click(object sender, EventArgs e)
-        {
-            var selectedCells = dataGridViewStorehouse.SelectedCells;
-
-            foreach (DataGridViewCell cell in selectedCells)
-            {
-                dataGridViewStorehouse.Rows[cell.RowIndex].Selected = true;
-            }
         }
 
         private void buttonDeleteStorehouse_Click(object sender, EventArgs e)
@@ -358,6 +370,7 @@ namespace DB
                 }
             }
         }
+
 
 
         private void SearchParts(object sender, KeyEventArgs e)
@@ -471,30 +484,6 @@ namespace DB
             }
         }
 
-        private void textBoxSearchParts_Enter(object sender, EventArgs e)
-        {
-            if (textBoxSearchActiveParts == false)
-            {
-                textBoxSearchParts.Text = "";
-                textBoxSearchParts.ForeColor = Color.Black;
-                textBoxSearchActiveParts = true;
-            }
-        }
-
-        private void textBoxSearchParts_Leave(object sender, EventArgs e)
-        {
-            if (textBoxSearchParts.Text == "")
-            {
-                textBoxSearchParts.ForeColor = Color.Gray;
-                textBoxSearchParts.Text = "Поиск🔍";
-                textBoxSearchActiveParts = false;
-            }
-            else
-            {
-                textBoxSearchActiveParts = true;
-            }
-        }
-
         private void buttonRefreshParts_Click(object sender, EventArgs e)
         {
             try
@@ -512,38 +501,6 @@ namespace DB
                 MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления Parts", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
-        }
-
-        public void refreshAfterDeleteParts()
-        {
-            dataGridViewParts.ClearSelection();
-            this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
-            labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
-        }
-
-        public void refreshAfterInsertParts()
-        {
-            dataGridViewParts.ClearSelection();
-            this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
-            dataGridViewParts.FirstDisplayedScrollingRowIndex = dataGridViewParts.RowCount - 1;
-            labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
-        }
-
-        private void buttonSearchClearParts_Click(object sender, EventArgs e)
-        {
-            textBoxSearchParts.ForeColor = Color.Gray;
-            textBoxSearchParts.Text = "Поиск🔍";
-            textBoxSearchActiveParts = false;
-        }
-
-        private void textBoxSearchParts_KeyDown(object sender, KeyEventArgs e)
-        {
-            SearchParts(sender, e);
-        }
-
-        private void comboBoxSearchByParts_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter) SearchParts(sender, e);
         }
 
         private void buttonCleanParts_Click(object sender, EventArgs e)
@@ -574,10 +531,45 @@ namespace DB
             }
         }
 
-        private void buttonAddParts_Click(object sender, EventArgs e)
+        private void comboBoxSearchByParts_KeyDown(object sender, KeyEventArgs e)
         {
-            AddPartsForm addPartsForm = new AddPartsForm(this);
-            addPartsForm.Show();
+            if (e.KeyCode == Keys.Enter) SearchParts(sender, e);
+        }
+
+        private void textBoxSearchParts_Enter(object sender, EventArgs e)
+        {
+            if (textBoxSearchActiveParts == false)
+            {
+                textBoxSearchParts.Text = "";
+                textBoxSearchParts.ForeColor = Color.Black;
+                textBoxSearchActiveParts = true;
+            }
+        }
+
+        private void textBoxSearchParts_Leave(object sender, EventArgs e)
+        {
+            if (textBoxSearchParts.Text == "")
+            {
+                textBoxSearchParts.ForeColor = Color.Gray;
+                textBoxSearchParts.Text = "Поиск🔍";
+                textBoxSearchActiveParts = false;
+            }
+            else
+            {
+                textBoxSearchActiveParts = true;
+            }
+        }
+
+        private void textBoxSearchParts_KeyDown(object sender, KeyEventArgs e)
+        {
+            SearchParts(sender, e);
+        }
+
+        private void buttonSearchClearParts_Click(object sender, EventArgs e)
+        {
+            textBoxSearchParts.ForeColor = Color.Gray;
+            textBoxSearchParts.Text = "Поиск🔍";
+            textBoxSearchActiveParts = false;
         }
 
         private void buttonSelectRowParts_Click(object sender, EventArgs e)
@@ -588,6 +580,12 @@ namespace DB
             {
                 dataGridViewParts.Rows[cell.RowIndex].Selected = true;
             }
+        }
+
+        private void buttonAddParts_Click(object sender, EventArgs e)
+        {
+            AddPartsForm addPartsForm = new AddPartsForm(this);
+            addPartsForm.Show();
         }
 
         private void buttonDeleteParts_Click(object sender, EventArgs e)
@@ -632,5 +630,6 @@ namespace DB
                 }
             }
         }
+
     }
 }

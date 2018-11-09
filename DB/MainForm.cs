@@ -16,6 +16,7 @@ namespace DB
         public const string connectionString = "Data Source=ORANGE\\MSSQLEXPRESS2017;Initial Catalog=AutoParts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
         bool textBoxSearchActiveStorehouse = false;
         bool textBoxSearchActiveParts = false;
+        bool textBoxSearchActiveProviders = false;
         //записки
         //https://www.flaticon.com/free-icon/plus_128575 иконка "назад"
         //42880b - зеленые иконки
@@ -49,7 +50,7 @@ namespace DB
             }
             try
             {
-                //this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
+                this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
             }
             catch (Exception err)
             {
@@ -57,6 +58,7 @@ namespace DB
             }
             labelRowCountStorehouse.Text += dataGridViewStorehouse.RowCount.ToString();
             labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
+            labelRowCountProviders.Text = "Количество записей: " + dataGridViewProviders.RowCount.ToString();
         }
 
         public void refreshAfterInsertStorehouse()
@@ -518,7 +520,7 @@ namespace DB
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления Parts", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из таблицы Parts", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
         }
@@ -651,5 +653,222 @@ namespace DB
             }
         }
 
+
+
+        private void SearchProviders(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && textBoxSearchProviders.Text != "")
+            {
+                bool getEntryInRow = false;
+                foreach (DataGridViewRow row in dataGridViewProviders.Rows)
+                {
+                    row.Visible = true;
+                }
+                dataGridViewProviders.ClearSelection();
+                dataGridViewProviders.CurrentCell = null;
+
+                if (comboboxSearchByProviders.Text == "Все")
+                {
+                    for (int i = 0; i < dataGridViewProviders.RowCount; i++)
+                    {
+                        dataGridViewProviders.Rows[i].Selected = false;
+                        for (int j = 0; j < dataGridViewProviders.ColumnCount; j++)
+                        {
+                            if (dataGridViewProviders.Rows[i].Cells[j].Value != null)
+                            {
+                                if (dataGridViewProviders.Rows[i].Cells[j].Value.ToString().ToLower().Contains(textBoxSearchProviders.Text.ToLower()))
+                                {
+                                    if (getEntryInRow == false)
+                                    {
+                                        getEntryInRow = true;
+                                        dataGridViewProviders.FirstDisplayedScrollingRowIndex = i;
+                                    }
+                                    dataGridViewProviders.Rows[i].Selected = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (getEntryInRow == false)
+                    {
+                        MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    else
+                    {
+                        foreach (DataGridViewRow row in dataGridViewProviders.Rows)
+                        {
+                            if (!row.Selected) row.Visible = false;
+                        }
+                        dataGridViewProviders.ClearSelection();
+
+                        for (int i = 0; i < dataGridViewProviders.RowCount; i++)
+                        {
+                            if (dataGridViewProviders.Rows[i].Visible)
+                            {
+                                for (int j = 0; j < dataGridViewProviders.ColumnCount; j++)
+                                {
+                                    if (dataGridViewProviders.Rows[i].Cells[j].Value.ToString().ToLower().Contains(textBoxSearchProviders.Text.ToLower()))
+                                    {
+                                        dataGridViewProviders.Rows[i].Cells[j].Selected = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    int columnSearchBy;
+
+                    switch (comboboxSearchByProviders.Text)
+                    {
+                        case "Название":
+                            columnSearchBy = 0;
+                            break;
+                        case "Адрес":
+                            columnSearchBy = 1;
+                            break;
+                        case "Телефон":
+                            columnSearchBy = 2;
+                            break;
+                        default:
+                            MessageBox.Show("Ошибка поиска! Выбранное поле отсутствует в таблице. Поиск будет произведен по названию.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            columnSearchBy = 1;
+                            break;
+                    }
+
+                    for (int i = 0; i < dataGridViewProviders.RowCount; i++)
+                    {
+                        dataGridViewProviders.Rows[i].Selected = false;
+                        if (dataGridViewProviders.Rows[i].Cells[columnSearchBy].Value != null)
+                        {
+                            if (dataGridViewProviders.Rows[i].Cells[columnSearchBy].Value.ToString().ToLower().Contains(textBoxSearchProviders.Text.ToLower()))
+                            {
+                                if (getEntryInRow == false)
+                                {
+                                    getEntryInRow = true;
+                                    dataGridViewProviders.FirstDisplayedScrollingRowIndex = i;
+                                }
+                                dataGridViewProviders.Rows[i].Cells[columnSearchBy].Selected = true;
+                            }
+                        }
+                    }
+                    if (getEntryInRow == false) MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else if (e.KeyCode == Keys.Enter && textBoxSearchProviders.Text == "")
+            {
+                MessageBox.Show("Введите данные для поиска", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void buttonRefreshProviders_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.providersTableAdapter.Fill(this.autoPartsDataSet.providers);
+                foreach (DataGridViewColumn column in dataGridViewProviders.Columns)
+                {
+                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    column.SortMode = DataGridViewColumnSortMode.Automatic;
+                }
+                dataGridViewProviders.ClearSelection();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из таблицы Providers", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            labelRowCountProviders.Text = "Количество записей: " + dataGridViewProviders.RowCount.ToString();
+        }
+
+        private void buttonCleanProviders_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridViewProviders.RowCount > 0)
+                {
+                    dataGridViewProviders.Sort(dataGridViewProviders.Columns[0], ListSortDirection.Ascending);
+                    foreach (DataGridViewColumn column in dataGridViewProviders.Columns)
+                    {
+                        column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        column.SortMode = DataGridViewColumnSortMode.Automatic;
+                    }
+                    foreach (DataGridViewRow row in dataGridViewProviders.Rows) row.Visible = true;
+                    dataGridViewProviders.FirstDisplayedScrollingRowIndex = 0;
+                    dataGridViewProviders.ClearSelection();
+                    labelRowCountProviders.Text = "Количество записей: " + dataGridViewProviders.RowCount.ToString();
+                }
+                else
+                {
+                    MessageBox.Show("Отсутствуют данные, сначала обновите таблицу.", "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления Providers", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void comboBoxSearchByProviders_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) SearchProviders(sender, e);
+        }
+
+        private void textBoxSearchProviders_Enter(object sender, EventArgs e)
+        {
+            if (textBoxSearchActiveProviders == false)
+            {
+                textBoxSearchProviders.Text = "";
+                textBoxSearchProviders.ForeColor = Color.Black;
+                textBoxSearchActiveProviders = true;
+            }
+        }
+
+        private void textBoxSearchProviders_Leave(object sender, EventArgs e)
+        {
+            if (textBoxSearchProviders.Text == "")
+            {
+                textBoxSearchProviders.ForeColor = Color.Gray;
+                textBoxSearchProviders.Text = "Поиск🔍";
+                textBoxSearchActiveProviders = false;
+            }
+            else
+            {
+                textBoxSearchActiveProviders = true;
+            }
+        }
+
+        private void textBoxSearchProviders_KeyDown(object sender, KeyEventArgs e)
+        {
+            SearchProviders(sender, e);
+        }
+
+        private void buttonSearchCleanProviders_Click(object sender, EventArgs e)
+        {
+            textBoxSearchProviders.ForeColor = Color.Gray;
+            textBoxSearchProviders.Text = "Поиск🔍";
+            textBoxSearchActiveProviders = false;
+        }
+
+        private void buttonSelectRowProviders_Click(object sender, EventArgs e)
+        {
+            var selectedCells = dataGridViewProviders.SelectedCells;
+
+            foreach (DataGridViewCell cell in selectedCells)
+            {
+                dataGridViewProviders.Rows[cell.RowIndex].Selected = true;
+            }
+        }
+
+        private void buttonAddProviders_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonDeleteProviders_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

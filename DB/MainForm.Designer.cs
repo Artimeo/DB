@@ -79,31 +79,30 @@
             this.buttonCleanParts = new System.Windows.Forms.Button();
             this.buttonRefreshParts = new System.Windows.Forms.Button();
             this.providersTab = new System.Windows.Forms.TabPage();
-            this.pricehistoryTab = new System.Windows.Forms.TabPage();
-            this.storehouseTableAdapter = new DB.AutoPartsDataSetTableAdapters.storehouseTableAdapter();
-            this.providersBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.providersTableAdapter = new DB.AutoPartsDataSetTableAdapters.providersTableAdapter();
-            this.partsTableAdapter = new DB.AutoPartsDataSetTableAdapters.partsTableAdapter();
-            this.dealsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dealsTableAdapter = new DB.AutoPartsDataSetTableAdapters.dealsTableAdapter();
             this.buttonSelectRowProviders = new System.Windows.Forms.Button();
             this.flowLayoutPanelProviders = new System.Windows.Forms.FlowLayoutPanel();
             this.labelRowCountProviders = new System.Windows.Forms.Label();
             this.buttonRequestProviders = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.textBoxSearchByProviders = new System.Windows.Forms.TextBox();
+            this.buttonSearchCleanProviders = new System.Windows.Forms.Button();
+            this.textBoxSearchProviders = new System.Windows.Forms.TextBox();
             this.dataGridViewProviders = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.providersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.buttonDeleteProviders = new System.Windows.Forms.Button();
             this.buttonAddProviders = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
-            this.comboBoxSearchByProviders = new System.Windows.Forms.ComboBox();
+            this.comboboxSearchByProviders = new System.Windows.Forms.ComboBox();
             this.buttonCleanProviders = new System.Windows.Forms.Button();
             this.buttonRefreshProviders = new System.Windows.Forms.Button();
+            this.pricehistoryTab = new System.Windows.Forms.TabPage();
+            this.storehouseTableAdapter = new DB.AutoPartsDataSetTableAdapters.storehouseTableAdapter();
+            this.providersTableAdapter = new DB.AutoPartsDataSetTableAdapters.providersTableAdapter();
+            this.partsTableAdapter = new DB.AutoPartsDataSetTableAdapters.partsTableAdapter();
+            this.dealsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dealsTableAdapter = new DB.AutoPartsDataSetTableAdapters.dealsTableAdapter();
+            this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.provider_address = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.phone = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabs.SuspendLayout();
             this.storehouseTab.SuspendLayout();
             this.flowLayoutPanelRowCountStorehouse.SuspendLayout();
@@ -116,10 +115,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSetBindingSource)).BeginInit();
             this.providersTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dealsBindingSource)).BeginInit();
             this.flowLayoutPanelProviders.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProviders)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dealsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tabs
@@ -696,14 +695,14 @@
             this.providersTab.Controls.Add(this.buttonSelectRowProviders);
             this.providersTab.Controls.Add(this.flowLayoutPanelProviders);
             this.providersTab.Controls.Add(this.buttonRequestProviders);
-            this.providersTab.Controls.Add(this.button3);
-            this.providersTab.Controls.Add(this.textBoxSearchByProviders);
+            this.providersTab.Controls.Add(this.buttonSearchCleanProviders);
+            this.providersTab.Controls.Add(this.textBoxSearchProviders);
             this.providersTab.Controls.Add(this.dataGridViewProviders);
             this.providersTab.Controls.Add(this.buttonDeleteProviders);
             this.providersTab.Controls.Add(this.buttonAddProviders);
             this.providersTab.Controls.Add(this.button6);
             this.providersTab.Controls.Add(this.button7);
-            this.providersTab.Controls.Add(this.comboBoxSearchByProviders);
+            this.providersTab.Controls.Add(this.comboboxSearchByProviders);
             this.providersTab.Controls.Add(this.buttonCleanProviders);
             this.providersTab.Controls.Add(this.buttonRefreshProviders);
             this.providersTab.Location = new System.Drawing.Point(4, 25);
@@ -714,41 +713,6 @@
             this.providersTab.Text = "Поставщики";
             this.providersTab.UseVisualStyleBackColor = true;
             // 
-            // pricehistoryTab
-            // 
-            this.pricehistoryTab.Location = new System.Drawing.Point(4, 25);
-            this.pricehistoryTab.Name = "pricehistoryTab";
-            this.pricehistoryTab.Size = new System.Drawing.Size(797, 423);
-            this.pricehistoryTab.TabIndex = 3;
-            this.pricehistoryTab.Text = "История цен";
-            this.pricehistoryTab.UseVisualStyleBackColor = true;
-            // 
-            // storehouseTableAdapter
-            // 
-            this.storehouseTableAdapter.ClearBeforeFill = true;
-            // 
-            // providersBindingSource
-            // 
-            this.providersBindingSource.DataMember = "providers";
-            this.providersBindingSource.DataSource = this.autoPartsDataSetBindingSource;
-            // 
-            // providersTableAdapter
-            // 
-            this.providersTableAdapter.ClearBeforeFill = true;
-            // 
-            // partsTableAdapter
-            // 
-            this.partsTableAdapter.ClearBeforeFill = true;
-            // 
-            // dealsBindingSource
-            // 
-            this.dealsBindingSource.DataMember = "deals";
-            this.dealsBindingSource.DataSource = this.autoPartsDataSet;
-            // 
-            // dealsTableAdapter
-            // 
-            this.dealsTableAdapter.ClearBeforeFill = true;
-            // 
             // buttonSelectRowProviders
             // 
             this.buttonSelectRowProviders.Location = new System.Drawing.Point(343, 40);
@@ -757,6 +721,7 @@
             this.buttonSelectRowProviders.TabIndex = 39;
             this.buttonSelectRowProviders.Text = "Выделить строку";
             this.buttonSelectRowProviders.UseVisualStyleBackColor = true;
+            this.buttonSelectRowProviders.Click += new System.EventHandler(this.buttonSelectRowProviders_Click);
             // 
             // flowLayoutPanelProviders
             // 
@@ -792,28 +757,32 @@
             this.buttonRequestProviders.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonRequestProviders.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // buttonSearchCleanProviders
             // 
-            this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
-            this.button3.Location = new System.Drawing.Point(769, 10);
-            this.button3.Margin = new System.Windows.Forms.Padding(0);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(22, 22);
-            this.button3.TabIndex = 36;
-            this.button3.UseVisualStyleBackColor = true;
+            this.buttonSearchCleanProviders.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearchCleanProviders.Image")));
+            this.buttonSearchCleanProviders.Location = new System.Drawing.Point(769, 10);
+            this.buttonSearchCleanProviders.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonSearchCleanProviders.Name = "buttonSearchCleanProviders";
+            this.buttonSearchCleanProviders.Size = new System.Drawing.Size(22, 22);
+            this.buttonSearchCleanProviders.TabIndex = 36;
+            this.buttonSearchCleanProviders.UseVisualStyleBackColor = true;
+            this.buttonSearchCleanProviders.Click += new System.EventHandler(this.buttonSearchCleanProviders_Click);
             // 
-            // textBoxSearchByProviders
+            // textBoxSearchProviders
             // 
-            this.textBoxSearchByProviders.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxSearchByProviders.ForeColor = System.Drawing.Color.Gray;
-            this.textBoxSearchByProviders.Location = new System.Drawing.Point(619, 11);
-            this.textBoxSearchByProviders.Margin = new System.Windows.Forms.Padding(0);
-            this.textBoxSearchByProviders.MaxLength = 255;
-            this.textBoxSearchByProviders.Name = "textBoxSearchByProviders";
-            this.textBoxSearchByProviders.Size = new System.Drawing.Size(150, 20);
-            this.textBoxSearchByProviders.TabIndex = 35;
-            this.textBoxSearchByProviders.Text = "Поиск🔍";
-            this.textBoxSearchByProviders.WordWrap = false;
+            this.textBoxSearchProviders.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxSearchProviders.ForeColor = System.Drawing.Color.Gray;
+            this.textBoxSearchProviders.Location = new System.Drawing.Point(619, 11);
+            this.textBoxSearchProviders.Margin = new System.Windows.Forms.Padding(0);
+            this.textBoxSearchProviders.MaxLength = 255;
+            this.textBoxSearchProviders.Name = "textBoxSearchProviders";
+            this.textBoxSearchProviders.Size = new System.Drawing.Size(150, 20);
+            this.textBoxSearchProviders.TabIndex = 35;
+            this.textBoxSearchProviders.Text = "Поиск🔍";
+            this.textBoxSearchProviders.WordWrap = false;
+            this.textBoxSearchProviders.Enter += new System.EventHandler(this.textBoxSearchProviders_Enter);
+            this.textBoxSearchProviders.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxSearchProviders_KeyDown);
+            this.textBoxSearchProviders.Leave += new System.EventHandler(this.textBoxSearchProviders_Leave);
             // 
             // dataGridViewProviders
             // 
@@ -822,49 +791,20 @@
             this.dataGridViewProviders.AutoGenerateColumns = false;
             this.dataGridViewProviders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewProviders.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4});
-            this.dataGridViewProviders.DataSource = this.partsBindingSource;
+            this.title,
+            this.provider_address,
+            this.phone});
+            this.dataGridViewProviders.DataSource = this.providersBindingSource;
             this.dataGridViewProviders.Location = new System.Drawing.Point(0, 74);
             this.dataGridViewProviders.Name = "dataGridViewProviders";
             this.dataGridViewProviders.ReadOnly = true;
             this.dataGridViewProviders.Size = new System.Drawing.Size(797, 327);
             this.dataGridViewProviders.TabIndex = 34;
             // 
-            // dataGridViewTextBoxColumn1
+            // providersBindingSource
             // 
-            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "title";
-            this.dataGridViewTextBoxColumn1.HeaderText = "Название";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "article";
-            this.dataGridViewTextBoxColumn2.HeaderText = "Код";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 51;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "manufacturer";
-            this.dataGridViewTextBoxColumn3.HeaderText = "Производитель";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "price";
-            this.dataGridViewTextBoxColumn4.HeaderText = "Цена";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            this.providersBindingSource.DataMember = "providers";
+            this.providersBindingSource.DataSource = this.autoPartsDataSetBindingSource;
             // 
             // buttonDeleteProviders
             // 
@@ -878,6 +818,7 @@
             this.buttonDeleteProviders.Text = "Удалить";
             this.buttonDeleteProviders.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonDeleteProviders.UseVisualStyleBackColor = true;
+            this.buttonDeleteProviders.Click += new System.EventHandler(this.buttonDeleteProviders_Click);
             // 
             // buttonAddProviders
             // 
@@ -891,6 +832,7 @@
             this.buttonAddProviders.Text = "Добавить";
             this.buttonAddProviders.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonAddProviders.UseVisualStyleBackColor = true;
+            this.buttonAddProviders.Click += new System.EventHandler(this.buttonAddProviders_Click);
             // 
             // button6
             // 
@@ -914,21 +856,21 @@
             this.button7.Text = "Показать ассортимент";
             this.button7.UseVisualStyleBackColor = true;
             // 
-            // comboBoxSearchByProviders
+            // comboboxSearchByProviders
             // 
-            this.comboBoxSearchByProviders.FormattingEnabled = true;
-            this.comboBoxSearchByProviders.ItemHeight = 13;
-            this.comboBoxSearchByProviders.Items.AddRange(new object[] {
+            this.comboboxSearchByProviders.FormattingEnabled = true;
+            this.comboboxSearchByProviders.ItemHeight = 13;
+            this.comboboxSearchByProviders.Items.AddRange(new object[] {
             "Все",
             "Название",
-            "Код",
-            "Производитель",
-            "Цена"});
-            this.comboBoxSearchByProviders.Location = new System.Drawing.Point(526, 11);
-            this.comboBoxSearchByProviders.Name = "comboBoxSearchByProviders";
-            this.comboBoxSearchByProviders.Size = new System.Drawing.Size(81, 21);
-            this.comboBoxSearchByProviders.TabIndex = 29;
-            this.comboBoxSearchByProviders.Text = "Все";
+            "Адрес",
+            "Телефон"});
+            this.comboboxSearchByProviders.Location = new System.Drawing.Point(526, 11);
+            this.comboboxSearchByProviders.Name = "comboboxSearchByProviders";
+            this.comboboxSearchByProviders.Size = new System.Drawing.Size(81, 21);
+            this.comboboxSearchByProviders.TabIndex = 29;
+            this.comboboxSearchByProviders.Text = "Все";
+            this.comboboxSearchByProviders.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxSearchByProviders_KeyDown);
             // 
             // buttonCleanProviders
             // 
@@ -942,6 +884,7 @@
             this.buttonCleanProviders.Text = "Очистить";
             this.buttonCleanProviders.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonCleanProviders.UseVisualStyleBackColor = true;
+            this.buttonCleanProviders.Click += new System.EventHandler(this.buttonCleanProviders_Click);
             // 
             // buttonRefreshProviders
             // 
@@ -955,6 +898,61 @@
             this.buttonRefreshProviders.Text = "Обновить";
             this.buttonRefreshProviders.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonRefreshProviders.UseVisualStyleBackColor = true;
+            this.buttonRefreshProviders.Click += new System.EventHandler(this.buttonRefreshProviders_Click);
+            // 
+            // pricehistoryTab
+            // 
+            this.pricehistoryTab.Location = new System.Drawing.Point(4, 25);
+            this.pricehistoryTab.Name = "pricehistoryTab";
+            this.pricehistoryTab.Size = new System.Drawing.Size(797, 423);
+            this.pricehistoryTab.TabIndex = 3;
+            this.pricehistoryTab.Text = "История цен";
+            this.pricehistoryTab.UseVisualStyleBackColor = true;
+            // 
+            // storehouseTableAdapter
+            // 
+            this.storehouseTableAdapter.ClearBeforeFill = true;
+            // 
+            // providersTableAdapter
+            // 
+            this.providersTableAdapter.ClearBeforeFill = true;
+            // 
+            // partsTableAdapter
+            // 
+            this.partsTableAdapter.ClearBeforeFill = true;
+            // 
+            // dealsBindingSource
+            // 
+            this.dealsBindingSource.DataMember = "deals";
+            this.dealsBindingSource.DataSource = this.autoPartsDataSet;
+            // 
+            // dealsTableAdapter
+            // 
+            this.dealsTableAdapter.ClearBeforeFill = true;
+            // 
+            // title
+            // 
+            this.title.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.title.DataPropertyName = "title";
+            this.title.HeaderText = "Название";
+            this.title.Name = "title";
+            this.title.ReadOnly = true;
+            // 
+            // provider_address
+            // 
+            this.provider_address.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.provider_address.DataPropertyName = "provider_address";
+            this.provider_address.HeaderText = "Адрес";
+            this.provider_address.Name = "provider_address";
+            this.provider_address.ReadOnly = true;
+            // 
+            // phone
+            // 
+            this.phone.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.phone.DataPropertyName = "phone";
+            this.phone.HeaderText = "Телефон";
+            this.phone.Name = "phone";
+            this.phone.ReadOnly = true;
             // 
             // MainForm
             // 
@@ -982,11 +980,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSetBindingSource)).EndInit();
             this.providersTab.ResumeLayout(false);
             this.providersTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dealsBindingSource)).EndInit();
             this.flowLayoutPanelProviders.ResumeLayout(false);
             this.flowLayoutPanelProviders.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProviders)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dealsBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1052,20 +1050,19 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelProviders;
         private System.Windows.Forms.Label labelRowCountProviders;
         private System.Windows.Forms.Button buttonRequestProviders;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TextBox textBoxSearchByProviders;
+        private System.Windows.Forms.Button buttonSearchCleanProviders;
+        private System.Windows.Forms.TextBox textBoxSearchProviders;
         private System.Windows.Forms.DataGridView dataGridViewProviders;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.Button buttonDeleteProviders;
         private System.Windows.Forms.Button buttonAddProviders;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.ComboBox comboBoxSearchByProviders;
+        private System.Windows.Forms.ComboBox comboboxSearchByProviders;
         private System.Windows.Forms.Button buttonCleanProviders;
         private System.Windows.Forms.Button buttonRefreshProviders;
+        private System.Windows.Forms.DataGridViewTextBoxColumn title;
+        private System.Windows.Forms.DataGridViewTextBoxColumn provider_address;
+        private System.Windows.Forms.DataGridViewTextBoxColumn phone;
     }
 }
 

@@ -134,7 +134,7 @@ namespace DB
                 MessageBox.Show("Запись успешно добавлена", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 if (parentMainForm != null) parentMainForm.refreshAfterInsertParts();
-                if (parentAddDealsForm != null)
+                else if (parentAddDealsForm != null)
                 {
                     parentAddDealsForm.parentForm.refreshAfterInsertParts(parentAddDealsForm);
                     parentAddDealsForm.Activate();

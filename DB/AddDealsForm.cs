@@ -201,17 +201,20 @@ namespace DB
 
         private void textBoxCount_Leave(object sender, EventArgs e)
         {
-            try
+            if (textBoxCount.Text != "")
             {
-                int partsCount = Int32.Parse(textBoxCount.Text);
-                if (partsCount <= 0) picturePartsCountError.Show(); else picturePartsCountError.Hide();
-                isAllowedRecordRow();
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                picturePartsCountError.Show();
-                isAllowedRecordRow();
+                try
+                {
+                    int partsCount = Int32.Parse(textBoxCount.Text);
+                    if (partsCount <= 0) picturePartsCountError.Show(); else picturePartsCountError.Hide();
+                    isAllowedRecordRow();
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    picturePartsCountError.Show();
+                    isAllowedRecordRow();
+                }
             }
         }
 
@@ -230,6 +233,12 @@ namespace DB
         {
             AddPartsForm addPartsForm = new AddPartsForm(this);
             addPartsForm.Show();
+        }
+
+        private void buttonAddProvider_Click(object sender, EventArgs e)
+        {
+            AddProvidersForm addProvidersForm = new AddProvidersForm(this);
+            addProvidersForm.Show();
         }
     }
 }

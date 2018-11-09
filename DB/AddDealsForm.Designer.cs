@@ -170,6 +170,7 @@
             this.buttonAddProvider.TabIndex = 13;
             this.buttonAddProvider.Text = "Добавить поставщика";
             this.buttonAddProvider.UseVisualStyleBackColor = true;
+            this.buttonAddProvider.Click += new System.EventHandler(this.buttonAddProvider_Click);
             // 
             // buttonRecordRow
             // 
@@ -293,7 +294,7 @@
             this.picturePartsCountError.TabIndex = 18;
             this.picturePartsCountError.TabStop = false;
             this.toolTip.SetToolTip(this.picturePartsCountError, "Введенное значение не может быть преобразовано в число, менее нуля, либо является" +
-        " отрицательным");
+        " отрицательным. Обязательное поле");
             // 
             // pictureProviderError
             // 

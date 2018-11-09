@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddProvidersForm));
             this.picturePhoneError = new System.Windows.Forms.PictureBox();
             this.pictureAddressError = new System.Windows.Forms.PictureBox();
@@ -40,6 +41,7 @@
             this.textBoxPhone = new System.Windows.Forms.TextBox();
             this.textBoxAddress = new System.Windows.Forms.TextBox();
             this.textBoxTitle = new System.Windows.Forms.TextBox();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.picturePhoneError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureAddressError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureTitleError)).BeginInit();
@@ -53,6 +55,8 @@
             this.picturePhoneError.Size = new System.Drawing.Size(16, 16);
             this.picturePhoneError.TabIndex = 31;
             this.picturePhoneError.TabStop = false;
+            this.toolTip.SetToolTip(this.picturePhoneError, "Введенное значение не является телефонным номером");
+            this.picturePhoneError.Visible = false;
             // 
             // pictureAddressError
             // 
@@ -62,6 +66,7 @@
             this.pictureAddressError.Size = new System.Drawing.Size(16, 16);
             this.pictureAddressError.TabIndex = 30;
             this.pictureAddressError.TabStop = false;
+            this.toolTip.SetToolTip(this.pictureAddressError, "Необходимо заполнить поле");
             // 
             // pictureTitleError
             // 
@@ -71,6 +76,7 @@
             this.pictureTitleError.Size = new System.Drawing.Size(16, 16);
             this.pictureTitleError.TabIndex = 29;
             this.pictureTitleError.TabStop = false;
+            this.toolTip.SetToolTip(this.pictureTitleError, "Необходимо заполнить поле");
             // 
             // labelPhone
             // 
@@ -107,6 +113,7 @@
             this.buttonClose.TabIndex = 25;
             this.buttonClose.Text = "Отмена";
             this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
             // buttonRecordRow
             // 
@@ -117,13 +124,17 @@
             this.buttonRecordRow.TabIndex = 24;
             this.buttonRecordRow.Text = "Добавить";
             this.buttonRecordRow.UseVisualStyleBackColor = true;
+            this.buttonRecordRow.Click += new System.EventHandler(this.buttonRecordRow_Click);
             // 
             // textBoxPhone
             // 
             this.textBoxPhone.Location = new System.Drawing.Point(77, 95);
+            this.textBoxPhone.MaxLength = 14;
             this.textBoxPhone.Name = "textBoxPhone";
             this.textBoxPhone.Size = new System.Drawing.Size(195, 20);
             this.textBoxPhone.TabIndex = 23;
+            this.textBoxPhone.TextChanged += new System.EventHandler(this.textBoxPhone_TextChanged_Leave);
+            this.textBoxPhone.Leave += new System.EventHandler(this.textBoxPhone_TextChanged_Leave);
             // 
             // textBoxAddress
             // 
@@ -131,6 +142,9 @@
             this.textBoxAddress.Name = "textBoxAddress";
             this.textBoxAddress.Size = new System.Drawing.Size(195, 20);
             this.textBoxAddress.TabIndex = 22;
+            this.textBoxAddress.TextChanged += new System.EventHandler(this.textBoxAddress_TextChanged_Leave);
+            this.textBoxAddress.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyDownEnterSelectNextControl);
+            this.textBoxAddress.Leave += new System.EventHandler(this.textBoxAddress_TextChanged_Leave);
             // 
             // textBoxTitle
             // 
@@ -138,6 +152,9 @@
             this.textBoxTitle.Name = "textBoxTitle";
             this.textBoxTitle.Size = new System.Drawing.Size(195, 20);
             this.textBoxTitle.TabIndex = 21;
+            this.textBoxTitle.TextChanged += new System.EventHandler(this.textBoxTitle_TextChanged_Leave);
+            this.textBoxTitle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyDownEnterSelectNextControl);
+            this.textBoxTitle.Leave += new System.EventHandler(this.textBoxTitle_TextChanged_Leave);
             // 
             // AddProvidersForm
             // 
@@ -178,5 +195,6 @@
         private System.Windows.Forms.TextBox textBoxPhone;
         private System.Windows.Forms.TextBox textBoxAddress;
         private System.Windows.Forms.TextBox textBoxTitle;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }

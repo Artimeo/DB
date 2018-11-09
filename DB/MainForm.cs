@@ -95,17 +95,40 @@ namespace DB
                 updateForm.textBoxManufacturer.AutoCompleteCustomSource.Add(
                     row.ItemArray[2].ToString());
             }
-            foreach (DataRow row in this.autoPartsDataSet.providers.Select())
-            {
-                updateForm.comboBoxProvider.Items.Add(
-                    row.ItemArray[0].ToString());
-            }
         }
         public void refreshAfterDeleteParts()
         {
             dataGridViewParts.ClearSelection();
             this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
             labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
+        }
+        public void refreshAfterInsertProviders()
+        {
+            dataGridViewProviders.ClearSelection();
+            this.providersTableAdapter.Fill(this.autoPartsDataSet.providers);
+            dataGridViewProviders.FirstDisplayedScrollingRowIndex = dataGridViewProviders.RowCount - 1;
+            labelRowCountProviders.Text = "Количество записей: " + dataGridViewProviders.RowCount.ToString();
+        }
+        public void refreshAfterInsertProviders(AddDealsForm updateForm)
+        {
+            dataGridViewProviders.ClearSelection();
+            this.providersTableAdapter.Fill(this.autoPartsDataSet.providers);
+            dataGridViewProviders.FirstDisplayedScrollingRowIndex = dataGridViewProviders.RowCount - 1;
+            labelRowCountProviders.Text = "Количество записей: " + dataGridViewProviders.RowCount.ToString();
+
+            updateForm.comboBoxProvider.Items.Clear();
+
+            foreach (DataRow row in this.autoPartsDataSet.providers.Select())
+            {
+                updateForm.comboBoxProvider.Items.Add(
+                    row.ItemArray[0].ToString());
+            }
+        }
+        public void refreshAfterDeleteProviders()
+        {
+            dataGridViewProviders.ClearSelection();
+            this.providersTableAdapter.Fill(this.autoPartsDataSet.providers);
+            labelRowCountProviders.Text = "Количество записей: " + dataGridViewProviders.RowCount.ToString();
         }
 
 
@@ -863,7 +886,8 @@ namespace DB
 
         private void buttonAddProviders_Click(object sender, EventArgs e)
         {
-
+            AddProvidersForm addProvidersForm = new AddProvidersForm(this);
+            addProvidersForm.Show();
         }
 
         private void buttonDeleteProviders_Click(object sender, EventArgs e)

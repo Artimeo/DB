@@ -59,6 +59,12 @@
     <Compile Include="AddPartsForm.Designer.cs">
       <DependentUpon>AddPartsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddProvidersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddProvidersForm.Designer.cs">
+      <DependentUpon>AddProvidersForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AutoPartsDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -77,6 +83,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AddPartsForm.resx">
       <DependentUpon>AddPartsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddProvidersForm.resx">
+      <DependentUpon>AddProvidersForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

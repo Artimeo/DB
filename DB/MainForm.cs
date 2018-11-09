@@ -672,6 +672,16 @@ namespace DB
 
                         foreach (DataGridViewRow selectedRow in dataGridViewParts.SelectedRows)
                         {
+                            for (int i = 0; i < dataGridViewStorehouse.Rows.Count; i++)
+                            {
+                                if (dataGridViewStorehouse.Rows[i].Cells[2].Value == selectedRow.Cells[1]) //deals.код == parts.код
+                                {
+                                    MessageBox.Show("Невозможно удалить выбранную строку (строки) из таблицы deals, так как от нее зависимы другие таблицы. " +
+                                        "Сначала удалите связанные строки в них.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                            }
+
                             string expression = "delete from priceHistory where parts_article = " + selectedRow.Cells[1].Value.ToString();
 
                             SqlCommand request = new SqlCommand(expression, connection);

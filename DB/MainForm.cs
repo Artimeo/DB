@@ -132,7 +132,7 @@ namespace DB
         }
 
 
-
+        //Storehouse & Deals
         private void SearchStorehouse(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter && textBoxSearchStorehouse.Text != "")
@@ -335,8 +335,13 @@ namespace DB
         private void textBoxSearchStorehouse_KeyDown(object sender, KeyEventArgs e)
         {
             SearchStorehouse(sender, e);
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = e.SuppressKeyPress = true;
+                this.dataGridViewStorehouse.Focus();
+            }
         }
-
+        
         private void buttonSearchClearStorehouse_Click(object sender, EventArgs e)
         {
             textBoxSearchStorehouse.ForeColor = Color.Gray;
@@ -409,15 +414,24 @@ namespace DB
                         this.refreshAfterDeleteStorehouse();
                         connection.Close();
                     }
-                } catch (Exception err)
+                } catch (SqlException err)
                 {
-                    MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (err.Number == 547)
+                    {
+                        MessageBox.Show("Невозможно удалить выбранную строку (строки) из таблицы deals, так как от нее зависимы другие таблицы. " +
+                            "Сначала удалите связанные строки в них.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        if (dataGridViewStorehouse.SelectedRows.Count > 1) return;
+                    }
+                    else
+                    {
+                        MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
 
 
-
+        //Parts
         private void SearchParts(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter && textBoxSearchParts.Text != "")
@@ -669,15 +683,24 @@ namespace DB
                         this.refreshAfterDeleteParts();
                         connection.Close();
                     }
-                } catch (Exception err)
+                } catch (SqlException err)
                 {
-                    MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (err.Number == 547)
+                    {
+                        MessageBox.Show("Невозможно удалить выбранную строку (строки) из таблицы deals, так как от нее зависимы другие таблицы. " +
+                            "Сначала удалите связанные строки в них.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        if (dataGridViewStorehouse.SelectedRows.Count > 1) return;
+                    }
+                    else
+                    {
+                        MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
 
 
-
+        //Providers
         private void SearchProviders(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter && textBoxSearchProviders.Text != "")

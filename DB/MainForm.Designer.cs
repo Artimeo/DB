@@ -103,6 +103,7 @@
             this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.provider_address = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.phone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tabs.SuspendLayout();
             this.storehouseTab.SuspendLayout();
             this.flowLayoutPanelRowCountStorehouse.SuspendLayout();
@@ -843,6 +844,7 @@
             this.button6.Size = new System.Drawing.Size(147, 28);
             this.button6.TabIndex = 31;
             this.button6.Text = "Показать на складе";
+            this.toolTip.SetToolTip(this.button6, "Показать все детали на складе, приобретенные у выбранного поставщика");
             this.button6.UseVisualStyleBackColor = true;
             // 
             // button7
@@ -854,6 +856,7 @@
             this.button7.Size = new System.Drawing.Size(147, 28);
             this.button7.TabIndex = 30;
             this.button7.Text = "Показать ассортимент";
+            this.toolTip.SetToolTip(this.button7, "Показать все доступные детали у этого поставщика");
             this.button7.UseVisualStyleBackColor = true;
             // 
             // comboboxSearchByProviders
@@ -1063,6 +1066,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn title;
         private System.Windows.Forms.DataGridViewTextBoxColumn provider_address;
         private System.Windows.Forms.DataGridViewTextBoxColumn phone;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
 

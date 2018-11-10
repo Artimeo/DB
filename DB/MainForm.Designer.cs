@@ -100,10 +100,12 @@
             this.partsTableAdapter = new DB.AutoPartsDataSetTableAdapters.partsTableAdapter();
             this.dealsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dealsTableAdapter = new DB.AutoPartsDataSetTableAdapters.dealsTableAdapter();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.provider_address = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.phone = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.bridgeproviderspartsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.bridge_providers_partsTableAdapter = new DB.AutoPartsDataSetTableAdapters.bridge_providers_partsTableAdapter();
             this.tabs.SuspendLayout();
             this.storehouseTab.SuspendLayout();
             this.flowLayoutPanelRowCountStorehouse.SuspendLayout();
@@ -120,6 +122,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProviders)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dealsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bridgeproviderspartsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tabs
@@ -957,6 +960,15 @@
             this.phone.Name = "phone";
             this.phone.ReadOnly = true;
             // 
+            // bridgeproviderspartsBindingSource
+            // 
+            this.bridgeproviderspartsBindingSource.DataMember = "bridge_providers_parts";
+            this.bridgeproviderspartsBindingSource.DataSource = this.autoPartsDataSet;
+            // 
+            // bridge_providers_partsTableAdapter
+            // 
+            this.bridge_providers_partsTableAdapter.ClearBeforeFill = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -988,6 +1000,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProviders)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dealsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bridgeproviderspartsBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1063,10 +1076,12 @@
         private System.Windows.Forms.ComboBox comboboxSearchByProviders;
         private System.Windows.Forms.Button buttonCleanProviders;
         private System.Windows.Forms.Button buttonRefreshProviders;
+        private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.DataGridViewTextBoxColumn title;
         private System.Windows.Forms.DataGridViewTextBoxColumn provider_address;
         private System.Windows.Forms.DataGridViewTextBoxColumn phone;
-        private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.BindingSource bridgeproviderspartsBindingSource;
+        private AutoPartsDataSetTableAdapters.bridge_providers_partsTableAdapter bridge_providers_partsTableAdapter;
     }
 }
 

@@ -31,7 +31,21 @@ namespace DB
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.dealsTableAdapter.Fill(this.autoPartsDataSet.deals);
+            try
+            {
+                this.bridge_providers_partsTableAdapter.Fill(this.autoPartsDataSet.bridge_providers_parts);
+            } catch (Exception err)
+            {
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из таблицы bridge_providers_parts", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+            try
+            {
+                this.dealsTableAdapter.Fill(this.autoPartsDataSet.deals);
+            } catch (Exception err)
+            {
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из таблицы deals", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             try
             {
                 this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
@@ -676,7 +690,7 @@ namespace DB
                             {
                                 if (dataGridViewStorehouse.Rows[i].Cells[2].Value == selectedRow.Cells[1]) //deals.код == parts.код
                                 {
-                                    MessageBox.Show("Невозможно удалить выбранную строку (строки) из таблицы deals, так как от нее зависимы другие таблицы. " +
+                                    MessageBox.Show("Невозможно у.далить выбранную строку (строки) из таблицы deals, так как от нее зависимы другие таблицы. " +
                                         "Сначала удалите связанные строки в них.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     return;
                                 }
@@ -838,7 +852,7 @@ namespace DB
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из таблицы Providers", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из таблицы providers", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             labelRowCountProviders.Text = "Количество записей: " + dataGridViewProviders.RowCount.ToString();
         }
@@ -930,7 +944,66 @@ namespace DB
 
         private void buttonDeleteProviders_Click(object sender, EventArgs e)
         {
+            var selectedCells = dataGridViewParts.SelectedCells;
 
+            if (selectedCells.Count == 0)
+            {
+                MessageBox.Show("Не выбраны строки для удаления", "Ошибка удаления", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            foreach (DataGridViewCell cell in selectedCells)
+            {
+                dataGridViewProviders.Rows[cell.RowIndex].Selected = true;
+            }
+
+            if (MessageBox.Show("Выбранные строки удалятся из базы данных. Продолжить? Будет затронута таблица запчастей. " +
+                "Если с ней связан выбранный поставщик (поставщики), удаление будет отменено.", "Удалить запись", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+            {
+                try
+                {
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        connection.Open();
+
+                        foreach (DataGridViewRow selectedRow in dataGridViewProviders.SelectedRows)
+                        {
+                            for (int i = 0; i < autoPartsDataSet.bridge_providers_parts.Rows.Count; i++)
+                            {
+                                if (autoPartsDataSet.bridge_providers_parts.Rows[i].ItemArray[0].ToString() == selectedRow.Cells[0].ToString()) //bridge_priveders_parts.providers_title == parts.title
+                                {
+                                    MessageBox.Show("Невозможно удалить выбранную строку (строки) из таблицы providers, так как от нее зависимы другие таблицы. " +
+                                        "Сначала удалите связанные строки в них.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                            }
+
+                            string expression = "delete from providers where title = '" + selectedRow.Cells[0].Value.ToString() + "';";
+
+                            SqlCommand request = new SqlCommand(expression, connection);
+                            request.ExecuteNonQuery();
+                            
+                            if (dataGridViewParts.SelectedRows.Count <= 1) break;
+                        }
+
+                        this.refreshAfterDeleteProviders();
+                        connection.Close();
+                    }
+                }
+                catch (SqlException err)
+                {
+                    if (err.Number == 547)
+                    {
+                        MessageBox.Show("Невозможно удалить выбранную строку (строки) из таблицы deals, так как от нее зависимы другие таблицы. " +
+                            "Сначала удалите связанные строки в них.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        if (dataGridViewStorehouse.SelectedRows.Count > 1) return;
+                    }
+                    else
+                    {
+                        MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
     }
 }

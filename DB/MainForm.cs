@@ -348,11 +348,11 @@ namespace DB
 
         private void textBoxSearchStorehouse_KeyDown(object sender, KeyEventArgs e)
         {
-            SearchStorehouse(sender, e);
             if (e.KeyCode == Keys.Enter)
             {
+                SearchStorehouse(sender, e);
                 e.Handled = e.SuppressKeyPress = true;
-                this.dataGridViewStorehouse.Focus();
+                SendKeys.Send("{tab}");
             }
         }
         

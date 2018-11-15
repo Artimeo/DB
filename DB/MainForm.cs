@@ -1269,6 +1269,12 @@ namespace DB
 
                         foreach (DataGridViewRow selectedRow in dataGridViewPriceview.SelectedRows)
                         {
+                            if (selectedRow.Cells[0].Value.ToString() == "")
+                            {
+                                MessageBox.Show("Для данной запчасти отсутствуют записи в таблице priceHistory, нечего удалять.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+
                             string expression = "delete from priceHistory where price_id = " + selectedRow.Cells[0].Value.ToString() + ";";
 
                             SqlCommand request = new SqlCommand(expression, connection);

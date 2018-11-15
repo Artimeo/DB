@@ -352,7 +352,6 @@ namespace DB
             {
                 SearchStorehouse(sender, e);
                 e.Handled = e.SuppressKeyPress = true;
-                SendKeys.Send("{tab}");
             }
         }
         

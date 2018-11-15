@@ -305,6 +305,27 @@ SELECT title, provider_address, phone FROM providers WHERE (title = @title)</Com
             </Mappings>
             <Sources />
           </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="priceviewTableAdapter" GeneratorDataComponentClassName="priceviewTableAdapter" Name="priceview" UserDataComponentName="priceviewTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="AutoPartsConnectionString (Settings)" DbObjectName="AutoParts.dbo.priceview" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT id, [Код детали], Название, [Текущая цена], [Старая цена], [Действовала до] FROM dbo.priceview</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="id" DataSetColumn="id" />
+              <Mapping SourceColumn="Код детали" DataSetColumn="Код детали" />
+              <Mapping SourceColumn="Название" DataSetColumn="Название" />
+              <Mapping SourceColumn="Текущая цена" DataSetColumn="Текущая цена" />
+              <Mapping SourceColumn="Старая цена" DataSetColumn="Старая цена" />
+              <Mapping SourceColumn="Действовала до" DataSetColumn="Действовала до" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
         </Tables>
         <Sources />
       </DataSource>
@@ -313,7 +334,7 @@ SELECT title, provider_address, phone FROM providers WHERE (title = @title)</Com
   <xs:element name="AutoPartsDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="AutoPartsDataSet" msprop:Generator_UserDSName="AutoPartsDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="bridge_providers_parts" msprop:Generator_TableClassName="bridge_providers_partsDataTable" msprop:Generator_TableVarName="tablebridge_providers_parts" msprop:Generator_TablePropName="bridge_providers_parts" msprop:Generator_RowDeletingName="bridge_providers_partsRowDeleting" msprop:Generator_RowChangingName="bridge_providers_partsRowChanging" msprop:Generator_RowEvHandlerName="bridge_providers_partsRowChangeEventHandler" msprop:Generator_RowDeletedName="bridge_providers_partsRowDeleted" msprop:Generator_UserTableName="bridge_providers_parts" msprop:Generator_RowChangedName="bridge_providers_partsRowChanged" msprop:Generator_RowEvArgName="bridge_providers_partsRowChangeEvent" msprop:Generator_RowClassName="bridge_providers_partsRow">
+        <xs:element name="bridge_providers_parts" msprop:Generator_TableClassName="bridge_providers_partsDataTable" msprop:Generator_TableVarName="tablebridge_providers_parts" msprop:Generator_RowChangedName="bridge_providers_partsRowChanged" msprop:Generator_TablePropName="bridge_providers_parts" msprop:Generator_RowDeletingName="bridge_providers_partsRowDeleting" msprop:Generator_RowChangingName="bridge_providers_partsRowChanging" msprop:Generator_RowEvHandlerName="bridge_providers_partsRowChangeEventHandler" msprop:Generator_RowDeletedName="bridge_providers_partsRowDeleted" msprop:Generator_RowClassName="bridge_providers_partsRow" msprop:Generator_UserTableName="bridge_providers_parts" msprop:Generator_RowEvArgName="bridge_providers_partsRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="providers_title" msprop:Generator_ColumnVarNameInTable="columnproviders_title" msprop:Generator_ColumnPropNameInRow="providers_title" msprop:Generator_ColumnPropNameInTable="providers_titleColumn" msprop:Generator_UserColumnName="providers_title">
@@ -328,7 +349,7 @@ SELECT title, provider_address, phone FROM providers WHERE (title = @title)</Com
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="deals" msprop:Generator_TableClassName="dealsDataTable" msprop:Generator_TableVarName="tabledeals" msprop:Generator_TablePropName="deals" msprop:Generator_RowDeletingName="dealsRowDeleting" msprop:Generator_RowChangingName="dealsRowChanging" msprop:Generator_RowEvHandlerName="dealsRowChangeEventHandler" msprop:Generator_RowDeletedName="dealsRowDeleted" msprop:Generator_UserTableName="deals" msprop:Generator_RowChangedName="dealsRowChanged" msprop:Generator_RowEvArgName="dealsRowChangeEvent" msprop:Generator_RowClassName="dealsRow">
+        <xs:element name="deals" msprop:Generator_TableClassName="dealsDataTable" msprop:Generator_TableVarName="tabledeals" msprop:Generator_RowChangedName="dealsRowChanged" msprop:Generator_TablePropName="deals" msprop:Generator_RowDeletingName="dealsRowDeleting" msprop:Generator_RowChangingName="dealsRowChanging" msprop:Generator_RowEvHandlerName="dealsRowChangeEventHandler" msprop:Generator_RowDeletedName="dealsRowDeleted" msprop:Generator_RowClassName="dealsRow" msprop:Generator_UserTableName="deals" msprop:Generator_RowEvArgName="dealsRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="deal_date" msprop:Generator_ColumnVarNameInTable="columndeal_date" msprop:Generator_ColumnPropNameInRow="deal_date" msprop:Generator_ColumnPropNameInTable="deal_dateColumn" msprop:Generator_UserColumnName="deal_date" type="xs:dateTime" />
@@ -338,7 +359,7 @@ SELECT title, provider_address, phone FROM providers WHERE (title = @title)</Com
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="parts" msprop:Generator_TableClassName="partsDataTable" msprop:Generator_TableVarName="tableparts" msprop:Generator_TablePropName="parts" msprop:Generator_RowDeletingName="partsRowDeleting" msprop:Generator_RowChangingName="partsRowChanging" msprop:Generator_RowEvHandlerName="partsRowChangeEventHandler" msprop:Generator_RowDeletedName="partsRowDeleted" msprop:Generator_UserTableName="parts" msprop:Generator_RowChangedName="partsRowChanged" msprop:Generator_RowEvArgName="partsRowChangeEvent" msprop:Generator_RowClassName="partsRow">
+        <xs:element name="parts" msprop:Generator_TableClassName="partsDataTable" msprop:Generator_TableVarName="tableparts" msprop:Generator_RowChangedName="partsRowChanged" msprop:Generator_TablePropName="parts" msprop:Generator_RowDeletingName="partsRowDeleting" msprop:Generator_RowChangingName="partsRowChanging" msprop:Generator_RowEvHandlerName="partsRowChangeEventHandler" msprop:Generator_RowDeletedName="partsRowDeleted" msprop:Generator_RowClassName="partsRow" msprop:Generator_UserTableName="parts" msprop:Generator_RowEvArgName="partsRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="title" msprop:Generator_ColumnVarNameInTable="columntitle" msprop:Generator_ColumnPropNameInRow="title" msprop:Generator_ColumnPropNameInTable="titleColumn" msprop:Generator_UserColumnName="title">
@@ -360,7 +381,7 @@ SELECT title, provider_address, phone FROM providers WHERE (title = @title)</Com
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="priceHistory" msprop:Generator_TableClassName="priceHistoryDataTable" msprop:Generator_TableVarName="tablepriceHistory" msprop:Generator_TablePropName="priceHistory" msprop:Generator_RowDeletingName="priceHistoryRowDeleting" msprop:Generator_RowChangingName="priceHistoryRowChanging" msprop:Generator_RowEvHandlerName="priceHistoryRowChangeEventHandler" msprop:Generator_RowDeletedName="priceHistoryRowDeleted" msprop:Generator_UserTableName="priceHistory" msprop:Generator_RowChangedName="priceHistoryRowChanged" msprop:Generator_RowEvArgName="priceHistoryRowChangeEvent" msprop:Generator_RowClassName="priceHistoryRow">
+        <xs:element name="priceHistory" msprop:Generator_TableClassName="priceHistoryDataTable" msprop:Generator_TableVarName="tablepriceHistory" msprop:Generator_RowChangedName="priceHistoryRowChanged" msprop:Generator_TablePropName="priceHistory" msprop:Generator_RowDeletingName="priceHistoryRowDeleting" msprop:Generator_RowChangingName="priceHistoryRowChanging" msprop:Generator_RowEvHandlerName="priceHistoryRowChangeEventHandler" msprop:Generator_RowDeletedName="priceHistoryRowDeleted" msprop:Generator_RowClassName="priceHistoryRow" msprop:Generator_UserTableName="priceHistory" msprop:Generator_RowEvArgName="priceHistoryRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="parts_article" msprop:Generator_ColumnVarNameInTable="columnparts_article" msprop:Generator_ColumnPropNameInRow="parts_article" msprop:Generator_ColumnPropNameInTable="parts_articleColumn" msprop:Generator_UserColumnName="parts_article" type="xs:int" />
@@ -370,7 +391,7 @@ SELECT title, provider_address, phone FROM providers WHERE (title = @title)</Com
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="providers" msprop:Generator_TableClassName="providersDataTable" msprop:Generator_TableVarName="tableproviders" msprop:Generator_TablePropName="providers" msprop:Generator_RowDeletingName="providersRowDeleting" msprop:Generator_RowChangingName="providersRowChanging" msprop:Generator_RowEvHandlerName="providersRowChangeEventHandler" msprop:Generator_RowDeletedName="providersRowDeleted" msprop:Generator_UserTableName="providers" msprop:Generator_RowChangedName="providersRowChanged" msprop:Generator_RowEvArgName="providersRowChangeEvent" msprop:Generator_RowClassName="providersRow">
+        <xs:element name="providers" msprop:Generator_TableClassName="providersDataTable" msprop:Generator_TableVarName="tableproviders" msprop:Generator_RowChangedName="providersRowChanged" msprop:Generator_TablePropName="providers" msprop:Generator_RowDeletingName="providersRowDeleting" msprop:Generator_RowChangingName="providersRowChanging" msprop:Generator_RowEvHandlerName="providersRowChangeEventHandler" msprop:Generator_RowDeletedName="providersRowDeleted" msprop:Generator_RowClassName="providersRow" msprop:Generator_UserTableName="providers" msprop:Generator_RowEvArgName="providersRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="title" msprop:Generator_ColumnVarNameInTable="columntitle" msprop:Generator_ColumnPropNameInRow="title" msprop:Generator_ColumnPropNameInTable="titleColumn" msprop:Generator_UserColumnName="title">
@@ -397,7 +418,7 @@ SELECT title, provider_address, phone FROM providers WHERE (title = @title)</Com
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="storehouse" msprop:Generator_TableClassName="storehouseDataTable" msprop:Generator_TableVarName="tablestorehouse" msprop:Generator_TablePropName="storehouse" msprop:Generator_RowDeletingName="storehouseRowDeleting" msprop:Generator_RowChangingName="storehouseRowChanging" msprop:Generator_RowEvHandlerName="storehouseRowChangeEventHandler" msprop:Generator_RowDeletedName="storehouseRowDeleted" msprop:Generator_UserTableName="storehouse" msprop:Generator_RowChangedName="storehouseRowChanged" msprop:Generator_RowEvArgName="storehouseRowChangeEvent" msprop:Generator_RowClassName="storehouseRow">
+        <xs:element name="storehouse" msprop:Generator_TableClassName="storehouseDataTable" msprop:Generator_TableVarName="tablestorehouse" msprop:Generator_RowChangedName="storehouseRowChanged" msprop:Generator_TablePropName="storehouse" msprop:Generator_RowDeletingName="storehouseRowDeleting" msprop:Generator_RowChangingName="storehouseRowChanging" msprop:Generator_RowEvHandlerName="storehouseRowChangeEventHandler" msprop:Generator_RowDeletedName="storehouseRowDeleted" msprop:Generator_RowClassName="storehouseRow" msprop:Generator_UserTableName="storehouse" msprop:Generator_RowEvArgName="storehouseRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Код" msprop:Generator_ColumnVarNameInTable="columnКод" msprop:Generator_ColumnPropNameInRow="Код" msprop:Generator_ColumnPropNameInTable="КодColumn" msprop:Generator_UserColumnName="Код" type="xs:int" />
@@ -430,6 +451,24 @@ SELECT title, provider_address, phone FROM providers WHERE (title = @title)</Com
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="priceview" msprop:Generator_TableClassName="priceviewDataTable" msprop:Generator_TableVarName="tablepriceview" msprop:Generator_TablePropName="priceview" msprop:Generator_RowDeletingName="priceviewRowDeleting" msprop:Generator_RowChangingName="priceviewRowChanging" msprop:Generator_RowEvHandlerName="priceviewRowChangeEventHandler" msprop:Generator_RowDeletedName="priceviewRowDeleted" msprop:Generator_UserTableName="priceview" msprop:Generator_RowChangedName="priceviewRowChanged" msprop:Generator_RowEvArgName="priceviewRowChangeEvent" msprop:Generator_RowClassName="priceviewRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" minOccurs="0" />
+              <xs:element name="Код_x0020_детали" msprop:Generator_ColumnVarNameInTable="columnКод_детали" msprop:Generator_ColumnPropNameInRow="Код_детали" msprop:Generator_ColumnPropNameInTable="Код_деталиColumn" msprop:Generator_UserColumnName="Код детали" type="xs:int" />
+              <xs:element name="Название" msprop:Generator_ColumnVarNameInTable="columnНазвание" msprop:Generator_ColumnPropNameInRow="Название" msprop:Generator_ColumnPropNameInTable="НазваниеColumn" msprop:Generator_UserColumnName="Название">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Текущая_x0020_цена" msprop:Generator_ColumnVarNameInTable="columnТекущая_цена" msprop:Generator_ColumnPropNameInRow="Текущая_цена" msprop:Generator_ColumnPropNameInTable="Текущая_ценаColumn" msprop:Generator_UserColumnName="Текущая цена" type="xs:int" />
+              <xs:element name="Старая_x0020_цена" msprop:Generator_ColumnVarNameInTable="columnСтарая_цена" msprop:Generator_ColumnPropNameInRow="Старая_цена" msprop:Generator_ColumnPropNameInTable="Старая_ценаColumn" msprop:Generator_UserColumnName="Старая цена" type="xs:int" minOccurs="0" />
+              <xs:element name="Действовала_x0020_до" msprop:Generator_ColumnVarNameInTable="columnДействовала_до" msprop:Generator_ColumnPropNameInRow="Действовала_до" msprop:Generator_ColumnPropNameInTable="Действовала_доColumn" msprop:Generator_UserColumnName="Действовала до" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
     <xs:unique name="Constraint1" msdata:PrimaryKey="true">
@@ -457,13 +496,18 @@ SELECT title, provider_address, phone FROM providers WHERE (title = @title)</Com
       <xs:field xpath="mstns:Код" />
       <xs:field xpath="mstns:Поставщик" />
     </xs:unique>
+    <xs:unique name="priceview_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:priceview" />
+      <xs:field xpath="mstns:id" />
+      <xs:field xpath="mstns:Код_x0020_детали" />
+    </xs:unique>
   </xs:element>
   <xs:annotation>
     <xs:appinfo>
-      <msdata:Relationship name="FK__bridge_pr__parts__2CF2ADDF" msdata:parent="parts" msdata:child="bridge_providers_parts" msdata:parentkey="article" msdata:childkey="parts_article" msprop:Generator_UserChildTable="bridge_providers_parts" msprop:Generator_ChildPropName="Getbridge_providers_partsRows" msprop:Generator_UserRelationName="FK__bridge_pr__parts__2CF2ADDF" msprop:Generator_RelationVarName="relationFK__bridge_pr__parts__2CF2ADDF" msprop:Generator_UserParentTable="parts" msprop:Generator_ParentPropName="partsRow" />
-      <msdata:Relationship name="FK__bridge_pr__provi__2BFE89A6" msdata:parent="providers" msdata:child="bridge_providers_parts" msdata:parentkey="title" msdata:childkey="providers_title" msprop:Generator_UserChildTable="bridge_providers_parts" msprop:Generator_ChildPropName="Getbridge_providers_partsRows" msprop:Generator_UserRelationName="FK__bridge_pr__provi__2BFE89A6" msprop:Generator_RelationVarName="relationFK__bridge_pr__provi__2BFE89A6" msprop:Generator_UserParentTable="providers" msprop:Generator_ParentPropName="providersRow" />
-      <msdata:Relationship name="FK__priceHist__parts__32AB8735" msdata:parent="parts" msdata:child="priceHistory" msdata:parentkey="article" msdata:childkey="parts_article" msprop:Generator_UserChildTable="priceHistory" msprop:Generator_ChildPropName="GetpriceHistoryRows" msprop:Generator_UserRelationName="FK__priceHist__parts__32AB8735" msprop:Generator_ParentPropName="partsRow" msprop:Generator_RelationVarName="relationFK__priceHist__parts__32AB8735" msprop:Generator_UserParentTable="parts" />
-      <msdata:Relationship name="FK__deals__bridge_id__4F47C5E3" msdata:parent="bridge_providers_parts" msdata:child="deals" msdata:parentkey="id" msdata:childkey="bridge_id" msprop:Generator_UserChildTable="deals" msprop:Generator_ChildPropName="GetdealsRows" msprop:Generator_UserRelationName="FK__deals__bridge_id__4F47C5E3" msprop:Generator_RelationVarName="relationFK__deals__bridge_id__4F47C5E3" msprop:Generator_UserParentTable="bridge_providers_parts" msprop:Generator_ParentPropName="bridge_providers_partsRow" />
+      <msdata:Relationship name="FK__bridge_pr__parts__2CF2ADDF" msdata:parent="parts" msdata:child="bridge_providers_parts" msdata:parentkey="article" msdata:childkey="parts_article" msprop:Generator_UserChildTable="bridge_providers_parts" msprop:Generator_ChildPropName="Getbridge_providers_partsRows" msprop:Generator_UserRelationName="FK__bridge_pr__parts__2CF2ADDF" msprop:Generator_ParentPropName="partsRow" msprop:Generator_RelationVarName="relationFK__bridge_pr__parts__2CF2ADDF" msprop:Generator_UserParentTable="parts" />
+      <msdata:Relationship name="FK__bridge_pr__provi__2BFE89A6" msdata:parent="providers" msdata:child="bridge_providers_parts" msdata:parentkey="title" msdata:childkey="providers_title" msprop:Generator_UserChildTable="bridge_providers_parts" msprop:Generator_ChildPropName="Getbridge_providers_partsRows" msprop:Generator_UserRelationName="FK__bridge_pr__provi__2BFE89A6" msprop:Generator_ParentPropName="providersRow" msprop:Generator_RelationVarName="relationFK__bridge_pr__provi__2BFE89A6" msprop:Generator_UserParentTable="providers" />
+      <msdata:Relationship name="FK__priceHist__parts__32AB8735" msdata:parent="parts" msdata:child="priceHistory" msdata:parentkey="article" msdata:childkey="parts_article" msprop:Generator_UserChildTable="priceHistory" msprop:Generator_ChildPropName="GetpriceHistoryRows" msprop:Generator_UserRelationName="FK__priceHist__parts__32AB8735" msprop:Generator_RelationVarName="relationFK__priceHist__parts__32AB8735" msprop:Generator_UserParentTable="parts" msprop:Generator_ParentPropName="partsRow" />
+      <msdata:Relationship name="FK__deals__bridge_id__4F47C5E3" msdata:parent="bridge_providers_parts" msdata:child="deals" msdata:parentkey="id" msdata:childkey="bridge_id" msprop:Generator_UserChildTable="deals" msprop:Generator_ChildPropName="GetdealsRows" msprop:Generator_UserRelationName="FK__deals__bridge_id__4F47C5E3" msprop:Generator_ParentPropName="bridge_providers_partsRow" msprop:Generator_RelationVarName="relationFK__deals__bridge_id__4F47C5E3" msprop:Generator_UserParentTable="bridge_providers_parts" />
     </xs:appinfo>
   </xs:annotation>
 </xs:schema>

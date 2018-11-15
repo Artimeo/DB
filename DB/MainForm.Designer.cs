@@ -86,6 +86,9 @@
             this.buttonSearchCleanProviders = new System.Windows.Forms.Button();
             this.textBoxSearchProviders = new System.Windows.Forms.TextBox();
             this.dataGridViewProviders = new System.Windows.Forms.DataGridView();
+            this.titleDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.provideraddressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.phoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.providersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.buttonDeleteProviders = new System.Windows.Forms.Button();
             this.buttonAddProviders = new System.Windows.Forms.Button();
@@ -95,17 +98,36 @@
             this.buttonCleanProviders = new System.Windows.Forms.Button();
             this.buttonRefreshProviders = new System.Windows.Forms.Button();
             this.pricehistoryTab = new System.Windows.Forms.TabPage();
+            this.buttonSelectRowPriceview = new System.Windows.Forms.Button();
+            this.flowLayoutPanelPriceview = new System.Windows.Forms.FlowLayoutPanel();
+            this.labelRowCountPriceview = new System.Windows.Forms.Label();
+            this.buttonRequestPriceview = new System.Windows.Forms.Button();
+            this.buttonSearchCleanPriceview = new System.Windows.Forms.Button();
+            this.textBoxSearchPriceview = new System.Windows.Forms.TextBox();
+            this.dataGridViewPriceview = new System.Windows.Forms.DataGridView();
+            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.кодДеталиDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.названиеDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.текущаяЦенаDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.стараяЦенаDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.действовалаДоDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priceviewBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.buttonDeletePriceveiw = new System.Windows.Forms.Button();
+            this.buttonAddPriceview = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
+            this.comboboxSearchByPriceview = new System.Windows.Forms.ComboBox();
+            this.buttonCleanPriceview = new System.Windows.Forms.Button();
+            this.buttonRefreshPriceview = new System.Windows.Forms.Button();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.storehouseTableAdapter = new DB.AutoPartsDataSetTableAdapters.storehouseTableAdapter();
             this.providersTableAdapter = new DB.AutoPartsDataSetTableAdapters.providersTableAdapter();
             this.partsTableAdapter = new DB.AutoPartsDataSetTableAdapters.partsTableAdapter();
             this.dealsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dealsTableAdapter = new DB.AutoPartsDataSetTableAdapters.dealsTableAdapter();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.provider_address = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.phone = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bridgeproviderspartsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.bridge_providers_partsTableAdapter = new DB.AutoPartsDataSetTableAdapters.bridge_providers_partsTableAdapter();
+            this.priceviewTableAdapter = new DB.AutoPartsDataSetTableAdapters.priceviewTableAdapter();
             this.tabs.SuspendLayout();
             this.storehouseTab.SuspendLayout();
             this.flowLayoutPanelRowCountStorehouse.SuspendLayout();
@@ -121,6 +143,10 @@
             this.flowLayoutPanelProviders.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProviders)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).BeginInit();
+            this.pricehistoryTab.SuspendLayout();
+            this.flowLayoutPanelPriceview.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPriceview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.priceviewBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dealsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bridgeproviderspartsBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -795,15 +821,36 @@
             this.dataGridViewProviders.AutoGenerateColumns = false;
             this.dataGridViewProviders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewProviders.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.title,
-            this.provider_address,
-            this.phone});
+            this.titleDataGridViewTextBoxColumn1,
+            this.provideraddressDataGridViewTextBoxColumn,
+            this.phoneDataGridViewTextBoxColumn});
             this.dataGridViewProviders.DataSource = this.providersBindingSource;
             this.dataGridViewProviders.Location = new System.Drawing.Point(0, 74);
             this.dataGridViewProviders.Name = "dataGridViewProviders";
             this.dataGridViewProviders.ReadOnly = true;
             this.dataGridViewProviders.Size = new System.Drawing.Size(797, 327);
             this.dataGridViewProviders.TabIndex = 34;
+            // 
+            // titleDataGridViewTextBoxColumn1
+            // 
+            this.titleDataGridViewTextBoxColumn1.DataPropertyName = "title";
+            this.titleDataGridViewTextBoxColumn1.HeaderText = "Название";
+            this.titleDataGridViewTextBoxColumn1.Name = "titleDataGridViewTextBoxColumn1";
+            this.titleDataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // provideraddressDataGridViewTextBoxColumn
+            // 
+            this.provideraddressDataGridViewTextBoxColumn.DataPropertyName = "provider_address";
+            this.provideraddressDataGridViewTextBoxColumn.HeaderText = "Адрес";
+            this.provideraddressDataGridViewTextBoxColumn.Name = "provideraddressDataGridViewTextBoxColumn";
+            this.provideraddressDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // phoneDataGridViewTextBoxColumn
+            // 
+            this.phoneDataGridViewTextBoxColumn.DataPropertyName = "phone";
+            this.phoneDataGridViewTextBoxColumn.HeaderText = "Телефон";
+            this.phoneDataGridViewTextBoxColumn.Name = "phoneDataGridViewTextBoxColumn";
+            this.phoneDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // providersBindingSource
             // 
@@ -908,12 +955,262 @@
             // 
             // pricehistoryTab
             // 
+            this.pricehistoryTab.Controls.Add(this.buttonSelectRowPriceview);
+            this.pricehistoryTab.Controls.Add(this.flowLayoutPanelPriceview);
+            this.pricehistoryTab.Controls.Add(this.buttonRequestPriceview);
+            this.pricehistoryTab.Controls.Add(this.buttonSearchCleanPriceview);
+            this.pricehistoryTab.Controls.Add(this.textBoxSearchPriceview);
+            this.pricehistoryTab.Controls.Add(this.dataGridViewPriceview);
+            this.pricehistoryTab.Controls.Add(this.buttonDeletePriceveiw);
+            this.pricehistoryTab.Controls.Add(this.buttonAddPriceview);
+            this.pricehistoryTab.Controls.Add(this.button10);
+            this.pricehistoryTab.Controls.Add(this.button11);
+            this.pricehistoryTab.Controls.Add(this.comboboxSearchByPriceview);
+            this.pricehistoryTab.Controls.Add(this.buttonCleanPriceview);
+            this.pricehistoryTab.Controls.Add(this.buttonRefreshPriceview);
             this.pricehistoryTab.Location = new System.Drawing.Point(4, 25);
             this.pricehistoryTab.Name = "pricehistoryTab";
             this.pricehistoryTab.Size = new System.Drawing.Size(797, 423);
             this.pricehistoryTab.TabIndex = 3;
             this.pricehistoryTab.Text = "История цен";
             this.pricehistoryTab.UseVisualStyleBackColor = true;
+            // 
+            // buttonSelectRowPriceview
+            // 
+            this.buttonSelectRowPriceview.Location = new System.Drawing.Point(343, 40);
+            this.buttonSelectRowPriceview.Name = "buttonSelectRowPriceview";
+            this.buttonSelectRowPriceview.Size = new System.Drawing.Size(109, 28);
+            this.buttonSelectRowPriceview.TabIndex = 52;
+            this.buttonSelectRowPriceview.Text = "Выделить строку";
+            this.buttonSelectRowPriceview.UseVisualStyleBackColor = true;
+            this.buttonSelectRowPriceview.Click += new System.EventHandler(this.buttonSelectRowPriceview_Click);
+            // 
+            // flowLayoutPanelPriceview
+            // 
+            this.flowLayoutPanelPriceview.Controls.Add(this.labelRowCountPriceview);
+            this.flowLayoutPanelPriceview.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanelPriceview.Location = new System.Drawing.Point(566, 401);
+            this.flowLayoutPanelPriceview.Name = "flowLayoutPanelPriceview";
+            this.flowLayoutPanelPriceview.Padding = new System.Windows.Forms.Padding(4, 4, 0, 4);
+            this.flowLayoutPanelPriceview.Size = new System.Drawing.Size(231, 22);
+            this.flowLayoutPanelPriceview.TabIndex = 51;
+            // 
+            // labelRowCountPriceview
+            // 
+            this.labelRowCountPriceview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelRowCountPriceview.AutoSize = true;
+            this.labelRowCountPriceview.Location = new System.Drawing.Point(107, 4);
+            this.labelRowCountPriceview.Name = "labelRowCountPriceview";
+            this.labelRowCountPriceview.Size = new System.Drawing.Size(117, 13);
+            this.labelRowCountPriceview.TabIndex = 11;
+            this.labelRowCountPriceview.Text = "Количество записей: ";
+            this.labelRowCountPriceview.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // buttonRequestPriceview
+            // 
+            this.buttonRequestPriceview.Image = ((System.Drawing.Image)(resources.GetObject("buttonRequestPriceview.Image")));
+            this.buttonRequestPriceview.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonRequestPriceview.Location = new System.Drawing.Point(497, 40);
+            this.buttonRequestPriceview.Name = "buttonRequestPriceview";
+            this.buttonRequestPriceview.Padding = new System.Windows.Forms.Padding(2);
+            this.buttonRequestPriceview.Size = new System.Drawing.Size(110, 28);
+            this.buttonRequestPriceview.TabIndex = 50;
+            this.buttonRequestPriceview.Text = "Ручной запрос";
+            this.buttonRequestPriceview.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonRequestPriceview.UseVisualStyleBackColor = true;
+            // 
+            // buttonSearchCleanPriceview
+            // 
+            this.buttonSearchCleanPriceview.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearchCleanPriceview.Image")));
+            this.buttonSearchCleanPriceview.Location = new System.Drawing.Point(769, 10);
+            this.buttonSearchCleanPriceview.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonSearchCleanPriceview.Name = "buttonSearchCleanPriceview";
+            this.buttonSearchCleanPriceview.Size = new System.Drawing.Size(22, 22);
+            this.buttonSearchCleanPriceview.TabIndex = 49;
+            this.buttonSearchCleanPriceview.UseVisualStyleBackColor = true;
+            this.buttonSearchCleanPriceview.Click += new System.EventHandler(this.buttonSearchCleanPriceview_Click);
+            // 
+            // textBoxSearchPriceview
+            // 
+            this.textBoxSearchPriceview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxSearchPriceview.ForeColor = System.Drawing.Color.Gray;
+            this.textBoxSearchPriceview.Location = new System.Drawing.Point(619, 11);
+            this.textBoxSearchPriceview.Margin = new System.Windows.Forms.Padding(0);
+            this.textBoxSearchPriceview.MaxLength = 255;
+            this.textBoxSearchPriceview.Name = "textBoxSearchPriceview";
+            this.textBoxSearchPriceview.Size = new System.Drawing.Size(150, 20);
+            this.textBoxSearchPriceview.TabIndex = 48;
+            this.textBoxSearchPriceview.Text = "Поиск🔍";
+            this.textBoxSearchPriceview.WordWrap = false;
+            this.textBoxSearchPriceview.Enter += new System.EventHandler(this.textBoxSearchPriceview_Enter);
+            this.textBoxSearchPriceview.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxSearchPriceview_KeyDown);
+            this.textBoxSearchPriceview.Leave += new System.EventHandler(this.textBoxSearchPriceview_Leave);
+            // 
+            // dataGridViewPriceview
+            // 
+            this.dataGridViewPriceview.AllowUserToAddRows = false;
+            this.dataGridViewPriceview.AllowUserToDeleteRows = false;
+            this.dataGridViewPriceview.AutoGenerateColumns = false;
+            this.dataGridViewPriceview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewPriceview.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.idDataGridViewTextBoxColumn,
+            this.кодДеталиDataGridViewTextBoxColumn,
+            this.названиеDataGridViewTextBoxColumn1,
+            this.текущаяЦенаDataGridViewTextBoxColumn,
+            this.стараяЦенаDataGridViewTextBoxColumn,
+            this.действовалаДоDataGridViewTextBoxColumn});
+            this.dataGridViewPriceview.DataSource = this.priceviewBindingSource;
+            this.dataGridViewPriceview.Location = new System.Drawing.Point(0, 74);
+            this.dataGridViewPriceview.Name = "dataGridViewPriceview";
+            this.dataGridViewPriceview.ReadOnly = true;
+            this.dataGridViewPriceview.Size = new System.Drawing.Size(797, 327);
+            this.dataGridViewPriceview.TabIndex = 47;
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            this.idDataGridViewTextBoxColumn.DataPropertyName = "id";
+            this.idDataGridViewTextBoxColumn.HeaderText = "id";
+            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            this.idDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // кодДеталиDataGridViewTextBoxColumn
+            // 
+            this.кодДеталиDataGridViewTextBoxColumn.DataPropertyName = "Код детали";
+            this.кодДеталиDataGridViewTextBoxColumn.HeaderText = "Код детали";
+            this.кодДеталиDataGridViewTextBoxColumn.Name = "кодДеталиDataGridViewTextBoxColumn";
+            this.кодДеталиDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // названиеDataGridViewTextBoxColumn1
+            // 
+            this.названиеDataGridViewTextBoxColumn1.DataPropertyName = "Название";
+            this.названиеDataGridViewTextBoxColumn1.HeaderText = "Название";
+            this.названиеDataGridViewTextBoxColumn1.Name = "названиеDataGridViewTextBoxColumn1";
+            this.названиеDataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // текущаяЦенаDataGridViewTextBoxColumn
+            // 
+            this.текущаяЦенаDataGridViewTextBoxColumn.DataPropertyName = "Текущая цена";
+            this.текущаяЦенаDataGridViewTextBoxColumn.HeaderText = "Текущая цена";
+            this.текущаяЦенаDataGridViewTextBoxColumn.Name = "текущаяЦенаDataGridViewTextBoxColumn";
+            this.текущаяЦенаDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // стараяЦенаDataGridViewTextBoxColumn
+            // 
+            this.стараяЦенаDataGridViewTextBoxColumn.DataPropertyName = "Старая цена";
+            this.стараяЦенаDataGridViewTextBoxColumn.HeaderText = "Старая цена";
+            this.стараяЦенаDataGridViewTextBoxColumn.Name = "стараяЦенаDataGridViewTextBoxColumn";
+            this.стараяЦенаDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // действовалаДоDataGridViewTextBoxColumn
+            // 
+            this.действовалаДоDataGridViewTextBoxColumn.DataPropertyName = "Действовала до";
+            this.действовалаДоDataGridViewTextBoxColumn.HeaderText = "Действовала до";
+            this.действовалаДоDataGridViewTextBoxColumn.Name = "действовалаДоDataGridViewTextBoxColumn";
+            this.действовалаДоDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // priceviewBindingSource
+            // 
+            this.priceviewBindingSource.DataMember = "priceview";
+            this.priceviewBindingSource.DataSource = this.autoPartsDataSet;
+            // 
+            // buttonDeletePriceveiw
+            // 
+            this.buttonDeletePriceveiw.Image = ((System.Drawing.Image)(resources.GetObject("buttonDeletePriceveiw.Image")));
+            this.buttonDeletePriceveiw.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonDeletePriceveiw.Location = new System.Drawing.Point(712, 40);
+            this.buttonDeletePriceveiw.Name = "buttonDeletePriceveiw";
+            this.buttonDeletePriceveiw.Padding = new System.Windows.Forms.Padding(2);
+            this.buttonDeletePriceveiw.Size = new System.Drawing.Size(79, 28);
+            this.buttonDeletePriceveiw.TabIndex = 46;
+            this.buttonDeletePriceveiw.Text = "Удалить";
+            this.buttonDeletePriceveiw.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonDeletePriceveiw.UseVisualStyleBackColor = true;
+            this.buttonDeletePriceveiw.Click += new System.EventHandler(this.buttonDeletePriceview_Click);
+            // 
+            // buttonAddPriceview
+            // 
+            this.buttonAddPriceview.Image = ((System.Drawing.Image)(resources.GetObject("buttonAddPriceview.Image")));
+            this.buttonAddPriceview.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonAddPriceview.Location = new System.Drawing.Point(619, 40);
+            this.buttonAddPriceview.Name = "buttonAddPriceview";
+            this.buttonAddPriceview.Padding = new System.Windows.Forms.Padding(2);
+            this.buttonAddPriceview.Size = new System.Drawing.Size(87, 28);
+            this.buttonAddPriceview.TabIndex = 45;
+            this.buttonAddPriceview.Text = "Добавить";
+            this.buttonAddPriceview.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonAddPriceview.UseVisualStyleBackColor = true;
+            this.buttonAddPriceview.Click += new System.EventHandler(this.buttonAddPriceview_Click);
+            // 
+            // button10
+            // 
+            this.button10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button10.Location = new System.Drawing.Point(159, 40);
+            this.button10.Name = "button10";
+            this.button10.Padding = new System.Windows.Forms.Padding(2);
+            this.button10.Size = new System.Drawing.Size(147, 28);
+            this.button10.TabIndex = 44;
+            this.button10.Text = "Показать на складе";
+            this.toolTip.SetToolTip(this.button10, "Показать все детали на складе, приобретенные у выбранного поставщика");
+            this.button10.UseVisualStyleBackColor = true;
+            // 
+            // button11
+            // 
+            this.button11.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button11.Location = new System.Drawing.Point(6, 40);
+            this.button11.Name = "button11";
+            this.button11.Padding = new System.Windows.Forms.Padding(2);
+            this.button11.Size = new System.Drawing.Size(147, 28);
+            this.button11.TabIndex = 43;
+            this.button11.Text = "Показать ассортимент";
+            this.toolTip.SetToolTip(this.button11, "Показать все доступные детали у этого поставщика");
+            this.button11.UseVisualStyleBackColor = true;
+            // 
+            // comboboxSearchByPriceview
+            // 
+            this.comboboxSearchByPriceview.FormattingEnabled = true;
+            this.comboboxSearchByPriceview.ItemHeight = 13;
+            this.comboboxSearchByPriceview.Items.AddRange(new object[] {
+            "Все",
+            "id",
+            "Код детали",
+            "Название",
+            "Текущая цена",
+            "Старая цена",
+            "Действовала до"});
+            this.comboboxSearchByPriceview.Location = new System.Drawing.Point(526, 11);
+            this.comboboxSearchByPriceview.Name = "comboboxSearchByPriceview";
+            this.comboboxSearchByPriceview.Size = new System.Drawing.Size(81, 21);
+            this.comboboxSearchByPriceview.TabIndex = 42;
+            this.comboboxSearchByPriceview.Text = "Все";
+            this.comboboxSearchByPriceview.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxSearchByPriceview_KeyDown);
+            // 
+            // buttonCleanPriceview
+            // 
+            this.buttonCleanPriceview.Image = ((System.Drawing.Image)(resources.GetObject("buttonCleanPriceview.Image")));
+            this.buttonCleanPriceview.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonCleanPriceview.Location = new System.Drawing.Point(99, 6);
+            this.buttonCleanPriceview.Name = "buttonCleanPriceview";
+            this.buttonCleanPriceview.Padding = new System.Windows.Forms.Padding(2);
+            this.buttonCleanPriceview.Size = new System.Drawing.Size(86, 28);
+            this.buttonCleanPriceview.TabIndex = 41;
+            this.buttonCleanPriceview.Text = "Очистить";
+            this.buttonCleanPriceview.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonCleanPriceview.UseVisualStyleBackColor = true;
+            this.buttonCleanPriceview.Click += new System.EventHandler(this.buttonCleanPriceview_Click);
+            // 
+            // buttonRefreshPriceview
+            // 
+            this.buttonRefreshPriceview.Image = ((System.Drawing.Image)(resources.GetObject("buttonRefreshPriceview.Image")));
+            this.buttonRefreshPriceview.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonRefreshPriceview.Location = new System.Drawing.Point(6, 6);
+            this.buttonRefreshPriceview.Name = "buttonRefreshPriceview";
+            this.buttonRefreshPriceview.Padding = new System.Windows.Forms.Padding(2);
+            this.buttonRefreshPriceview.Size = new System.Drawing.Size(87, 28);
+            this.buttonRefreshPriceview.TabIndex = 40;
+            this.buttonRefreshPriceview.Text = "Обновить";
+            this.buttonRefreshPriceview.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonRefreshPriceview.UseVisualStyleBackColor = true;
+            this.buttonRefreshPriceview.Click += new System.EventHandler(this.buttonRefreshPriceview_Click);
             // 
             // storehouseTableAdapter
             // 
@@ -936,30 +1233,6 @@
             // 
             this.dealsTableAdapter.ClearBeforeFill = true;
             // 
-            // title
-            // 
-            this.title.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.title.DataPropertyName = "title";
-            this.title.HeaderText = "Название";
-            this.title.Name = "title";
-            this.title.ReadOnly = true;
-            // 
-            // provider_address
-            // 
-            this.provider_address.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.provider_address.DataPropertyName = "provider_address";
-            this.provider_address.HeaderText = "Адрес";
-            this.provider_address.Name = "provider_address";
-            this.provider_address.ReadOnly = true;
-            // 
-            // phone
-            // 
-            this.phone.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.phone.DataPropertyName = "phone";
-            this.phone.HeaderText = "Телефон";
-            this.phone.Name = "phone";
-            this.phone.ReadOnly = true;
-            // 
             // bridgeproviderspartsBindingSource
             // 
             this.bridgeproviderspartsBindingSource.DataMember = "bridge_providers_parts";
@@ -968,6 +1241,10 @@
             // bridge_providers_partsTableAdapter
             // 
             this.bridge_providers_partsTableAdapter.ClearBeforeFill = true;
+            // 
+            // priceviewTableAdapter
+            // 
+            this.priceviewTableAdapter.ClearBeforeFill = true;
             // 
             // MainForm
             // 
@@ -999,6 +1276,12 @@
             this.flowLayoutPanelProviders.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProviders)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).EndInit();
+            this.pricehistoryTab.ResumeLayout(false);
+            this.pricehistoryTab.PerformLayout();
+            this.flowLayoutPanelPriceview.ResumeLayout(false);
+            this.flowLayoutPanelPriceview.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPriceview)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.priceviewBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dealsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bridgeproviderspartsBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -1077,11 +1360,33 @@
         private System.Windows.Forms.Button buttonCleanProviders;
         private System.Windows.Forms.Button buttonRefreshProviders;
         private System.Windows.Forms.ToolTip toolTip;
-        private System.Windows.Forms.DataGridViewTextBoxColumn title;
-        private System.Windows.Forms.DataGridViewTextBoxColumn provider_address;
-        private System.Windows.Forms.DataGridViewTextBoxColumn phone;
         private System.Windows.Forms.BindingSource bridgeproviderspartsBindingSource;
         private AutoPartsDataSetTableAdapters.bridge_providers_partsTableAdapter bridge_providers_partsTableAdapter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn provideraddressDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn phoneDataGridViewTextBoxColumn;
+        private System.Windows.Forms.Button buttonSelectRowPriceview;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelPriceview;
+        private System.Windows.Forms.Label labelRowCountPriceview;
+        private System.Windows.Forms.Button buttonRequestPriceview;
+        private System.Windows.Forms.Button buttonSearchCleanPriceview;
+        private System.Windows.Forms.TextBox textBoxSearchPriceview;
+        private System.Windows.Forms.DataGridView dataGridViewPriceview;
+        private System.Windows.Forms.Button buttonDeletePriceveiw;
+        private System.Windows.Forms.Button buttonAddPriceview;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.ComboBox comboboxSearchByPriceview;
+        private System.Windows.Forms.Button buttonCleanPriceview;
+        private System.Windows.Forms.Button buttonRefreshPriceview;
+        private System.Windows.Forms.BindingSource priceviewBindingSource;
+        private AutoPartsDataSetTableAdapters.priceviewTableAdapter priceviewTableAdapter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn кодДеталиDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn названиеDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn текущаяЦенаDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn стараяЦенаDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn действовалаДоDataGridViewTextBoxColumn;
     }
 }
 

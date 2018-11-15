@@ -17,6 +17,7 @@ namespace DB
         bool textBoxSearchActiveStorehouse = false;
         bool textBoxSearchActiveParts = false;
         bool textBoxSearchActiveProviders = false;
+        bool textBoxSearchActivePriceview = false;
         //записки
         //https://www.flaticon.com/free-icon/plus_128575 иконка "назад"
         //42880b - зеленые иконки
@@ -70,9 +71,18 @@ namespace DB
             {
                 MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления storehouse", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            try
+            {
+                this.priceviewTableAdapter.Fill(this.autoPartsDataSet.priceview);
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления priceview", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             labelRowCountStorehouse.Text += dataGridViewStorehouse.RowCount.ToString();
             labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
             labelRowCountProviders.Text = "Количество записей: " + dataGridViewProviders.RowCount.ToString();
+            labelRowCountPriceview.Text = "Количество записей: " + dataGridViewPriceview.RowCount.ToString();
         }
 
         public void refreshAfterInsertStorehouse()
@@ -143,6 +153,12 @@ namespace DB
             dataGridViewProviders.ClearSelection();
             this.providersTableAdapter.Fill(this.autoPartsDataSet.providers);
             labelRowCountProviders.Text = "Количество записей: " + dataGridViewProviders.RowCount.ToString();
+        }
+        public void refreshAfterDeletePriceview()
+        {
+            dataGridViewPriceview.ClearSelection();
+            this.priceviewTableAdapter.Fill(this.autoPartsDataSet.priceview);
+            labelRowCountPriceview.Text = "Количество записей: " + dataGridViewPriceview.RowCount.ToString();
         }
 
 
@@ -943,7 +959,7 @@ namespace DB
 
         private void buttonDeleteProviders_Click(object sender, EventArgs e)
         {
-            var selectedCells = dataGridViewParts.SelectedCells;
+            var selectedCells = dataGridViewProviders.SelectedCells;
 
             if (selectedCells.Count == 0)
             {
@@ -994,6 +1010,282 @@ namespace DB
                     if (err.Number == 547)
                     {
                         MessageBox.Show("Невозможно удалить выбранную строку (строки) из таблицы deals, так как от нее зависимы другие таблицы. " +
+                            "Сначала удалите связанные строки в них.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        if (dataGridViewStorehouse.SelectedRows.Count > 1) return;
+                    }
+                    else
+                    {
+                        MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+
+        //priceview
+        private void SearchPriceview(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && textBoxSearchPriceview.Text != "")
+            {
+                bool getEntryInRow = false;
+                foreach (DataGridViewRow row in dataGridViewPriceview.Rows)
+                {
+                    row.Visible = true;
+                }
+                dataGridViewPriceview.ClearSelection();
+                dataGridViewPriceview.CurrentCell = null;
+
+                if (comboboxSearchByPriceview.Text == "Все")
+                {
+                    for (int i = 0; i < dataGridViewPriceview.RowCount; i++)
+                    {
+                        dataGridViewPriceview.Rows[i].Selected = false;
+                        for (int j = 0; j < dataGridViewPriceview.ColumnCount; j++)
+                        {
+                            if (dataGridViewPriceview.Rows[i].Cells[j].Value != null)
+                            {
+                                if (dataGridViewPriceview.Rows[i].Cells[j].Value.ToString().ToLower().Contains(textBoxSearchPriceview.Text.ToLower()))
+                                {
+                                    if (getEntryInRow == false)
+                                    {
+                                        getEntryInRow = true;
+                                        dataGridViewPriceview.FirstDisplayedScrollingRowIndex = i;
+                                    }
+                                    dataGridViewPriceview.Rows[i].Selected = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (getEntryInRow == false)
+                    {
+                        MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    else
+                    {
+                        foreach (DataGridViewRow row in dataGridViewPriceview.Rows)
+                        {
+                            if (!row.Selected) row.Visible = false;
+                        }
+                        dataGridViewPriceview.ClearSelection();
+
+                        for (int i = 0; i < dataGridViewPriceview.RowCount; i++)
+                        {
+                            if (dataGridViewPriceview.Rows[i].Visible)
+                            {
+                                for (int j = 0; j < dataGridViewPriceview.ColumnCount; j++)
+                                {
+                                    if (dataGridViewPriceview.Rows[i].Cells[j].Value.ToString().ToLower().Contains(textBoxSearchPriceview.Text.ToLower()))
+                                    {
+                                        dataGridViewPriceview.Rows[i].Cells[j].Selected = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    int columnSearchBy;
+
+                    switch (comboboxSearchByPriceview.Text)
+                    {
+                        case "id":
+                            columnSearchBy = 0;
+                            break;
+                        case "Код детали":
+                            columnSearchBy = 1;
+                            break;
+                        case "Название":
+                            columnSearchBy = 2;
+                            break;
+                        case "Текущая цена":
+                            columnSearchBy = 3;
+                            break;
+                        case "Старая цена":
+                            columnSearchBy = 4;
+                            break;
+                        case "Действовала до":
+                            columnSearchBy = 5;
+                            break;
+                        default:
+                            MessageBox.Show("Ошибка поиска! Выбранное поле отсутствует в представлении. Поиск будет произведен по названию.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            columnSearchBy = 1;
+                            break;
+                    }
+
+                    for (int i = 0; i < dataGridViewPriceview.RowCount; i++)
+                    {
+                        dataGridViewPriceview.Rows[i].Selected = false;
+                        if (dataGridViewPriceview.Rows[i].Cells[columnSearchBy].Value != null)
+                        {
+                            if (dataGridViewPriceview.Rows[i].Cells[columnSearchBy].Value.ToString().ToLower().Contains(textBoxSearchPriceview.Text.ToLower()))
+                            {
+                                if (getEntryInRow == false)
+                                {
+                                    getEntryInRow = true;
+                                    dataGridViewPriceview.FirstDisplayedScrollingRowIndex = i;
+                                }
+                                dataGridViewPriceview.Rows[i].Cells[columnSearchBy].Selected = true;
+                            }
+                        }
+                    }
+                    if (getEntryInRow == false) MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else if (e.KeyCode == Keys.Enter && textBoxSearchPriceview.Text == "")
+            {
+                MessageBox.Show("Введите данные для поиска", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void buttonRefreshPriceview_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.priceviewTableAdapter.Fill(this.autoPartsDataSet.priceview);
+                foreach (DataGridViewColumn column in dataGridViewPriceview.Columns)
+                {
+                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    column.SortMode = DataGridViewColumnSortMode.Automatic;
+                }
+                dataGridViewPriceview.ClearSelection();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления priceview", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            labelRowCountPriceview.Text = "Количество записей: " + dataGridViewPriceview.RowCount.ToString();
+        }
+
+        private void buttonCleanPriceview_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridViewPriceview.RowCount > 0)
+                {
+                    dataGridViewPriceview.Sort(dataGridViewPriceview.Columns[0], ListSortDirection.Ascending);
+                    foreach (DataGridViewColumn column in dataGridViewPriceview.Columns)
+                    {
+                        column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        column.SortMode = DataGridViewColumnSortMode.Automatic;
+                    }
+                    foreach (DataGridViewRow row in dataGridViewPriceview.Rows) row.Visible = true;
+                    dataGridViewPriceview.FirstDisplayedScrollingRowIndex = 0;
+                    dataGridViewPriceview.ClearSelection();
+                    labelRowCountPriceview.Text = "Количество записей: " + dataGridViewPriceview.RowCount.ToString();
+                }
+                else
+                {
+                    MessageBox.Show("Отсутствуют данные, сначала обновите таблицу.", "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления Priceview", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void comboBoxSearchByPriceview_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) SearchPriceview(sender, e);
+        }
+
+        private void textBoxSearchPriceview_Enter(object sender, EventArgs e)
+        {
+            if (textBoxSearchActivePriceview == false)
+            {
+                textBoxSearchPriceview.Text = "";
+                textBoxSearchPriceview.ForeColor = Color.Black;
+                textBoxSearchActivePriceview = true;
+            }
+        }
+
+        private void textBoxSearchPriceview_Leave(object sender, EventArgs e)
+        {
+            if (textBoxSearchPriceview.Text == "")
+            {
+                textBoxSearchPriceview.ForeColor = Color.Gray;
+                textBoxSearchPriceview.Text = "Поиск🔍";
+                textBoxSearchActivePriceview = false;
+            }
+            else
+            {
+                textBoxSearchActivePriceview = true;
+            }
+        }
+
+        private void textBoxSearchPriceview_KeyDown(object sender, KeyEventArgs e)
+        {
+            SearchPriceview(sender, e);
+        }
+
+        private void buttonSearchCleanPriceview_Click(object sender, EventArgs e)
+        {
+            textBoxSearchPriceview.ForeColor = Color.Gray;
+            textBoxSearchPriceview.Text = "Поиск🔍";
+            textBoxSearchActivePriceview = false;
+        }
+
+        private void buttonSelectRowPriceview_Click(object sender, EventArgs e)
+        {
+            var selectedCells = dataGridViewPriceview.SelectedCells;
+
+            foreach (DataGridViewCell cell in selectedCells)
+            {
+                dataGridViewPriceview.Rows[cell.RowIndex].Selected = true;
+            }
+        }
+
+        private void buttonAddPriceview_Click(object sender, EventArgs e)
+        {
+            //AddPriceviewForm addPriceviewForm = new AddPriceviewForm(this);
+            //addPriceviewForm.Show();
+        }
+
+        private void buttonDeletePriceview_Click(object sender, EventArgs e)
+        {
+            var selectedCells = dataGridViewPriceview.SelectedCells;
+
+            if (selectedCells.Count == 0)
+            {
+                MessageBox.Show("Не выбраны строки для удаления", "Ошибка удаления", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            foreach (DataGridViewCell cell in selectedCells)
+            {
+                dataGridViewPriceview.Rows[cell.RowIndex].Selected = true;
+            }
+
+            if (MessageBox.Show("Выбранные строки удалятся из базы данных. Продолжить?", "Удалить запись", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+            {
+                try
+                {
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        connection.Open();
+
+                        foreach (DataGridViewRow selectedRow in dataGridViewPriceview.SelectedRows)
+                        {
+                            string expression = "delete from priceHistory where price_id = " + selectedRow.Cells[0].Value.ToString() + ";";
+
+                            SqlCommand request = new SqlCommand(expression, connection);
+                            request.ExecuteNonQuery();
+
+                            if (dataGridViewPriceview.SelectedRows.Count <= 1) break;
+                        }
+
+                        this.refreshAfterDeletePriceview();
+                        connection.Close();
+                    }
+                }
+                catch (SqlException err)
+                {
+                    if (err.Number == 547)
+                    {
+                        MessageBox.Show("Невозможно удалить выбранную строку (строки) из представления priceview, так как от нее зависимы другие таблицы. " +
                             "Сначала удалите связанные строки в них.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         if (dataGridViewStorehouse.SelectedRows.Count > 1) return;
                     }

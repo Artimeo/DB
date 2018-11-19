@@ -173,7 +173,7 @@
             this.Controls.Add(this.textBoxAddress);
             this.Controls.Add(this.textBoxTitle);
             this.Name = "AddProvidersForm";
-            this.Text = "AddProvidersForm";
+            this.Text = "Добавить поставщика";
             ((System.ComponentModel.ISupportInitialize)(this.picturePhoneError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureAddressError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureTitleError)).EndInit();

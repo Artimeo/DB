@@ -1136,7 +1136,7 @@
             this.buttonAddPriceview.Padding = new System.Windows.Forms.Padding(2);
             this.buttonAddPriceview.Size = new System.Drawing.Size(87, 28);
             this.buttonAddPriceview.TabIndex = 45;
-            this.buttonAddPriceview.Text = "Добавить";
+            this.buttonAddPriceview.Text = "Изменить";
             this.buttonAddPriceview.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonAddPriceview.UseVisualStyleBackColor = true;
             this.buttonAddPriceview.Click += new System.EventHandler(this.buttonAddPriceview_Click);

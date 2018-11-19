@@ -59,6 +59,12 @@
     <Compile Include="AddPartsForm.Designer.cs">
       <DependentUpon>AddPartsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddPriceHistoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddPriceHistoryForm.Designer.cs">
+      <DependentUpon>AddPriceHistoryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AddProvidersForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AddPartsForm.resx">
       <DependentUpon>AddPartsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddPriceHistoryForm.resx">
+      <DependentUpon>AddPriceHistoryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AddProvidersForm.resx">
       <DependentUpon>AddProvidersForm.cs</DependentUpon>

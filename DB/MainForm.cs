@@ -1240,8 +1240,35 @@ namespace DB
 
         private void buttonAddPriceview_Click(object sender, EventArgs e)
         {
-            //AddPriceviewForm addPriceviewForm = new AddPriceviewForm(this);
-            //addPriceviewForm.Show();
+            if (dataGridViewPriceview.SelectedRows.Count > 0)
+            {
+                MessageBox.Show("Выберите только одну строку для изменения цены", "Ошибка выбора", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else
+            {
+                var selectedCells = dataGridViewPriceview.SelectedCells;
+                foreach (DataGridViewCell cell in selectedCells)
+                {
+                    dataGridViewPriceview.Rows[cell.RowIndex].Selected = true;
+                }
+            }
+
+            AddPriceHistoryForm addPriceHistoryForm = new AddPriceHistoryForm(this);
+
+            addPriceHistoryForm.textBoxTitle.Text = dataGridViewPriceview.SelectedCells[2].Value.ToString();
+
+            if (dataGridViewPriceview.SelectedCells[3].ToString() != "")
+                addPriceHistoryForm.textBoxOldPrice.Text = dataGridViewPriceview.SelectedCells[3].Value.ToString();
+
+            foreach (DataRow row in this.autoPartsDataSet.priceview.Select())
+            {
+                addPriceHistoryForm.textBoxTitle.AutoCompleteCustomSource.Add(
+                    row.ItemArray[2].ToString());
+            }
+
+            addPriceHistoryForm.isAllowedRecordRow();
+            addPriceHistoryForm.Show();
         }
 
         private void buttonDeletePriceview_Click(object sender, EventArgs e)

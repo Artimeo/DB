@@ -1240,7 +1240,7 @@ namespace DB
 
         private void buttonAddPriceview_Click(object sender, EventArgs e)
         {
-            if (dataGridViewPriceview.SelectedRows.Count > 0)
+            if (dataGridViewPriceview.SelectedRows.Count > 1)
             {
                 MessageBox.Show("Выберите только одну строку для изменения цены", "Ошибка выбора", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -1248,6 +1248,7 @@ namespace DB
             else
             {
                 var selectedCells = dataGridViewPriceview.SelectedCells;
+
                 foreach (DataGridViewCell cell in selectedCells)
                 {
                     dataGridViewPriceview.Rows[cell.RowIndex].Selected = true;
@@ -1267,8 +1268,9 @@ namespace DB
                     row.ItemArray[2].ToString());
             }
 
-            addPriceHistoryForm.isAllowedRecordRow();
             addPriceHistoryForm.Show();
+            addPriceHistoryForm.partsAutocompleteСhanged();
+            addPriceHistoryForm.isAllowedRecordRow();
         }
 
         private void buttonDeletePriceview_Click(object sender, EventArgs e)

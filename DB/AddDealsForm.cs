@@ -211,7 +211,7 @@ namespace DB
                 }
                 catch (Exception err)
                 {
-                    MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(err.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     picturePartsCountError.Show();
                     isAllowedRecordRow();
                 }

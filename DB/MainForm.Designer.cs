@@ -1307,7 +1307,6 @@
         private System.Windows.Forms.Button buttonRequestStorehouse;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelRowCountStorehouse;
         private System.Windows.Forms.Label labelRowCountStorehouse;
-        private AutoPartsDataSet autoPartsDataSet;
         private System.Windows.Forms.BindingSource storehouseBindingSource;
         private AutoPartsDataSetTableAdapters.storehouseTableAdapter storehouseTableAdapter;
         private System.Windows.Forms.BindingSource autoPartsDataSetBindingSource;
@@ -1371,7 +1370,6 @@
         private System.Windows.Forms.Button buttonRequestPriceview;
         private System.Windows.Forms.Button buttonSearchCleanPriceview;
         private System.Windows.Forms.TextBox textBoxSearchPriceview;
-        private System.Windows.Forms.DataGridView dataGridViewPriceview;
         private System.Windows.Forms.Button buttonDeletePriceveiw;
         private System.Windows.Forms.Button buttonAddPriceview;
         private System.Windows.Forms.Button button10;
@@ -1387,6 +1385,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn текущаяЦенаDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn стараяЦенаDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn действовалаДоDataGridViewTextBoxColumn;
+        public AutoPartsDataSet autoPartsDataSet;
+        private System.Windows.Forms.DataGridView dataGridViewPriceview;
     }
 }
 

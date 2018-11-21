@@ -44,8 +44,10 @@
             this.buttonSetCurrentDate = new System.Windows.Forms.Button();
             this.labelDate = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.pictureOldPriceError = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureNewPriceError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureTitleError)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureOldPriceError)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureNewPriceError
@@ -114,6 +116,7 @@
             this.buttonRecordRow.TabIndex = 35;
             this.buttonRecordRow.Text = "Изменить";
             this.buttonRecordRow.UseVisualStyleBackColor = true;
+            this.buttonRecordRow.Click += new System.EventHandler(this.buttonRecordRow_Click);
             // 
             // textBoxNewPrice
             // 
@@ -122,6 +125,8 @@
             this.textBoxNewPrice.Name = "textBoxNewPrice";
             this.textBoxNewPrice.Size = new System.Drawing.Size(195, 20);
             this.textBoxNewPrice.TabIndex = 34;
+            this.textBoxNewPrice.TextChanged += new System.EventHandler(this.textBoxNewPrice_TextChanged);
+            this.textBoxNewPrice.Leave += new System.EventHandler(this.textBoxNewPrice_Leave);
             // 
             // textBoxOldPrice
             // 
@@ -139,6 +144,8 @@
             this.textBoxTitle.Name = "textBoxTitle";
             this.textBoxTitle.Size = new System.Drawing.Size(195, 20);
             this.textBoxTitle.TabIndex = 32;
+            this.textBoxTitle.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxTitle_KeyDown);
+            this.textBoxTitle.Leave += new System.EventHandler(this.textBoxTitle_Leave);
             // 
             // dateTimePicker
             // 
@@ -169,11 +176,22 @@
             this.labelDate.TabIndex = 43;
             this.labelDate.Text = "Действует с:";
             // 
+            // pictureOldPriceError
+            // 
+            this.pictureOldPriceError.Image = ((System.Drawing.Image)(resources.GetObject("pictureOldPriceError.Image")));
+            this.pictureOldPriceError.Location = new System.Drawing.Point(294, 58);
+            this.pictureOldPriceError.Name = "pictureOldPriceError";
+            this.pictureOldPriceError.Size = new System.Drawing.Size(16, 16);
+            this.pictureOldPriceError.TabIndex = 46;
+            this.pictureOldPriceError.TabStop = false;
+            this.toolTip.SetToolTip(this.pictureOldPriceError, "Не найдена цена для данной запчасти");
+            // 
             // AddPriceHistoryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(332, 204);
+            this.Controls.Add(this.pictureOldPriceError);
             this.Controls.Add(this.dateTimePicker);
             this.Controls.Add(this.buttonSetCurrentDate);
             this.Controls.Add(this.labelDate);
@@ -191,6 +209,7 @@
             this.Text = "Изменить цену";
             ((System.ComponentModel.ISupportInitialize)(this.pictureNewPriceError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureTitleError)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureOldPriceError)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -212,5 +231,6 @@
         public System.Windows.Forms.TextBox textBoxOldPrice;
         public System.Windows.Forms.TextBox textBoxTitle;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.PictureBox pictureOldPriceError;
     }
 }

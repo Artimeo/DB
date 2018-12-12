@@ -229,6 +229,7 @@
             this.buttonRequestStorehouse.TabIndex = 10;
             this.buttonRequestStorehouse.Text = "Ручной запрос";
             this.buttonRequestStorehouse.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip.SetToolTip(this.buttonRequestStorehouse, "Создать ручной SQL-запрос");
             this.buttonRequestStorehouse.UseVisualStyleBackColor = true;
             this.buttonRequestStorehouse.Click += new System.EventHandler(this.buttonRequest_Click);
             // 
@@ -409,6 +410,7 @@
             this.buttonPricehistoryStorehouse.TabIndex = 4;
             this.buttonPricehistoryStorehouse.Text = "Показать историю цен";
             this.buttonPricehistoryStorehouse.UseVisualStyleBackColor = true;
+            this.buttonPricehistoryStorehouse.Click += new System.EventHandler(this.buttonPricehistoryStorehouse_Click);
             // 
             // buttonToProvidersStorehouse
             // 
@@ -418,8 +420,9 @@
             this.buttonToProvidersStorehouse.Padding = new System.Windows.Forms.Padding(2);
             this.buttonToProvidersStorehouse.Size = new System.Drawing.Size(147, 28);
             this.buttonToProvidersStorehouse.TabIndex = 3;
-            this.buttonToProvidersStorehouse.Text = "Показать поставщиков";
+            this.buttonToProvidersStorehouse.Text = "Перейти к поставщику";
             this.buttonToProvidersStorehouse.UseVisualStyleBackColor = true;
+            this.buttonToProvidersStorehouse.Click += new System.EventHandler(this.buttonToProvidersStorehouse_Click);
             // 
             // comboboxSearchByStorehouse
             // 
@@ -454,6 +457,7 @@
             this.buttonCleanStorehouse.TabIndex = 1;
             this.buttonCleanStorehouse.Text = "Очистить";
             this.buttonCleanStorehouse.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip.SetToolTip(this.buttonCleanStorehouse, "Сбросить все фильтры для таблицы");
             this.buttonCleanStorehouse.UseVisualStyleBackColor = true;
             this.buttonCleanStorehouse.Click += new System.EventHandler(this.buttonCleanStorehouse_Click);
             // 
@@ -674,7 +678,7 @@
             this.button9.Padding = new System.Windows.Forms.Padding(2);
             this.button9.Size = new System.Drawing.Size(147, 28);
             this.button9.TabIndex = 17;
-            this.button9.Text = "Перейти к поставщику";
+            this.button9.Text = "Показать поставщиков";
             this.button9.UseVisualStyleBackColor = true;
             // 
             // comboboxSearchByParts

@@ -1332,10 +1332,34 @@ namespace DB
             }
         }
 
+
+        //additional functions
         private void buttonRequest_Click(object sender, EventArgs e)
         {
             var addRequest = new AddRequest(this);
             addRequest.Show();
+        }
+
+        private void buttonToProvidersStorehouse_Click(object sender, EventArgs e)
+        {
+            tabs.SelectTab(providersTab);
+            comboboxSearchByProviders.Text = "Название";
+            textBoxSearchProviders.Focus();
+            textBoxSearchProviders_Enter(sender, e);
+            textBoxSearchProviders.Text = dataGridViewStorehouse.CurrentRow.Cells[8].Value.ToString();
+            SendKeys.Send("{ENTER}");
+            textBoxSearchProviders_Leave(sender, e);
+        }
+
+        private void buttonPricehistoryStorehouse_Click(object sender, EventArgs e)
+        {
+            tabs.SelectTab(pricehistoryTab);
+            comboboxSearchByPriceview.Text = "Все";
+            textBoxSearchPriceview.Focus();
+            textBoxSearchPriceview_Enter(sender, e);
+            textBoxSearchPriceview.Text = dataGridViewStorehouse.CurrentRow.Cells[1].Value.ToString();
+            SendKeys.Send("{ENTER}");
+            textBoxSearchPriceview_Leave(sender, e);
         }
     }
 }

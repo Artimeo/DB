@@ -230,6 +230,7 @@
             this.buttonRequestStorehouse.Text = "Ручной запрос";
             this.buttonRequestStorehouse.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonRequestStorehouse.UseVisualStyleBackColor = true;
+            this.buttonRequestStorehouse.Click += new System.EventHandler(this.buttonRequest_Click);
             // 
             // buttonSearchClearStorehouse
             // 
@@ -536,6 +537,7 @@
             this.buttonRequestParts.Text = "Ручной запрос";
             this.buttonRequestParts.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonRequestParts.UseVisualStyleBackColor = true;
+            this.buttonRequestParts.Click += new System.EventHandler(this.buttonRequest_Click);
             // 
             // buttonSearchCleanParts
             // 
@@ -786,6 +788,7 @@
             this.buttonRequestProviders.Text = "Ручной запрос";
             this.buttonRequestProviders.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonRequestProviders.UseVisualStyleBackColor = true;
+            this.buttonRequestProviders.Click += new System.EventHandler(this.buttonRequest_Click);
             // 
             // buttonSearchCleanProviders
             // 
@@ -1018,6 +1021,7 @@
             this.buttonRequestPriceview.Text = "Ручной запрос";
             this.buttonRequestPriceview.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonRequestPriceview.UseVisualStyleBackColor = true;
+            this.buttonRequestPriceview.Click += new System.EventHandler(this.buttonRequest_Click);
             // 
             // buttonSearchCleanPriceview
             // 

@@ -1331,5 +1331,11 @@ namespace DB
                 }
             }
         }
+
+        private void buttonRequest_Click(object sender, EventArgs e)
+        {
+            var addRequest = new AddRequest(this);
+            addRequest.Show();
+        }
     }
 }

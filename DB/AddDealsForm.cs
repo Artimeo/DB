@@ -209,7 +209,7 @@ namespace DB
                     if (partsCount <= 0) picturePartsCountError.Show(); else picturePartsCountError.Hide();
                     isAllowedRecordRow();
                 }
-                catch (Exception err)
+                catch (OverflowException err)
                 {
                     MessageBox.Show(err.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     picturePartsCountError.Show();

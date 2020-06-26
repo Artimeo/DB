@@ -352,12 +352,9 @@
         private System.Windows.Forms.TextBox textBoxPrice;
         private System.Windows.Forms.Label labelPrice;
         private System.Windows.Forms.Label labelDate;
-        private System.Windows.Forms.TextBox textBoxCount;
         private System.Windows.Forms.Label labelCount;
         private System.Windows.Forms.Label labelProvider;
         public System.Windows.Forms.ComboBox comboBoxProvider;
-        private System.Windows.Forms.Button buttonSetCurrentDate;
-        private System.Windows.Forms.DateTimePicker dateTimePicker;
         private System.Windows.Forms.Button buttonAddProvider;
         private System.Windows.Forms.Button buttonRecordRow;
         private System.Windows.Forms.Button buttonCloseForm;
@@ -375,8 +372,11 @@
         private System.Windows.Forms.Label labelManufacturer;
         public System.Windows.Forms.TextBox textBoxManufacturer;
         private System.Windows.Forms.PictureBox pictureTitleError;
-        private System.Windows.Forms.PictureBox picturePartsCountError;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.PictureBox pictureProviderError;
+        public System.Windows.Forms.Button buttonSetCurrentDate;
+        public System.Windows.Forms.DateTimePicker dateTimePicker;
+        public System.Windows.Forms.PictureBox picturePartsCountError;
+        public System.Windows.Forms.TextBox textBoxCount;
     }
 }

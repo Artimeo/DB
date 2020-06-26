@@ -426,6 +426,7 @@
             // 
             // comboboxSearchByStorehouse
             // 
+            this.comboboxSearchByStorehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboboxSearchByStorehouse.FormattingEnabled = true;
             this.comboboxSearchByStorehouse.ItemHeight = 13;
             this.comboboxSearchByStorehouse.Items.AddRange(new object[] {
@@ -443,7 +444,6 @@
             this.comboboxSearchByStorehouse.Name = "comboboxSearchByStorehouse";
             this.comboboxSearchByStorehouse.Size = new System.Drawing.Size(81, 21);
             this.comboboxSearchByStorehouse.TabIndex = 2;
-            this.comboboxSearchByStorehouse.Text = "Все";
             this.comboboxSearchByStorehouse.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxSearchByStorehouse_KeyDown);
             // 
             // buttonCleanStorehouse
@@ -552,7 +552,7 @@
             this.buttonSearchCleanParts.Size = new System.Drawing.Size(22, 22);
             this.buttonSearchCleanParts.TabIndex = 23;
             this.buttonSearchCleanParts.UseVisualStyleBackColor = true;
-            this.buttonSearchCleanParts.Click += new System.EventHandler(this.buttonCleanParts_Click);
+            this.buttonSearchCleanParts.Click += new System.EventHandler(this.buttonSearchClearParts_Click);
             // 
             // textBoxSearchParts
             // 
@@ -1297,20 +1297,13 @@
         }
 
         #endregion
-        private System.Windows.Forms.TabControl tabs;
-        private System.Windows.Forms.TabPage storehouseTab;
         private System.Windows.Forms.Button buttonCleanStorehouse;
         private System.Windows.Forms.Button buttonRefreshStorehouse;
-        private System.Windows.Forms.TabPage partsTab;
-        private System.Windows.Forms.TabPage providersTab;
-        private System.Windows.Forms.TabPage pricehistoryTab;
         private System.Windows.Forms.Button buttonDeleteStorehouse;
         private System.Windows.Forms.Button buttonAddStorehouse;
         private System.Windows.Forms.Button buttonPricehistoryStorehouse;
         private System.Windows.Forms.Button buttonToProvidersStorehouse;
-        private System.Windows.Forms.ComboBox comboboxSearchByStorehouse;
         private System.Windows.Forms.DataGridView dataGridViewStorehouse;
-        private System.Windows.Forms.TextBox textBoxSearchStorehouse;
         private System.Windows.Forms.Button buttonSearchClearStorehouse;
         private System.Windows.Forms.Button buttonRequestStorehouse;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelRowCountStorehouse;
@@ -1395,6 +1388,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn действовалаДоDataGridViewTextBoxColumn;
         public AutoPartsDataSet autoPartsDataSet;
         private System.Windows.Forms.DataGridView dataGridViewPriceview;
+        public System.Windows.Forms.TextBox textBoxSearchStorehouse;
+        public System.Windows.Forms.TabControl tabs;
+        public System.Windows.Forms.ComboBox comboboxSearchByStorehouse;
+        public System.Windows.Forms.TabPage storehouseTab;
+        public System.Windows.Forms.TabPage partsTab;
+        public System.Windows.Forms.TabPage providersTab;
+        public System.Windows.Forms.TabPage pricehistoryTab;
     }
 }
 

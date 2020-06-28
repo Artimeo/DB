@@ -1,7 +1,7 @@
 ﻿using DB.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -11,9 +11,9 @@ namespace DB.Model.Repository
 {
     public class AppContext : DbContext
     {
-        public AppContext() : base("AutoParts") 
+        public AppContext()
         {
-            Database.SetInitializer<AppContext>(new SampleInitializer());
+            Database.EnsureCreated();
         }
 
         public DbSet<Provider> Providers { get; set; }
@@ -21,12 +21,24 @@ namespace DB.Model.Repository
         public DbSet<ProviderPart> ProvidersParts { get; set; }
         public DbSet<Deal> Deals { get; set; }
         public DbSet<PriceHistory> PriceHistories { get; set; }
-    }
 
-    class SampleInitializer : DropCreateDatabaseIfModelChanges<AppContext>
-    {
-        protected override void Seed(AppContext context)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AutoParts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ProviderPart>()
+                .HasOne<Part>(pp => pp.Part)
+                .WithMany(p => p.ProviderParts)
+                .HasForeignKey(pp => pp.PartId);
+
+            modelBuilder.Entity<ProviderPart>()
+                .HasOne<Provider>(pp => pp.Provider)
+                .WithMany(p => p.ProviderParts)
+                .HasForeignKey(pp => pp.ProviderId);
+            
             List<Part> parts = new List<Part>
             {
                 new Part { Title = "Рулевая рейка", Manufacturer = "Nissan Almera N16", Price = 12000 },
@@ -52,8 +64,7 @@ namespace DB.Model.Repository
                 new Part { Title = "Фильтр салона", Manufacturer = "BMW e53", Price = 1890 },
                 new Part { Title = "Ролик ремня ГРМ", Manufacturer = "Volkswagen Passat", Price = 2800 }
             };
-            context.Parts.AddRange(parts);
-            context.SaveChanges();
+            modelBuilder.Entity<Part>().HasData(parts);
 
             var providers = new List<Provider>
             {
@@ -65,8 +76,8 @@ namespace DB.Model.Repository
                 new Provider {Title = "Запчастье" , Address = "ул. Ставского 4", Phone = "+78412224610" }
             };
 
-            context.Providers.AddRange(providers);
-            context.SaveChanges();
+            modelBuilder.Entity<Provider>().HasData(providers);
+
 
             var providersParts = new List<ProviderPart>
             {
@@ -100,8 +111,7 @@ namespace DB.Model.Repository
                 new ProviderPart { Provider = providers[5+1], Part = parts[18+1] },
                 new ProviderPart { Provider = providers[5+1], Part = parts[22+1] }
             };
-            context.ProvidersParts.AddRange(providersParts);
-            context.SaveChanges();
+            modelBuilder.Entity<ProviderPart>().HasData(providersParts);
 
             var deals = new List<Deal>
             {
@@ -153,10 +163,8 @@ namespace DB.Model.Repository
                 new Deal {Date = DateTime.Parse("2018.08.17"), Part = parts[22+1], Count = 5 },
                 new Deal {Date = DateTime.Parse("2018.09.17"), Part = parts[22+1], Count = 2 }
             };
-            context.Deals.AddRange(deals);
-            context.SaveChanges();
-
-            base.Seed(context);
+            modelBuilder.Entity<Deal>().HasData(deals);
         }
     }
+    
 }

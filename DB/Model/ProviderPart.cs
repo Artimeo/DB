@@ -12,15 +12,16 @@ namespace DB.Model
     {
         [Key]
         public int Id { get; set; }
-
-        //[Key, Column(Order = 0)]
-        [ForeignKey("Provider")]
+        
+        [Required, ForeignKey("Provider")]
         public int ProviderId { get; set; }
-        //[Key, Column(Order = 1)]
-        [ForeignKey("Part")]
-        public int PartArticle { get; set; }
-
-        public virtual Provider Provider { get; set; }
-        public virtual Part Part { get; set; }
+        
+        [Required]
+        public Provider Provider { get; set; }
+        
+        [Required, ForeignKey("Part")]
+        public int PartId { get; set; }
+        [Required]
+        public Part Part { get; set; }
     }
 }

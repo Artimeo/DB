@@ -10,21 +10,19 @@ namespace DB.Model
     public class Provider
     {
         [Key]
-        [Required]
         public int Id { get; set; }
+        
         [Required]
         [MaxLength(50)]
         public string Title { get; set; }
+        
         [Required]
         [MaxLength(50)]
         public string Address { get; set; }
+        
         [MaxLength(12)]
         public string Phone { get; set; }
 
-        public virtual ICollection<Part> Parts { get; set; }
-        public Provider()
-        {
-            this.Parts = new List<Part>();
-        }
+        public IList<ProviderPart> ProviderParts { get; set; }
     }
 }

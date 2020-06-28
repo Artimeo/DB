@@ -261,6 +261,11 @@
     <EmbeddedResource Include="resources\request.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="dump\autoparts diagram.png" />
+    <Content Include="dump\SQL_1_CreateTables.sql" />
+    <Content Include="dump\SQL_1_CreateTables_my.sql" />
+    <Content Include="dump\SQL_2_Select.sql" />
+    <Content Include="dump\SQL_3_CreateView.sql" />
     <Content Include="resources\error.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

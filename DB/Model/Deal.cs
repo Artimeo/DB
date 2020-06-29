@@ -14,9 +14,9 @@ namespace DB.Model
 
         public DateTime Date { get; set; }
         
-        public int PartId { get; set; }
+        public int ProviderPartId { get; set; }
         
-        public Part Part { get; set; }
+        public ProviderPart ProviderPart { get; set; }
         
         public int Count { get; set; }
     }

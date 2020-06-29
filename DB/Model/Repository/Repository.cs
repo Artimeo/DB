@@ -72,11 +72,11 @@ namespace DB.Model.Repository
         {
 
             var storehouseItems = (from deal in context.Deals
-                                  join part in context.Parts on deal.PartId equals part.Id
-                                  join providerPart in context.ProvidersParts on part.Id equals providerPart.PartId
+                                  join providerPart in context.ProvidersParts on deal.ProviderPartId equals providerPart.Id
+                                  join part in context.Parts on providerPart.PartId equals part.Id
                                   join provider in context.Providers on providerPart.ProviderId equals provider.Id
                                   let price = context.PriceHistories.OrderByDescending(p => p.Id).Where(p => p.PartId == part.Id).Select(p => p.Price).SingleOrDefault()
-
+                                  //where ...
                                   select new StorehouseItem
                                   {
                                       Id = deal.Id,

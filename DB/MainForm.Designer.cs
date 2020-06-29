@@ -40,14 +40,6 @@
             this.textBoxSearchStorehouse = new System.Windows.Forms.TextBox();
             this.dataGridViewStorehouse = new System.Windows.Forms.DataGridView();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.названиеDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.кодDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ценаDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.количествоDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.производительDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ценаЗакупкиDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.датаЗакупкиDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.поставщикDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.storehouseBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.autoPartsDataSet = new DB.AutoPartsDataSet();
             this.buttonDeleteStorehouse = new System.Windows.Forms.Button();
@@ -65,10 +57,6 @@
             this.buttonSearchCleanParts = new System.Windows.Forms.Button();
             this.textBoxSearchParts = new System.Windows.Forms.TextBox();
             this.dataGridViewParts = new System.Windows.Forms.DataGridView();
-            this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.articleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.manufacturerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.partsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.autoPartsDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.buttonDeleteParts = new System.Windows.Forms.Button();
@@ -86,9 +74,6 @@
             this.buttonSearchCleanProviders = new System.Windows.Forms.Button();
             this.textBoxSearchProviders = new System.Windows.Forms.TextBox();
             this.dataGridViewProviders = new System.Windows.Forms.DataGridView();
-            this.titleDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.provideraddressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.phoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.providersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.buttonDeleteProviders = new System.Windows.Forms.Button();
             this.buttonAddProviders = new System.Windows.Forms.Button();
@@ -105,12 +90,6 @@
             this.buttonSearchCleanPriceview = new System.Windows.Forms.Button();
             this.textBoxSearchPriceview = new System.Windows.Forms.TextBox();
             this.dataGridViewPriceview = new System.Windows.Forms.DataGridView();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.кодДеталиDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.названиеDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.текущаяЦенаDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.стараяЦенаDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.действовалаДоDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.priceviewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.buttonDeletePriceveiw = new System.Windows.Forms.Button();
             this.buttonAddPriceview = new System.Windows.Forms.Button();
@@ -264,19 +243,9 @@
             // 
             this.dataGridViewStorehouse.AllowUserToAddRows = false;
             this.dataGridViewStorehouse.AllowUserToDeleteRows = false;
-            this.dataGridViewStorehouse.AutoGenerateColumns = false;
             this.dataGridViewStorehouse.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewStorehouse.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.id,
-            this.названиеDataGridViewTextBoxColumn,
-            this.кодDataGridViewTextBoxColumn,
-            this.ценаDataGridViewTextBoxColumn,
-            this.количествоDataGridViewTextBoxColumn,
-            this.производительDataGridViewTextBoxColumn,
-            this.ценаЗакупкиDataGridViewTextBoxColumn,
-            this.датаЗакупкиDataGridViewTextBoxColumn,
-            this.поставщикDataGridViewTextBoxColumn});
-            this.dataGridViewStorehouse.DataSource = this.storehouseBindingSource;
+            this.id});
             this.dataGridViewStorehouse.Location = new System.Drawing.Point(0, 74);
             this.dataGridViewStorehouse.Name = "dataGridViewStorehouse";
             this.dataGridViewStorehouse.ReadOnly = true;
@@ -293,72 +262,6 @@
             this.id.ReadOnly = true;
             this.id.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.id.Width = 40;
-            // 
-            // названиеDataGridViewTextBoxColumn
-            // 
-            this.названиеDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.названиеDataGridViewTextBoxColumn.DataPropertyName = "Название";
-            this.названиеDataGridViewTextBoxColumn.HeaderText = "Название";
-            this.названиеDataGridViewTextBoxColumn.Name = "названиеDataGridViewTextBoxColumn";
-            this.названиеDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // кодDataGridViewTextBoxColumn
-            // 
-            this.кодDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.кодDataGridViewTextBoxColumn.DataPropertyName = "Код";
-            this.кодDataGridViewTextBoxColumn.HeaderText = "Код";
-            this.кодDataGridViewTextBoxColumn.Name = "кодDataGridViewTextBoxColumn";
-            this.кодDataGridViewTextBoxColumn.ReadOnly = true;
-            this.кодDataGridViewTextBoxColumn.Width = 51;
-            // 
-            // ценаDataGridViewTextBoxColumn
-            // 
-            this.ценаDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ценаDataGridViewTextBoxColumn.DataPropertyName = "Цена";
-            this.ценаDataGridViewTextBoxColumn.HeaderText = "Цена";
-            this.ценаDataGridViewTextBoxColumn.Name = "ценаDataGridViewTextBoxColumn";
-            this.ценаDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // количествоDataGridViewTextBoxColumn
-            // 
-            this.количествоDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.количествоDataGridViewTextBoxColumn.DataPropertyName = "Количество";
-            this.количествоDataGridViewTextBoxColumn.HeaderText = "Количество";
-            this.количествоDataGridViewTextBoxColumn.Name = "количествоDataGridViewTextBoxColumn";
-            this.количествоDataGridViewTextBoxColumn.ReadOnly = true;
-            this.количествоDataGridViewTextBoxColumn.Width = 91;
-            // 
-            // производительDataGridViewTextBoxColumn
-            // 
-            this.производительDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.производительDataGridViewTextBoxColumn.DataPropertyName = "Производитель";
-            this.производительDataGridViewTextBoxColumn.HeaderText = "Производитель";
-            this.производительDataGridViewTextBoxColumn.Name = "производительDataGridViewTextBoxColumn";
-            this.производительDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // ценаЗакупкиDataGridViewTextBoxColumn
-            // 
-            this.ценаЗакупкиDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ценаЗакупкиDataGridViewTextBoxColumn.DataPropertyName = "Цена закупки";
-            this.ценаЗакупкиDataGridViewTextBoxColumn.HeaderText = "Цена закупки";
-            this.ценаЗакупкиDataGridViewTextBoxColumn.Name = "ценаЗакупкиDataGridViewTextBoxColumn";
-            this.ценаЗакупкиDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // датаЗакупкиDataGridViewTextBoxColumn
-            // 
-            this.датаЗакупкиDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.датаЗакупкиDataGridViewTextBoxColumn.DataPropertyName = "Дата закупки";
-            this.датаЗакупкиDataGridViewTextBoxColumn.HeaderText = "Дата закупки";
-            this.датаЗакупкиDataGridViewTextBoxColumn.Name = "датаЗакупкиDataGridViewTextBoxColumn";
-            this.датаЗакупкиDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // поставщикDataGridViewTextBoxColumn
-            // 
-            this.поставщикDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.поставщикDataGridViewTextBoxColumn.DataPropertyName = "Поставщик";
-            this.поставщикDataGridViewTextBoxColumn.HeaderText = "Поставщик";
-            this.поставщикDataGridViewTextBoxColumn.Name = "поставщикDataGridViewTextBoxColumn";
-            this.поставщикDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // storehouseBindingSource
             // 
@@ -574,52 +477,12 @@
             // 
             this.dataGridViewParts.AllowUserToAddRows = false;
             this.dataGridViewParts.AllowUserToDeleteRows = false;
-            this.dataGridViewParts.AutoGenerateColumns = false;
             this.dataGridViewParts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewParts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.titleDataGridViewTextBoxColumn,
-            this.articleDataGridViewTextBoxColumn,
-            this.manufacturerDataGridViewTextBoxColumn,
-            this.priceDataGridViewTextBoxColumn});
-            this.dataGridViewParts.DataSource = this.partsBindingSource;
             this.dataGridViewParts.Location = new System.Drawing.Point(0, 74);
             this.dataGridViewParts.Name = "dataGridViewParts";
             this.dataGridViewParts.ReadOnly = true;
             this.dataGridViewParts.Size = new System.Drawing.Size(797, 327);
             this.dataGridViewParts.TabIndex = 21;
-            // 
-            // titleDataGridViewTextBoxColumn
-            // 
-            this.titleDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.titleDataGridViewTextBoxColumn.DataPropertyName = "title";
-            this.titleDataGridViewTextBoxColumn.HeaderText = "Название";
-            this.titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
-            this.titleDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // articleDataGridViewTextBoxColumn
-            // 
-            this.articleDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.articleDataGridViewTextBoxColumn.DataPropertyName = "article";
-            this.articleDataGridViewTextBoxColumn.HeaderText = "Код";
-            this.articleDataGridViewTextBoxColumn.Name = "articleDataGridViewTextBoxColumn";
-            this.articleDataGridViewTextBoxColumn.ReadOnly = true;
-            this.articleDataGridViewTextBoxColumn.Width = 51;
-            // 
-            // manufacturerDataGridViewTextBoxColumn
-            // 
-            this.manufacturerDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.manufacturerDataGridViewTextBoxColumn.DataPropertyName = "manufacturer";
-            this.manufacturerDataGridViewTextBoxColumn.HeaderText = "Производитель";
-            this.manufacturerDataGridViewTextBoxColumn.Name = "manufacturerDataGridViewTextBoxColumn";
-            this.manufacturerDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // priceDataGridViewTextBoxColumn
-            // 
-            this.priceDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.priceDataGridViewTextBoxColumn.DataPropertyName = "price";
-            this.priceDataGridViewTextBoxColumn.HeaderText = "Цена";
-            this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
-            this.priceDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // partsBindingSource
             // 
@@ -825,39 +688,12 @@
             // 
             this.dataGridViewProviders.AllowUserToAddRows = false;
             this.dataGridViewProviders.AllowUserToDeleteRows = false;
-            this.dataGridViewProviders.AutoGenerateColumns = false;
             this.dataGridViewProviders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewProviders.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.titleDataGridViewTextBoxColumn1,
-            this.provideraddressDataGridViewTextBoxColumn,
-            this.phoneDataGridViewTextBoxColumn});
-            this.dataGridViewProviders.DataSource = this.providersBindingSource;
             this.dataGridViewProviders.Location = new System.Drawing.Point(0, 74);
             this.dataGridViewProviders.Name = "dataGridViewProviders";
             this.dataGridViewProviders.ReadOnly = true;
             this.dataGridViewProviders.Size = new System.Drawing.Size(797, 327);
             this.dataGridViewProviders.TabIndex = 34;
-            // 
-            // titleDataGridViewTextBoxColumn1
-            // 
-            this.titleDataGridViewTextBoxColumn1.DataPropertyName = "title";
-            this.titleDataGridViewTextBoxColumn1.HeaderText = "Название";
-            this.titleDataGridViewTextBoxColumn1.Name = "titleDataGridViewTextBoxColumn1";
-            this.titleDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // provideraddressDataGridViewTextBoxColumn
-            // 
-            this.provideraddressDataGridViewTextBoxColumn.DataPropertyName = "provider_address";
-            this.provideraddressDataGridViewTextBoxColumn.HeaderText = "Адрес";
-            this.provideraddressDataGridViewTextBoxColumn.Name = "provideraddressDataGridViewTextBoxColumn";
-            this.provideraddressDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // phoneDataGridViewTextBoxColumn
-            // 
-            this.phoneDataGridViewTextBoxColumn.DataPropertyName = "phone";
-            this.phoneDataGridViewTextBoxColumn.HeaderText = "Телефон";
-            this.phoneDataGridViewTextBoxColumn.Name = "phoneDataGridViewTextBoxColumn";
-            this.phoneDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // providersBindingSource
             // 
@@ -1058,63 +894,12 @@
             // 
             this.dataGridViewPriceview.AllowUserToAddRows = false;
             this.dataGridViewPriceview.AllowUserToDeleteRows = false;
-            this.dataGridViewPriceview.AutoGenerateColumns = false;
             this.dataGridViewPriceview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewPriceview.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idDataGridViewTextBoxColumn,
-            this.кодДеталиDataGridViewTextBoxColumn,
-            this.названиеDataGridViewTextBoxColumn1,
-            this.текущаяЦенаDataGridViewTextBoxColumn,
-            this.стараяЦенаDataGridViewTextBoxColumn,
-            this.действовалаДоDataGridViewTextBoxColumn});
-            this.dataGridViewPriceview.DataSource = this.priceviewBindingSource;
             this.dataGridViewPriceview.Location = new System.Drawing.Point(0, 74);
             this.dataGridViewPriceview.Name = "dataGridViewPriceview";
             this.dataGridViewPriceview.ReadOnly = true;
             this.dataGridViewPriceview.Size = new System.Drawing.Size(797, 327);
             this.dataGridViewPriceview.TabIndex = 47;
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "id";
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            this.idDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // кодДеталиDataGridViewTextBoxColumn
-            // 
-            this.кодДеталиDataGridViewTextBoxColumn.DataPropertyName = "Код детали";
-            this.кодДеталиDataGridViewTextBoxColumn.HeaderText = "Код детали";
-            this.кодДеталиDataGridViewTextBoxColumn.Name = "кодДеталиDataGridViewTextBoxColumn";
-            this.кодДеталиDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // названиеDataGridViewTextBoxColumn1
-            // 
-            this.названиеDataGridViewTextBoxColumn1.DataPropertyName = "Название";
-            this.названиеDataGridViewTextBoxColumn1.HeaderText = "Название";
-            this.названиеDataGridViewTextBoxColumn1.Name = "названиеDataGridViewTextBoxColumn1";
-            this.названиеDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // текущаяЦенаDataGridViewTextBoxColumn
-            // 
-            this.текущаяЦенаDataGridViewTextBoxColumn.DataPropertyName = "Текущая цена";
-            this.текущаяЦенаDataGridViewTextBoxColumn.HeaderText = "Текущая цена";
-            this.текущаяЦенаDataGridViewTextBoxColumn.Name = "текущаяЦенаDataGridViewTextBoxColumn";
-            this.текущаяЦенаDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // стараяЦенаDataGridViewTextBoxColumn
-            // 
-            this.стараяЦенаDataGridViewTextBoxColumn.DataPropertyName = "Старая цена";
-            this.стараяЦенаDataGridViewTextBoxColumn.HeaderText = "Старая цена";
-            this.стараяЦенаDataGridViewTextBoxColumn.Name = "стараяЦенаDataGridViewTextBoxColumn";
-            this.стараяЦенаDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // действовалаДоDataGridViewTextBoxColumn
-            // 
-            this.действовалаДоDataGridViewTextBoxColumn.DataPropertyName = "Действовала до";
-            this.действовалаДоDataGridViewTextBoxColumn.HeaderText = "Действовала до";
-            this.действовалаДоDataGridViewTextBoxColumn.Name = "действовалаДоDataGridViewTextBoxColumn";
-            this.действовалаДоDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // priceviewBindingSource
             // 
@@ -1319,14 +1104,6 @@
         private System.Windows.Forms.BindingSource dealsBindingSource;
         private AutoPartsDataSetTableAdapters.dealsTableAdapter dealsTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn названиеDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn кодDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ценаDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn количествоDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn производительDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ценаЗакупкиDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn датаЗакупкиDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn поставщикDataGridViewTextBoxColumn;
         private System.Windows.Forms.Button buttonSelectRowParts;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelParts;
         private System.Windows.Forms.Label labelRowCountParts;
@@ -1341,10 +1118,6 @@
         private System.Windows.Forms.ComboBox comboboxSearchByParts;
         private System.Windows.Forms.Button buttonCleanParts;
         private System.Windows.Forms.Button buttonRefreshParts;
-        private System.Windows.Forms.DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn articleDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn manufacturerDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
         private System.Windows.Forms.Button buttonSelectRowProviders;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelProviders;
         private System.Windows.Forms.Label labelRowCountProviders;
@@ -1362,9 +1135,6 @@
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.BindingSource bridgeproviderspartsBindingSource;
         private AutoPartsDataSetTableAdapters.bridge_providers_partsTableAdapter bridge_providers_partsTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn provideraddressDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn phoneDataGridViewTextBoxColumn;
         private System.Windows.Forms.Button buttonSelectRowPriceview;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelPriceview;
         private System.Windows.Forms.Label labelRowCountPriceview;
@@ -1380,12 +1150,6 @@
         private System.Windows.Forms.Button buttonRefreshPriceview;
         private System.Windows.Forms.BindingSource priceviewBindingSource;
         private AutoPartsDataSetTableAdapters.priceviewTableAdapter priceviewTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn кодДеталиDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn названиеDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn текущаяЦенаDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn стараяЦенаDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn действовалаДоDataGridViewTextBoxColumn;
         public AutoPartsDataSet autoPartsDataSet;
         private System.Windows.Forms.DataGridView dataGridViewPriceview;
         public System.Windows.Forms.TextBox textBoxSearchStorehouse;

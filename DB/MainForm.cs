@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DB.AutoPartsDataSetTableAdapters;
+using DB.Model.Repository;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,72 +15,96 @@ namespace DB
 {
     public partial class MainForm : Form
     {
-        public const string connectionString = "Data Source=ORANGE\\MSSQLEXPRESS2017;Initial Catalog=AutoParts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
+        string connectionString = "";
+        private Repository repository = Repository.Current;
         bool textBoxSearchActiveStorehouse = false;
         bool textBoxSearchActiveParts = false;
         bool textBoxSearchActiveProviders = false;
         bool textBoxSearchActivePriceview = false;
-        //записки
-        //https://www.flaticon.com/free-icon/plus_128575 иконка "назад"
-        //42880b - зеленые иконки
-        //1568A3 синие 
-        //db342d красные
-        //E8C538 желтые
 
         public MainForm()
         {
             InitializeComponent();
         }
 
+        private void InitiallizaDataGridViews()
+        {
+            DataGridViewCellStyle columnHeaderStyle = new DataGridViewCellStyle();
+            columnHeaderStyle.BackColor = Color.Aqua;
+            columnHeaderStyle.Font = new Font("Verdana", 10, FontStyle.Bold);
+
+            //Storehouse
+            dataGridViewStorehouse.ColumnCount = 9;
+            dataGridViewStorehouse.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
+            dataGridViewStorehouse.Columns[0].Name = "id";
+            dataGridViewStorehouse.Columns[1].Name = "Название";
+            dataGridViewStorehouse.Columns[2].Name = "Код";
+            dataGridViewStorehouse.Columns[3].Name = "Количество";
+            dataGridViewStorehouse.Columns[4].Name = "Производитель";
+            dataGridViewStorehouse.Columns[5].Name = "Цена закупки";
+            dataGridViewStorehouse.Columns[6].Name = "Дата закупки";
+            dataGridViewStorehouse.Columns[7].Name = "Поставщик";
+            dataGridViewStorehouse.Columns[8].Name = "Цена";
+
+            //Parts
+            dataGridViewParts.ColumnCount = 4;
+            dataGridViewParts.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
+            dataGridViewParts.Columns[0].Name = "Название";
+            dataGridViewParts.Columns[1].Name = "Код";
+            dataGridViewParts.Columns[2].Name = "Производитель";
+            dataGridViewParts.Columns[3].Name = "Цена";
+
+            //Providers
+            dataGridViewProviders.ColumnCount = 3;
+            dataGridViewProviders.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
+            dataGridViewProviders.Columns[0].Name = "Название";
+            dataGridViewProviders.Columns[1].Name = "Адрес";
+            dataGridViewProviders.Columns[2].Name = "Телефон";
+
+            //PriceView
+            dataGridViewPriceview.ColumnCount = 6;
+            dataGridViewPriceview.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
+            dataGridViewPriceview.Columns[0].Name = "id";
+            dataGridViewPriceview.Columns[1].Name = "Код детали";
+            dataGridViewPriceview.Columns[2].Name = "Название";
+            dataGridViewPriceview.Columns[3].Name = "Текущая цена";
+            dataGridViewPriceview.Columns[4].Name = "Старая цена";
+            dataGridViewPriceview.Columns[5].Name = "Действовала до";
+        }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
+            InitiallizaDataGridViews();
+
             try
             {
-                this.bridge_providers_partsTableAdapter.Fill(this.autoPartsDataSet.bridge_providers_parts);
-            } catch (Exception err)
-            {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из таблицы bridge_providers_parts", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                foreach (Repository.StorehouseItem item in repository.Storehouse())
+                    dataGridViewStorehouse.Rows.Add(
+                        item.Id, item.Title, item.PartId, item.Count, 
+                        item.Manufacturer, item.OriginalPrice, item.Date.Date, item.ProviderTitle, item.Price
+                    );
+
+                foreach (Repository.PartItem item in repository.GetParts())
+                    dataGridViewParts.Rows.Add(
+                        item.Title, item.Id, item.Manufacturer, item.Price
+                    );
+                
+                foreach (Repository.ProviderItem item in repository.GetProviders())
+                    dataGridViewProviders.Rows.Add(
+                        item.Title, item.Address, item.Phone
+                    );
+
+                foreach (Repository.PriceHistoryItem item in repository.GetPriceHistories())
+                    dataGridViewProviders.Rows.Add(
+                        item.Id, item.PartId, item.Title, item.CurrentPrice, item.OldPrice, item.ActualBefore    
+                    );
 
             }
-            try
-            {
-                this.dealsTableAdapter.Fill(this.autoPartsDataSet.deals);
-            } catch (Exception err)
-            {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из таблицы deals", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            try
-            {
-                this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
-            }
             catch (Exception err)
             {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из таблицы parts", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из базы данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            try
-            {
-                this.providersTableAdapter.Fill(this.autoPartsDataSet.providers);
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из таблицы providers", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            try
-            {
-                this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления storehouse", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            try
-            {
-                this.priceviewTableAdapter.Fill(this.autoPartsDataSet.priceview);
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления priceview", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
             labelRowCountStorehouse.Text += dataGridViewStorehouse.RowCount.ToString();
             labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
             labelRowCountProviders.Text = "Количество записей: " + dataGridViewProviders.RowCount.ToString();

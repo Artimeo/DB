@@ -23,24 +23,6 @@ namespace DB.Model.Repository
         public IEnumerable<Deal> Deals { get { return context.Deals; } }
         public IEnumerable<PriceHistory> PriceHistories { get { return context.PriceHistories; } }
 
-        //create view storehouse as select distinct
-        //deals.id as 'id',
-        //parts.article as 'Код', 
-        //parts.title as 'Название', 
-        //parts.price as 'Цена',
-        //deals.parts_count as 'Количество', 
-        //parts.manufacturer as 'Производитель',
-        //(select distinct price from priceHistory where
-        //    priceHistory.price_id = (select max(price_id) from priceHistory where priceHistory.parts_article = bridge_providers_parts.parts_article) ) 
-        // as 'Цена закупки',
-        //deals.deal_date as 'Дата закупки', 
-        //providers.title as 'Поставщик' 
-        //from parts, providers, deals, bridge_providers_parts, priceHistory
-        //where deals.bridge_id = bridge_providers_parts.id
-        // and parts.article = bridge_providers_parts.parts_article
-        // and providers.title = bridge_providers_parts.providers_title
-        // and priceHistory.parts_article = bridge_providers_parts.parts_article;
-
         public class StorehouseItem {
             public int Id { get; set; }               //id
             public int PartId { get; set; }           //код детали
@@ -68,6 +50,14 @@ namespace DB.Model.Repository
             }
         }
 
+        public class PartItem
+        {
+            public string Title { get; set; }
+            public int Id { get; set; }
+            public string Manufacturer { get; set; }
+            public int Price { get; set; }
+        }
+
         public List<StorehouseItem> Storehouse()
         {
 
@@ -89,8 +79,65 @@ namespace DB.Model.Repository
                                       Date = deal.Date,
                                       ProviderTitle = provider.Title
                                   }).OrderBy(item => item.Id);
-            var list = storehouseItems.ToList();
-            return list;
+
+            return storehouseItems.ToList();
+        }
+
+        public class ProviderItem
+        {
+            public string Title { get; set; }
+            public string Address { get; set; }
+            public string Phone { get; set; }
+        }
+
+        public List<PartItem> GetParts()
+        {
+            var query = from part in Parts
+                   select new PartItem
+                   {
+                       Title = part.Title,
+                       Id = part.Id,
+                       Manufacturer = part.Manufacturer,
+                       Price = part.Price
+                   };
+            return query.ToList();
+        }
+
+        public List<ProviderItem> GetProviders()
+        {
+            var query = from provider in Providers
+                   select new ProviderItem
+                   {
+                       Title = provider.Title,
+                       Address = provider.Address,
+                       Phone = provider.Phone
+                    };
+            return query.ToList();
+        }
+
+        public class PriceHistoryItem
+        {
+            public int Id { get; set; }
+            public int PartId { get; set; }
+            public string Title { get; set; }
+            public int CurrentPrice { get; set; }
+            public int OldPrice { get; set; }
+            public DateTime ActualBefore { get; set; }
+        }
+
+        public List<PriceHistoryItem> GetPriceHistories()
+        {
+            var query = from priceHistory in PriceHistories
+                        select new PriceHistoryItem
+                        {
+                            Id = priceHistory.Id,
+                            PartId = priceHistory.PartId,
+                            Title = priceHistory.Part.Title,
+                            CurrentPrice = priceHistory.Part.Price,
+                            OldPrice = priceHistory.Price,
+                            ActualBefore = priceHistory.Date
+                        };
+            return query.ToList();
         }
     }
 }

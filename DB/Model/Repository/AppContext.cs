@@ -31,6 +31,14 @@ namespace DB.Model.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Deal>().
+                Property(d => d.Date)
+                .HasColumnType("date");
+
+            modelBuilder.Entity<PriceHistory>().
+                Property(ph => ph.Date)
+                .HasColumnType("date");
+
             List<Part> parts = new List<Part>
             {
                 new Part { Id = 1 , Title = "Рулевая рейка", Manufacturer = "Nissan Almera N16", Price = 12000 },

@@ -116,7 +116,7 @@ namespace DB
             foreach (Repository.StorehouseItem item in repository.Storehouse())
                 dataGridViewStorehouse.Rows.Add(
                     item.Id, item.Title, item.PartId, item.Count,
-                    item.Manufacturer, item.OriginalPrice, item.Date.Date, item.ProviderTitle, item.Price
+                    item.Manufacturer, item.OriginalPrice, item.Date.ToString("dd.MM.yyyy"), item.ProviderTitle, item.Price
                 );
             if (saveScrollPosition == true)
                 dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = dataGridViewStorehouse.RowCount - 1;
@@ -169,7 +169,7 @@ namespace DB
             dataGridViewPriceview.Rows.Clear();
             foreach (Repository.PriceHistoryItem item in repository.GetPriceHistories())
                 dataGridViewProviders.Rows.Add(
-                    item.Id, item.PartId, item.Title, item.CurrentPrice, item.OldPrice, item.ActualBefore
+                    item.Id, item.PartId, item.Title, item.CurrentPrice, item.OldPrice, item.ActualBefore.ToString("dd.MM.yyyy")
                 );
             if (saveScrollPosition == true)
                 dataGridViewPriceview.FirstDisplayedScrollingRowIndex = dataGridViewPriceview.RowCount - 1;

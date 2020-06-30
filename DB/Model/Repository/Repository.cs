@@ -50,14 +50,6 @@ namespace DB.Model.Repository
             }
         }
 
-        public class PartItem
-        {
-            public string Title { get; set; }
-            public int Id { get; set; }
-            public string Manufacturer { get; set; }
-            public int Price { get; set; }
-        }
-
         public List<StorehouseItem> Storehouse()
         {
 
@@ -82,12 +74,13 @@ namespace DB.Model.Repository
 
             return storehouseItems.ToList();
         }
-
-        public class ProviderItem
+        
+        public class PartItem
         {
             public string Title { get; set; }
-            public string Address { get; set; }
-            public string Phone { get; set; }
+            public int Id { get; set; }
+            public string Manufacturer { get; set; }
+            public int Price { get; set; }
         }
 
         public List<PartItem> GetParts()
@@ -102,12 +95,21 @@ namespace DB.Model.Repository
                    };
             return query.ToList();
         }
+        
+        public class ProviderItem
+        {
+            public int Id { get; set; }
+            public string Title { get; set; }
+            public string Address { get; set; }
+            public string Phone { get; set; }
+        }
 
         public List<ProviderItem> GetProviders()
         {
             var query = from provider in Providers
                    select new ProviderItem
                    {
+                       Id = provider.Id,
                        Title = provider.Title,
                        Address = provider.Address,
                        Phone = provider.Phone
@@ -138,6 +140,34 @@ namespace DB.Model.Repository
                             ActualBefore = priceHistory.Date
                         };
             return query.ToList();
+        }
+
+        public void DeleteDealById(int id)
+        {
+            var deal = Deals.Where(d => d.Id == id).SingleOrDefault();
+            context.Deals.Remove(deal);
+            context.SaveChanges();
+        }
+
+        public void DeletePartById(int id)
+        {
+            var part = Parts.Where(p => p.Id == id).SingleOrDefault();
+            context.Parts.Remove(part);
+            context.SaveChanges();
+        }
+
+        public void DeleteProviderById(int id)
+        {
+            var provider = Providers.Where(p => p.Id == id).SingleOrDefault();
+            context.Providers.Remove(provider);
+            context.SaveChanges();
+        }
+
+        public void DeletePriceHistoryById(int id)
+        {
+            var priceHistory = PriceHistories.Where(p => p.Id == id).SingleOrDefault();
+            context.PriceHistories.Remove(priceHistory);
+            context.SaveChanges();
         }
     }
 }

@@ -333,7 +333,7 @@
             this.Controls.Add(this.textBoxTitle);
             this.Name = "AddDealsForm";
             this.Text = "Добавление записи";
-            this.Load += new System.EventHandler(this.AddForm_Load);
+            this.Load += new System.EventHandler(this.AddDealsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bridgeproviderspartsBindingSource)).EndInit();

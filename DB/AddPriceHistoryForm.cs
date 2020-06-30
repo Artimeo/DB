@@ -156,7 +156,7 @@ namespace DB
                 MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            parentForm.refreshAfterDeletePriceview();
+            //parentForm.refreshAfterDeletePriceview();
             MessageBox.Show("Запись успешно добавлена", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
             partsAutocompleteСhanged();
         }

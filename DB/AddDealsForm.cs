@@ -34,14 +34,7 @@ namespace DB
             this.Close();
         }
 
-        private void AddForm_Load(object sender, EventArgs e)
-        {
-            this.providersTableAdapter.Fill(this.autoPartsDataSet.providers);
-            this.dealsTableAdapter.Fill(this.autoPartsDataSet.deals);
-            this.bridge_providers_partsTableAdapter.Fill(this.autoPartsDataSet.bridge_providers_parts);
-            this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
-
-        }
+        private void AddDealsForm_Load(object sender, EventArgs e) {}
 
         public bool isAllowedRecordRow()
         {
@@ -59,7 +52,7 @@ namespace DB
 
         private void partsAutocomplete (object sender, EventArgs e)
         {
-            if (textBoxTitle.Text == "")
+            if (textBoxTitle.Text.Length == 0)
             {
                 pictureTitleError.Show();
                 pictureProviderError.Show();
@@ -167,7 +160,7 @@ namespace DB
                 MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            parentForm.refreshAfterInsertStorehouse();
+            //parentForm.refreshAfterInsertStorehouse();
             MessageBox.Show("Запись успешно добавлена", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

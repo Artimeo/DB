@@ -15,19 +15,15 @@ namespace DB
 {
     public partial class MainForm : Form
     {
-        string connectionString = "";
         private Repository repository = Repository.Current;
-        bool textBoxSearchActiveStorehouse = false;
-        bool textBoxSearchActiveParts = false;
-        bool textBoxSearchActiveProviders = false;
-        bool textBoxSearchActivePriceview = false;
+        private bool textBoxSearchActiveStorehouse = false;
+        private bool textBoxSearchActiveParts = false;
+        private bool textBoxSearchActiveProviders = false;
+        private bool textBoxSearchActivePriceview = false;
 
-        public MainForm()
-        {
-            InitializeComponent();
-        }
+        public MainForm() { InitializeComponent(); }
 
-        private void InitiallizaDataGridViews()
+        private void InitiallizeDataGridViews()
         {
             DataGridViewCellStyle columnHeaderStyle = new DataGridViewCellStyle();
             columnHeaderStyle.BackColor = Color.Aqua;
@@ -49,17 +45,18 @@ namespace DB
             //Parts
             dataGridViewParts.ColumnCount = 4;
             dataGridViewParts.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
-            dataGridViewParts.Columns[0].Name = "Название";
-            dataGridViewParts.Columns[1].Name = "Код";
+            dataGridViewParts.Columns[0].Name = "id";
+            dataGridViewParts.Columns[1].Name = "Название";
             dataGridViewParts.Columns[2].Name = "Производитель";
             dataGridViewParts.Columns[3].Name = "Цена";
 
             //Providers
-            dataGridViewProviders.ColumnCount = 3;
+            dataGridViewProviders.ColumnCount = 4;
             dataGridViewProviders.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
-            dataGridViewProviders.Columns[0].Name = "Название";
-            dataGridViewProviders.Columns[1].Name = "Адрес";
-            dataGridViewProviders.Columns[2].Name = "Телефон";
+            dataGridViewProviders.Columns[0].Name = "id";
+            dataGridViewProviders.Columns[1].Name = "Название";
+            dataGridViewProviders.Columns[2].Name = "Адрес";
+            dataGridViewProviders.Columns[3].Name = "Телефон";
 
             //PriceView
             dataGridViewPriceview.ColumnCount = 6;
@@ -72,178 +69,174 @@ namespace DB
             dataGridViewPriceview.Columns[5].Name = "Действовала до";
         }
 
+        private void InitiallizeSearchComboboxes()
+        {
+            comboboxSearchByStorehouse.Items.Add("Все");
+            for (int i = 0; i < dataGridViewStorehouse.ColumnCount; i++)
+                comboboxSearchByStorehouse.Items.Add(dataGridViewStorehouse.Columns[i].Name);
+            comboboxSearchByStorehouse.SelectedIndex = 0;
+
+            comboboxSearchByParts.Items.Add("Все");
+            for (int i = 0; i < dataGridViewParts.ColumnCount; i++)
+                comboboxSearchByParts.Items.Add(dataGridViewParts.Columns[i].Name);
+            comboboxSearchByParts.SelectedIndex = 0;
+            
+            comboboxSearchByProviders.Items.Add("Все");
+            for (int i = 0; i < dataGridViewProviders.ColumnCount; i++)
+                comboboxSearchByProviders.Items.Add(dataGridViewProviders.Columns[i].Name);
+            comboboxSearchByProviders.SelectedIndex = 0;
+            
+            comboboxSearchByPriceview.Items.Add("Все");
+            for (int i = 0; i < dataGridViewPriceview.ColumnCount; i++)
+                comboboxSearchByPriceview.Items.Add(dataGridViewPriceview.Columns[i].Name);
+            comboboxSearchByPriceview.SelectedIndex = 0;
+        }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
-            InitiallizaDataGridViews();
+            InitiallizeDataGridViews();
+            InitiallizeSearchComboboxes();
 
             try
             {
-                foreach (Repository.StorehouseItem item in repository.Storehouse())
-                    dataGridViewStorehouse.Rows.Add(
-                        item.Id, item.Title, item.PartId, item.Count, 
-                        item.Manufacturer, item.OriginalPrice, item.Date.Date, item.ProviderTitle, item.Price
-                    );
-
-                foreach (Repository.PartItem item in repository.GetParts())
-                    dataGridViewParts.Rows.Add(
-                        item.Title, item.Id, item.Manufacturer, item.Price
-                    );
-                
-                foreach (Repository.ProviderItem item in repository.GetProviders())
-                    dataGridViewProviders.Rows.Add(
-                        item.Title, item.Address, item.Phone
-                    );
-
-                foreach (Repository.PriceHistoryItem item in repository.GetPriceHistories())
-                    dataGridViewProviders.Rows.Add(
-                        item.Id, item.PartId, item.Title, item.CurrentPrice, item.OldPrice, item.ActualBefore    
-                    );
-
+                refreshStorehouse();
+                refreshParts();
+                refreshProviders();
+                refreshPriceview();
             }
             catch (Exception err)
             {
                 MessageBox.Show(err.ToString(), "Ошибка загрузки данных из базы данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
 
-            labelRowCountStorehouse.Text += dataGridViewStorehouse.RowCount.ToString();
+        public void refreshStorehouse(bool saveScrollPosition = false)
+        {
+            dataGridViewStorehouse.Rows.Clear();
+            foreach (Repository.StorehouseItem item in repository.Storehouse())
+                dataGridViewStorehouse.Rows.Add(
+                    item.Id, item.Title, item.PartId, item.Count,
+                    item.Manufacturer, item.OriginalPrice, item.Date.Date, item.ProviderTitle, item.Price
+                );
+            if (saveScrollPosition == true)
+                dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = dataGridViewStorehouse.RowCount - 1;
+            labelRowCountStorehouse.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
+        }
+
+        public void refreshParts(bool saveScrollPosition = false)
+        {
+            dataGridViewParts.Rows.Clear();
+            foreach (Repository.PartItem item in repository.GetParts())
+                dataGridViewParts.Rows.Add(
+                    item.Id, item.Title, item.Manufacturer, item.Price
+                );
+            if (saveScrollPosition == true)
+                dataGridViewParts.FirstDisplayedScrollingRowIndex = dataGridViewParts.RowCount - 1;
             labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
+            
+            //в параметрах (AddDealsForm updateForm)
+            //foreach (DataRow row in this.autoPartsDataSet.parts.Select())
+            //{
+            //    updateForm.textBoxTitle.AutoCompleteCustomSource.Add(
+            //        row.ItemArray[0].ToString());
+            //    updateForm.textBoxManufacturer.AutoCompleteCustomSource.Add(
+            //        row.ItemArray[2].ToString());
+            //}
+        }
+
+        public void refreshProviders(bool saveScrollPosition = false)
+        {
+            dataGridViewProviders.Rows.Clear();
+            foreach (Repository.ProviderItem item in repository.GetProviders())
+                dataGridViewProviders.Rows.Add(
+                    item.Id, item.Title, item.Address, item.Phone
+                );
+            if (saveScrollPosition == true)
+                dataGridViewProviders.FirstDisplayedScrollingRowIndex = dataGridViewProviders.RowCount - 1;
             labelRowCountProviders.Text = "Количество записей: " + dataGridViewProviders.RowCount.ToString();
+
+            //updateForm.comboBoxProvider.Items.Clear();
+
+            //foreach (DataRow row in this.autoPartsDataSet.providers.Select())
+            //{
+            //    updateForm.comboBoxProvider.Items.Add(
+            //        row.ItemArray[0].ToString());
+            //}
+        }
+        
+        public void refreshPriceview(bool saveScrollPosition = false)
+        {
+            dataGridViewPriceview.Rows.Clear();
+            foreach (Repository.PriceHistoryItem item in repository.GetPriceHistories())
+                dataGridViewProviders.Rows.Add(
+                    item.Id, item.PartId, item.Title, item.CurrentPrice, item.OldPrice, item.ActualBefore
+                );
+            if (saveScrollPosition == true)
+                dataGridViewPriceview.FirstDisplayedScrollingRowIndex = dataGridViewPriceview.RowCount - 1;
             labelRowCountPriceview.Text = "Количество записей: " + dataGridViewPriceview.RowCount.ToString();
         }
 
-        public void refreshAfterInsertStorehouse()
+        private int Search(DataGridView view, ComboBox comboboxSearchBy, string searchText)
         {
-            dataGridViewStorehouse.ClearSelection();
-            this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
-            dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = dataGridViewStorehouse.RowCount - 1;
-            labelRowCountStorehouse.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
-        }
-        public void refreshAfterDeleteStorehouse()
-        {
-            dataGridViewStorehouse.ClearSelection();
-            this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
-            labelRowCountStorehouse.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
-        }
-        public void refreshAfterInsertParts()
-        {
-            dataGridViewParts.ClearSelection();
-            this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
-            dataGridViewParts.FirstDisplayedScrollingRowIndex = dataGridViewParts.RowCount - 1;
-            labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
-        }
-        public void refreshAfterInsertParts(AddDealsForm updateForm)
-        {
-            dataGridViewParts.ClearSelection();
-            this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
-            dataGridViewParts.FirstDisplayedScrollingRowIndex = dataGridViewParts.RowCount - 1;
-            labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
+            if (searchText.Length == 0) 
+                return -3;
 
-            foreach (DataRow row in this.autoPartsDataSet.parts.Select())
-            {
-                updateForm.textBoxTitle.AutoCompleteCustomSource.Add(
-                    row.ItemArray[0].ToString());
-                updateForm.textBoxManufacturer.AutoCompleteCustomSource.Add(
-                    row.ItemArray[2].ToString());
-            }
-        }
-        public void refreshAfterDeleteParts()
-        {
-            dataGridViewParts.ClearSelection();
-            this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
-            labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
-        }
-        public void refreshAfterInsertProviders()
-        {
-            dataGridViewProviders.ClearSelection();
-            this.providersTableAdapter.Fill(this.autoPartsDataSet.providers);
-            dataGridViewProviders.FirstDisplayedScrollingRowIndex = dataGridViewProviders.RowCount - 1;
-            labelRowCountProviders.Text = "Количество записей: " + dataGridViewProviders.RowCount.ToString();
-        }
-        public void refreshAfterInsertProviders(AddDealsForm updateForm)
-        {
-            dataGridViewProviders.ClearSelection();
-            this.providersTableAdapter.Fill(this.autoPartsDataSet.providers);
-            dataGridViewProviders.FirstDisplayedScrollingRowIndex = dataGridViewProviders.RowCount - 1;
-            labelRowCountProviders.Text = "Количество записей: " + dataGridViewProviders.RowCount.ToString();
-
-            updateForm.comboBoxProvider.Items.Clear();
-
-            foreach (DataRow row in this.autoPartsDataSet.providers.Select())
-            {
-                updateForm.comboBoxProvider.Items.Add(
-                    row.ItemArray[0].ToString());
-            }
-        }
-        public void refreshAfterDeleteProviders()
-        {
-            dataGridViewProviders.ClearSelection();
-            this.providersTableAdapter.Fill(this.autoPartsDataSet.providers);
-            labelRowCountProviders.Text = "Количество записей: " + dataGridViewProviders.RowCount.ToString();
-        }
-        public void refreshAfterDeletePriceview()
-        {
-            dataGridViewPriceview.ClearSelection();
-            this.priceviewTableAdapter.Fill(this.autoPartsDataSet.priceview);
-            labelRowCountPriceview.Text = "Количество записей: " + dataGridViewPriceview.RowCount.ToString();
-        }
-
-
-        //Storehouse & Deals
-        private int SearchStorehouse(string SearchBy, string SearchText)
-        {
-            if (SearchText == "") return -3;
-
+            int columnSearchBy = comboboxSearchBy.SelectedIndex;
             bool getEntryInRow = false;
-            foreach (DataGridViewRow row in dataGridViewStorehouse.Rows)
-            {
-                row.Visible = true;
-            }
-            dataGridViewStorehouse.ClearSelection();
-            dataGridViewStorehouse.CurrentCell = null;
+            searchText = searchText.ToLower();
 
-            if (SearchBy == "Все")
+            foreach (DataGridViewRow row in view.Rows)
+                row.Visible = true;
+
+            view.ClearSelection();
+            view.CurrentCell = null;
+
+
+            if (columnSearchBy == 0)
             {
-                for (int i = 0; i < dataGridViewStorehouse.RowCount; i++)
+                for (int i = 0; i < view.RowCount; i++)
                 {
-                    dataGridViewStorehouse.Rows[i].Selected = false;
-                    for (int j = 0; j < dataGridViewStorehouse.ColumnCount; j++)
+                    view.Rows[i].Selected = false;
+                    for (int j = 0; j < view.ColumnCount; j++)
                     {
-                        if (dataGridViewStorehouse.Rows[i].Cells[j].Value != null)
+                        if (view.Rows[i].Cells[j].Value != null)
                         {
-                            if (dataGridViewStorehouse.Rows[i].Cells[j].Value.ToString().ToLower().Contains(SearchText.ToLower()))
+                            if (view.Rows[i].Cells[j].Value.ToString().ToLower().Contains(searchText))
                             {
                                 if (getEntryInRow == false)
                                 {
                                     getEntryInRow = true;
-                                    dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = i;
+                                    view.FirstDisplayedScrollingRowIndex = i;
                                 }
-                                dataGridViewStorehouse.Rows[i].Selected = true;
+                                view.Rows[i].Selected = true;
                                 break;
                             }
                         }
                     }
                 }
-                if (getEntryInRow == false) {
+
+                if (getEntryInRow == false)
+                {
                     MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return -1;
                 }
                 else
                 {
-                    foreach (DataGridViewRow row in dataGridViewStorehouse.Rows)
+                    foreach (DataGridViewRow row in view.Rows)
                     {
                         if (!row.Selected) row.Visible = false;
                     }
-                    dataGridViewStorehouse.ClearSelection();
-                        
-                    for (int i = 0; i < dataGridViewStorehouse.RowCount; i++)
+                    view.ClearSelection();
+
+                    for (int i = 0; i < view.RowCount; i++)
                     {
-                        if (dataGridViewStorehouse.Rows[i].Visible)
+                        if (view.Rows[i].Visible)
                         {
-                            for (int j = 0; j < dataGridViewStorehouse.ColumnCount; j++)
+                            for (int j = 0; j < view.ColumnCount; j++)
                             {
-                                if (dataGridViewStorehouse.Rows[i].Cells[j].Value.ToString().ToLower().Contains(SearchText.ToLower()))
+                                if (view.Rows[i].Cells[j].Value.ToString().ToLower().Contains(searchText))
                                 {
-                                    dataGridViewStorehouse.Rows[i].Cells[j].Selected = true;
+                                    view.Rows[i].Cells[j].Selected = true;
                                 }
                             }
                         }
@@ -253,56 +246,20 @@ namespace DB
             }
             else
             {
-                int columnSearchBy;
-
-                switch (SearchBy)
+                columnSearchBy -= 1;
+                for (int i = 0; i < view.RowCount; i++)
                 {
-                    case "id":
-                        columnSearchBy = 0;
-                        break;
-                    case "Название":
-                        columnSearchBy = 1;
-                        break;
-                    case "Код":
-                        columnSearchBy = 2;
-                        break;
-                    case "Цена":
-                        columnSearchBy = 3;
-                        break;
-                    case "Количество":
-                        columnSearchBy = 4;
-                        break;
-                    case "Производитель":
-                        columnSearchBy = 5;
-                        break;
-                    case "Цена закупки":
-                        columnSearchBy = 6;
-                        break;
-                    case "Дата закупки":
-                        columnSearchBy = 7;
-                        break;
-                    case "Поставщик":
-                        columnSearchBy = 8;
-                        break;
-                    default:
-                        MessageBox.Show("Ошибка поиска! Выбранное поле отсутствует в таблице. Поиск установлен на \"Все\".", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        comboboxSearchByStorehouse.Text = "Все";
-                        return -2;
-                }
-
-                for (int i = 0; i < dataGridViewStorehouse.RowCount; i++)
-                {
-                    dataGridViewStorehouse.Rows[i].Selected = false;
-                    if (dataGridViewStorehouse.Rows[i].Cells[columnSearchBy].Value != null)
+                    view.Rows[i].Selected = false;
+                    if (view.Rows[i].Cells[columnSearchBy].Value != null)
                     {
-                        if (dataGridViewStorehouse.Rows[i].Cells[columnSearchBy].Value.ToString().ToLower().Contains(SearchText.ToLower()))
+                        if (view.Rows[i].Cells[columnSearchBy].Value.ToString().ToLower().Contains(searchText))
                         {
                             if (getEntryInRow == false)
                             {
                                 getEntryInRow = true;
-                                dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = i;
+                                view.FirstDisplayedScrollingRowIndex = i;
                             }
-                            dataGridViewStorehouse.Rows[i].Cells[columnSearchBy].Selected = true;
+                            view.Rows[i].Cells[columnSearchBy].Selected = true;
                         }
                     }
                 }
@@ -315,49 +272,42 @@ namespace DB
             }
         }
 
+
+        //Storehouse
         private void buttonRefreshStorehouse_Click(object sender, EventArgs e)
         {
             try
             {
-                this.storehouseTableAdapter.Fill(this.autoPartsDataSet.storehouse);
+                refreshStorehouse();
                 foreach (DataGridViewColumn column in dataGridViewStorehouse.Columns)
                 {
                     column.SortMode = DataGridViewColumnSortMode.NotSortable;
                     column.SortMode = DataGridViewColumnSortMode.Automatic;
                 }
-                dataGridViewStorehouse.ClearSelection();
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления storehouse", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            labelRowCountStorehouse.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
         }
 
         private void buttonCleanStorehouse_Click(object sender, EventArgs e)
         {
-            try
+            if (dataGridViewStorehouse.RowCount > 0)
             {
-                if (dataGridViewStorehouse.RowCount > 0)
+                dataGridViewStorehouse.Sort(dataGridViewStorehouse.Columns[0], ListSortDirection.Ascending);
+                foreach (DataGridViewColumn column in dataGridViewStorehouse.Columns)
                 {
-                    dataGridViewStorehouse.Sort(dataGridViewStorehouse.Columns[0], ListSortDirection.Ascending);
-                    foreach (DataGridViewColumn column in dataGridViewStorehouse.Columns)
-                    {
-                        column.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        column.SortMode = DataGridViewColumnSortMode.Automatic;
-                    }
-                    foreach (DataGridViewRow row in dataGridViewStorehouse.Rows) row.Visible = true;
-                    dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = 0;
-                    dataGridViewStorehouse.ClearSelection();
-                    labelRowCountStorehouse.Text = "Количество записей: " + dataGridViewStorehouse.RowCount.ToString();
+                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    column.SortMode = DataGridViewColumnSortMode.Automatic;
                 }
-                else
-                {
-                    MessageBox.Show("Отсутствуют данные, сначала обновите таблицу.", "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            } catch (Exception err)
+                foreach (DataGridViewRow row in dataGridViewStorehouse.Rows) row.Visible = true;
+                dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = 0;
+                dataGridViewStorehouse.ClearSelection();
+            }
+            else
             {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления storehouse", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Отсутствуют данные, сначала обновите таблицу.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -393,9 +343,9 @@ namespace DB
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (textBoxSearchStorehouse.Text != "")
+                if (textBoxSearchStorehouse.Text.Length > 0)
                 {
-                    SearchStorehouse(comboboxSearchByStorehouse.Text, textBoxSearchStorehouse.Text);
+                    Search(dataGridViewStorehouse, comboboxSearchByStorehouse, textBoxSearchStorehouse.Text);
                 }
                 else
                 {
@@ -415,11 +365,8 @@ namespace DB
         private void buttonSelectRowStorehouse_Click(object sender, EventArgs e)
         {
             var selectedCells = dataGridViewStorehouse.SelectedCells;
-
             foreach (DataGridViewCell cell in selectedCells)
-            {
                 dataGridViewStorehouse.Rows[cell.RowIndex].Selected = true;
-            }
         }
 
         private void buttonAddStorehouse_Click(object sender, EventArgs e)
@@ -460,159 +407,29 @@ namespace DB
             {
                 try
                 {
-                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    foreach (DataGridViewRow selectedRow in dataGridViewStorehouse.SelectedRows)
                     {
-                        connection.Open();
+                        int id = int.Parse(selectedRow.Cells[0].Value.ToString());
+                        repository.DeleteDealById(id);
 
-                        foreach (DataGridViewRow selectedRow in dataGridViewStorehouse.SelectedRows)
-                        {
-                            string expression = "delete from deals where id = " + selectedRow.Cells[0].Value;
-
-                            SqlCommand request = new SqlCommand(expression, connection);
-                            request.ExecuteNonQuery();
-
-                            if (dataGridViewStorehouse.SelectedRows.Count <= 1) break;
-                        }
-
-                        this.refreshAfterDeleteStorehouse();
-                        connection.Close();
+                        if (dataGridViewStorehouse.SelectedRows.Count <= 1) break;
                     }
-                } catch (SqlException err)
+                    refreshStorehouse(true);
+                } 
+                catch (Exception err)
                 {
-                    if (err.Number == 547)
-                    {
-                        MessageBox.Show("Невозможно удалить выбранную строку (строки) из таблицы deals, так как от нее зависимы другие таблицы. " +
-                            "Сначала удалите связанные строки в них.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        if (dataGridViewStorehouse.SelectedRows.Count > 1) return;
-                    }
-                    else
-                    {
-                        MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
 
         //Parts
-        public int SearchParts(string SearchBy, string SearchText)
-        {
-            if (SearchText == "") return -3;
-
-            bool getEntryInRow = false;
-            foreach (DataGridViewRow row in dataGridViewParts.Rows)
-            {
-                row.Visible = true;
-            }
-            dataGridViewParts.ClearSelection();
-            dataGridViewParts.CurrentCell = null;
-
-            if (SearchBy == "Все")
-            {
-                for (int i = 0; i < dataGridViewParts.RowCount; i++)
-                {
-                    dataGridViewParts.Rows[i].Selected = false;
-                    for (int j = 0; j < dataGridViewParts.ColumnCount; j++)
-                    {
-                        if (dataGridViewParts.Rows[i].Cells[j].Value != null)
-                        {
-                            if (dataGridViewParts.Rows[i].Cells[j].Value.ToString().ToLower().Contains(SearchText.ToLower()))
-                            {
-                                if (getEntryInRow == false)
-                                {
-                                    getEntryInRow = true;
-                                    dataGridViewParts.FirstDisplayedScrollingRowIndex = i;
-                                }
-                                dataGridViewParts.Rows[i].Selected = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-                if (getEntryInRow == false)
-                {
-                    MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return -1;
-                }
-                else
-                {
-                    foreach (DataGridViewRow row in dataGridViewParts.Rows)
-                    {
-                        if (!row.Selected) row.Visible = false;
-                    }
-                    dataGridViewParts.ClearSelection();
-
-                    for (int i = 0; i < dataGridViewParts.RowCount; i++)
-                    {
-                        if (dataGridViewParts.Rows[i].Visible)
-                        {
-                            for (int j = 0; j < dataGridViewParts.ColumnCount; j++)
-                            {
-                                if (dataGridViewParts.Rows[i].Cells[j].Value.ToString().ToLower().Contains(SearchText.ToLower()))
-                                {
-                                    dataGridViewParts.Rows[i].Cells[j].Selected = true;
-                                }
-                            }
-                        }
-                    }
-                }
-                return 0;
-            }
-            else
-            {
-                int columnSearchBy;
-
-                switch (SearchBy)
-                {
-                    case "Название":
-                        columnSearchBy = 0;
-                        break;
-                    case "Код":
-                        columnSearchBy = 1;
-                        break;
-                    case "Производитель":
-                        columnSearchBy = 2;
-                        break;
-                    case "Цена":
-                        columnSearchBy = 3;
-                        break;
-                    default:
-                        MessageBox.Show("Ошибка поиска! Выбранное поле отсутствует в таблице. Поиск установлен на \"Все\".", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        comboboxSearchByParts.Text = "Все";
-                        return -2;
-                }
-
-                for (int i = 0; i < dataGridViewParts.RowCount; i++)
-                {
-                    dataGridViewParts.Rows[i].Selected = false;
-                    if (dataGridViewParts.Rows[i].Cells[columnSearchBy].Value != null)
-                    {
-                        if (dataGridViewParts.Rows[i].Cells[columnSearchBy].Value.ToString().ToLower().Contains(SearchText.ToLower()))
-                        {
-                            if (getEntryInRow == false)
-                            {
-                                getEntryInRow = true;
-                                dataGridViewParts.FirstDisplayedScrollingRowIndex = i;
-                            }
-                            dataGridViewParts.Rows[i].Cells[columnSearchBy].Selected = true;
-                        }
-                    }
-                }
-                if (getEntryInRow == false)
-                {
-                    MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return -1;
-                }
-                return 0;
-            }
-            
-        }
-
         private void buttonRefreshParts_Click(object sender, EventArgs e)
         {
             try
             {
-                this.partsTableAdapter.Fill(this.autoPartsDataSet.parts);
+                refreshParts();
                 foreach (DataGridViewColumn column in dataGridViewParts.Columns)
                 {
                     column.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -622,36 +439,28 @@ namespace DB
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из таблицы Parts", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
         }
 
         private void buttonCleanParts_Click(object sender, EventArgs e)
         {
-            try
+            
+            if (dataGridViewParts.RowCount > 0)
             {
-                if (dataGridViewParts.RowCount > 0)
+                dataGridViewParts.Sort(dataGridViewParts.Columns[0], ListSortDirection.Ascending);
+                foreach (DataGridViewColumn column in dataGridViewParts.Columns)
                 {
-                    dataGridViewParts.Sort(dataGridViewParts.Columns[0], ListSortDirection.Ascending);
-                    foreach (DataGridViewColumn column in dataGridViewParts.Columns)
-                    {
-                        column.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        column.SortMode = DataGridViewColumnSortMode.Automatic;
-                    }
-                    foreach (DataGridViewRow row in dataGridViewParts.Rows) row.Visible = true;
-                    dataGridViewParts.FirstDisplayedScrollingRowIndex = 0;
-                    dataGridViewParts.ClearSelection();
-                    labelRowCountParts.Text = "Количество записей: " + dataGridViewParts.RowCount.ToString();
+                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    column.SortMode = DataGridViewColumnSortMode.Automatic;
                 }
-                else
-                {
-                    MessageBox.Show("Отсутствуют данные, сначала обновите таблицу.", "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                foreach (DataGridViewRow row in dataGridViewParts.Rows) row.Visible = true;
+                dataGridViewParts.FirstDisplayedScrollingRowIndex = 0;
+                dataGridViewParts.ClearSelection();
             }
-            catch (Exception err)
+            else
             {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления Parts", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Отсутствуют данные, сначала обновите таблицу.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -690,7 +499,7 @@ namespace DB
             {
                 if (textBoxSearchParts.Text != "")
                 {
-                    SearchParts(comboboxSearchByParts.Text, textBoxSearchParts.Text);
+                    Search(dataGridViewParts, comboboxSearchByParts, textBoxSearchParts.Text);
                 }
                 else
                 {
@@ -710,11 +519,8 @@ namespace DB
         private void buttonSelectRowParts_Click(object sender, EventArgs e)
         {
             var selectedCells = dataGridViewParts.SelectedCells;
-
             foreach (DataGridViewCell cell in selectedCells)
-            {
                 dataGridViewParts.Rows[cell.RowIndex].Selected = true;
-            }
         }
 
         private void buttonAddParts_Click(object sender, EventArgs e)
@@ -738,174 +544,34 @@ namespace DB
                 dataGridViewParts.Rows[cell.RowIndex].Selected = true;
             }
 
-            if (MessageBox.Show("Выбранные строки удалятся из базы данных. Продолжить? Будет затронута таблица истории цен для данной запчасти", "Удалить запись", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+            if (MessageBox.Show("Выбранные строки удалятся из базы данных. Продолжить?", "Удалить запись", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
             {
                 try
                 {
-                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    foreach (DataGridViewRow selectedRow in dataGridViewParts.SelectedRows)
                     {
-                        connection.Open();
+                        int id = int.Parse(selectedRow.Cells[0].Value.ToString());
+                        repository.DeletePartById(id);
 
-                        foreach (DataGridViewRow selectedRow in dataGridViewParts.SelectedRows)
-                        {
-                            for (int i = 0; i < dataGridViewStorehouse.Rows.Count; i++)
-                            {
-                                if (dataGridViewStorehouse.Rows[i].Cells[2].Value == selectedRow.Cells[1]) //deals.код == parts.код
-                                {
-                                    MessageBox.Show("Невозможно у.далить выбранную строку (строки) из таблицы deals, так как от нее зависимы другие таблицы. " +
-                                        "Сначала удалите связанные строки в них.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    return;
-                                }
-                            }
-
-                            string expression = "delete from priceHistory where parts_article = " + selectedRow.Cells[1].Value.ToString();
-
-                            SqlCommand request = new SqlCommand(expression, connection);
-                            request.ExecuteNonQuery();
-
-                            expression = "delete from parts where title = '" + selectedRow.Cells[0].Value.ToString() + "'";
-
-                            request = new SqlCommand(expression, connection);
-                            request.ExecuteNonQuery();
-
-                            if (dataGridViewParts.SelectedRows.Count <= 1) break;
-                        }
-
-                        this.refreshAfterDeleteParts();
-                        connection.Close();
+                        if (dataGridViewParts.SelectedRows.Count <= 1) break;
                     }
-                } catch (SqlException err)
+
+                    refreshParts(true);
+                } 
+                catch (Exception err)
                 {
-                    if (err.Number == 547)
-                    {
-                        MessageBox.Show("Невозможно удалить выбранную строку (строки) из таблицы deals, так как от нее зависимы другие таблицы. " +
-                            "Сначала удалите связанные строки в них.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        if (dataGridViewStorehouse.SelectedRows.Count > 1) return;
-                    }
-                    else
-                    {
-                        MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
 
         //Providers
-        public int SearchProviders(string SearchBy, string SearchText)
-        {
-            if (SearchText == "") return -3;
-
-            bool getEntryInRow = false;
-            foreach (DataGridViewRow row in dataGridViewProviders.Rows)
-            {
-                row.Visible = true;
-            }
-            dataGridViewProviders.ClearSelection();
-            dataGridViewProviders.CurrentCell = null;
-
-            if (SearchBy == "Все")
-            {
-                for (int i = 0; i < dataGridViewProviders.RowCount; i++)
-                {
-                    dataGridViewProviders.Rows[i].Selected = false;
-                    for (int j = 0; j < dataGridViewProviders.ColumnCount; j++)
-                    {
-                        if (dataGridViewProviders.Rows[i].Cells[j].Value != null)
-                        {
-                            if (dataGridViewProviders.Rows[i].Cells[j].Value.ToString().ToLower().Contains(SearchText.ToLower()))
-                            {
-                                if (getEntryInRow == false)
-                                {
-                                    getEntryInRow = true;
-                                    dataGridViewProviders.FirstDisplayedScrollingRowIndex = i;
-                                }
-                                dataGridViewProviders.Rows[i].Selected = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-                if (getEntryInRow == false)
-                {
-                    MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return -1;
-                }
-                else
-                {
-                    foreach (DataGridViewRow row in dataGridViewProviders.Rows)
-                    {
-                        if (!row.Selected) row.Visible = false;
-                    }
-                    dataGridViewProviders.ClearSelection();
-
-                    for (int i = 0; i < dataGridViewProviders.RowCount; i++)
-                    {
-                        if (dataGridViewProviders.Rows[i].Visible)
-                        {
-                            for (int j = 0; j < dataGridViewProviders.ColumnCount; j++)
-                            {
-                                if (dataGridViewProviders.Rows[i].Cells[j].Value.ToString().ToLower().Contains(SearchText.ToLower()))
-                                {
-                                    dataGridViewProviders.Rows[i].Cells[j].Selected = true;
-                                }
-                            }
-                        }
-                    }
-                }
-                return 0;
-            }
-            else
-            {
-                int columnSearchBy;
-
-                switch (SearchBy)
-                {
-                    case "Название":
-                        columnSearchBy = 0;
-                        break;
-                    case "Адрес":
-                        columnSearchBy = 1;
-                        break;
-                    case "Телефон":
-                        columnSearchBy = 2;
-                        break;
-                    default:
-                        MessageBox.Show("Ошибка поиска! Выбранное поле отсутствует в таблице. Поиск установлен на \"Все\".", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        comboboxSearchByProviders.Text = "Все";
-                        return -2;
-                }
-
-                for (int i = 0; i < dataGridViewProviders.RowCount; i++)
-                {
-                    dataGridViewProviders.Rows[i].Selected = false;
-                    if (dataGridViewProviders.Rows[i].Cells[columnSearchBy].Value != null)
-                    {
-                        if (dataGridViewProviders.Rows[i].Cells[columnSearchBy].Value.ToString().ToLower().Contains(SearchText.ToLower()))
-                        {
-                            if (getEntryInRow == false)
-                            {
-                                getEntryInRow = true;
-                                dataGridViewProviders.FirstDisplayedScrollingRowIndex = i;
-                            }
-                            dataGridViewProviders.Rows[i].Cells[columnSearchBy].Selected = true;
-                        }
-                    }
-                }
-                if (getEntryInRow == false)
-                {
-                    MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return -1;
-                }
-                return 0;
-            }
-        }
-
         private void buttonRefreshProviders_Click(object sender, EventArgs e)
         {
             try
             {
-                this.providersTableAdapter.Fill(this.autoPartsDataSet.providers);
+                refreshProviders();
                 foreach (DataGridViewColumn column in dataGridViewProviders.Columns)
                 {
                     column.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -915,37 +581,30 @@ namespace DB
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из таблицы providers", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            labelRowCountProviders.Text = "Количество записей: " + dataGridViewProviders.RowCount.ToString();
         }
 
         private void buttonCleanProviders_Click(object sender, EventArgs e)
         {
-            try
+            
+            if (dataGridViewProviders.RowCount > 0)
             {
-                if (dataGridViewProviders.RowCount > 0)
+                dataGridViewProviders.Sort(dataGridViewProviders.Columns[0], ListSortDirection.Ascending);
+                foreach (DataGridViewColumn column in dataGridViewProviders.Columns)
                 {
-                    dataGridViewProviders.Sort(dataGridViewProviders.Columns[0], ListSortDirection.Ascending);
-                    foreach (DataGridViewColumn column in dataGridViewProviders.Columns)
-                    {
-                        column.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        column.SortMode = DataGridViewColumnSortMode.Automatic;
-                    }
-                    foreach (DataGridViewRow row in dataGridViewProviders.Rows) row.Visible = true;
-                    dataGridViewProviders.FirstDisplayedScrollingRowIndex = 0;
-                    dataGridViewProviders.ClearSelection();
-                    labelRowCountProviders.Text = "Количество записей: " + dataGridViewProviders.RowCount.ToString();
+                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    column.SortMode = DataGridViewColumnSortMode.Automatic;
                 }
-                else
-                {
-                    MessageBox.Show("Отсутствуют данные, сначала обновите таблицу.", "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                foreach (DataGridViewRow row in dataGridViewProviders.Rows) row.Visible = true;
+                dataGridViewProviders.FirstDisplayedScrollingRowIndex = 0;
+                dataGridViewProviders.ClearSelection();
             }
-            catch (Exception err)
+            else
             {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления Providers", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Отсутствуют данные, сначала обновите таблицу.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            
         }
 
         private void comboBoxSearchByProviders_KeyDown(object sender, KeyEventArgs e)
@@ -983,7 +642,7 @@ namespace DB
             {
                 if (textBoxSearchProviders.Text != "")
                 {
-                    SearchProviders(comboboxSearchByProviders.Text, textBoxSearchProviders.Text);
+                    Search(dataGridViewProviders, comboboxSearchByProviders, textBoxSearchProviders.Text);
                 }
                 else
                 {
@@ -1003,11 +662,8 @@ namespace DB
         private void buttonSelectRowProviders_Click(object sender, EventArgs e)
         {
             var selectedCells = dataGridViewProviders.SelectedCells;
-
             foreach (DataGridViewCell cell in selectedCells)
-            {
                 dataGridViewProviders.Rows[cell.RowIndex].Selected = true;
-            }
         }
 
         private void buttonAddProviders_Click(object sender, EventArgs e)
@@ -1027,184 +683,36 @@ namespace DB
             }
 
             foreach (DataGridViewCell cell in selectedCells)
-            {
                 dataGridViewProviders.Rows[cell.RowIndex].Selected = true;
-            }
 
-            if (MessageBox.Show("Выбранные строки удалятся из базы данных. Продолжить? Будет затронута таблица запчастей. " +
-                "Если с ней связан выбранный поставщик (поставщики), удаление будет отменено.", "Удалить запись", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+            if (MessageBox.Show("Выбранные строки удалятся из базы данных. Продолжить?", "Удалить запись", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
             {
                 try
                 {
-                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    foreach (DataGridViewRow selectedRow in dataGridViewProviders.SelectedRows)
                     {
-                        connection.Open();
+                        int id = int.Parse(selectedRow.Cells[0].Value.ToString());
+                        repository.DeleteProviderById(id);
 
-                        foreach (DataGridViewRow selectedRow in dataGridViewProviders.SelectedRows)
-                        {
-                            for (int i = 0; i < autoPartsDataSet.bridge_providers_parts.Rows.Count; i++)
-                            {
-                                if (autoPartsDataSet.bridge_providers_parts.Rows[i].ItemArray[0].ToString() == selectedRow.Cells[0].ToString()) //bridge_priveders_parts.providers_title == parts.title
-                                {
-                                    MessageBox.Show("Невозможно удалить выбранную строку (строки) из таблицы providers, так как от нее зависимы другие таблицы. " +
-                                        "Сначала удалите связанные строки в них.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    return;
-                                }
-                            }
-
-                            string expression = "delete from providers where title = '" + selectedRow.Cells[0].Value.ToString() + "';";
-
-                            SqlCommand request = new SqlCommand(expression, connection);
-                            request.ExecuteNonQuery();
-                            
-                            if (dataGridViewParts.SelectedRows.Count <= 1) break;
-                        }
-
-                        this.refreshAfterDeleteProviders();
-                        connection.Close();
+                        if (dataGridViewProviders.SelectedRows.Count <= 1) break;
                     }
+
+                    refreshProviders(true);
                 }
-                catch (SqlException err)
+                catch (Exception err)
                 {
-                    if (err.Number == 547)
-                    {
-                        MessageBox.Show("Невозможно удалить выбранную строку (строки) из таблицы deals, так как от нее зависимы другие таблицы. " +
-                            "Сначала удалите связанные строки в них.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        if (dataGridViewStorehouse.SelectedRows.Count > 1) return;
-                    }
-                    else
-                    {
-                        MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
 
         //priceview
-        private int SearchPriceview(string SearchBy, string SearchText)
-        {
-            if (SearchText == "") return -3;
-
-            bool getEntryInRow = false;
-            foreach (DataGridViewRow row in dataGridViewPriceview.Rows)
-            {
-                row.Visible = true;
-            }
-            dataGridViewPriceview.ClearSelection();
-            dataGridViewPriceview.CurrentCell = null;
-
-            if (SearchBy == "Все")
-            {
-                for (int i = 0; i < dataGridViewPriceview.RowCount; i++)
-                {
-                    dataGridViewPriceview.Rows[i].Selected = false;
-                    for (int j = 0; j < dataGridViewPriceview.ColumnCount; j++)
-                    {
-                        if (dataGridViewPriceview.Rows[i].Cells[j].Value != null)
-                        {
-                            if (dataGridViewPriceview.Rows[i].Cells[j].Value.ToString().ToLower().Contains(SearchText.ToLower()))
-                            {
-                                if (getEntryInRow == false)
-                                {
-                                    getEntryInRow = true;
-                                    dataGridViewPriceview.FirstDisplayedScrollingRowIndex = i;
-                                }
-                                dataGridViewPriceview.Rows[i].Selected = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-                if (getEntryInRow == false)
-                {
-                    MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return -1;
-                }
-                else
-                {
-                    foreach (DataGridViewRow row in dataGridViewPriceview.Rows)
-                    {
-                        if (!row.Selected) row.Visible = false;
-                    }
-                    dataGridViewPriceview.ClearSelection();
-
-                    for (int i = 0; i < dataGridViewPriceview.RowCount; i++)
-                    {
-                        if (dataGridViewPriceview.Rows[i].Visible)
-                        {
-                            for (int j = 0; j < dataGridViewPriceview.ColumnCount; j++)
-                            {
-                                if (dataGridViewPriceview.Rows[i].Cells[j].Value.ToString().ToLower().Contains(SearchText.ToLower()))
-                                {
-                                    dataGridViewPriceview.Rows[i].Cells[j].Selected = true;
-                                }
-                            }
-                        }
-                    }
-                }
-                return 0;
-            }
-            else
-            {
-                int columnSearchBy;
-
-                switch (SearchBy)
-                {
-                    case "id":
-                        columnSearchBy = 0;
-                        break;
-                    case "Код детали":
-                        columnSearchBy = 1;
-                        break;
-                    case "Название":
-                        columnSearchBy = 2;
-                        break;
-                    case "Текущая цена":
-                        columnSearchBy = 3;
-                        break;
-                    case "Старая цена":
-                        columnSearchBy = 4;
-                        break;
-                    case "Действовала до":
-                        columnSearchBy = 5;
-                        break;
-                    default:
-                        MessageBox.Show("Ошибка поиска! Выбранное поле отсутствует в таблице. Поиск установлен на \"Все\".", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        comboboxSearchByPriceview.Text = "Все";
-                        return -2;
-                }
-
-                for (int i = 0; i < dataGridViewPriceview.RowCount; i++)
-                {
-                    dataGridViewPriceview.Rows[i].Selected = false;
-                    if (dataGridViewPriceview.Rows[i].Cells[columnSearchBy].Value != null)
-                    {
-                        if (dataGridViewPriceview.Rows[i].Cells[columnSearchBy].Value.ToString().ToLower().Contains(SearchText.ToLower()))
-                        {
-                            if (getEntryInRow == false)
-                            {
-                                getEntryInRow = true;
-                                dataGridViewPriceview.FirstDisplayedScrollingRowIndex = i;
-                            }
-                            dataGridViewPriceview.Rows[i].Cells[columnSearchBy].Selected = true;
-                        }
-                    }
-                }
-                if (getEntryInRow == false)
-                {
-                    MessageBox.Show("Ничего не найдено, попробуйте изменить критерии поиска.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return -1;
-                }
-                return 0;
-            }
-        }
-
         private void buttonRefreshPriceview_Click(object sender, EventArgs e)
         {
             try
             {
-                this.priceviewTableAdapter.Fill(this.autoPartsDataSet.priceview);
+                refreshPriceview();
                 foreach (DataGridViewColumn column in dataGridViewPriceview.Columns)
                 {
                     column.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -1214,36 +722,28 @@ namespace DB
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления priceview", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(err.ToString(), "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            labelRowCountPriceview.Text = "Количество записей: " + dataGridViewPriceview.RowCount.ToString();
         }
 
         private void buttonCleanPriceview_Click(object sender, EventArgs e)
         {
-            try
+            
+            if (dataGridViewPriceview.RowCount > 0)
             {
-                if (dataGridViewPriceview.RowCount > 0)
+                dataGridViewPriceview.Sort(dataGridViewPriceview.Columns[0], ListSortDirection.Ascending);
+                foreach (DataGridViewColumn column in dataGridViewPriceview.Columns)
                 {
-                    dataGridViewPriceview.Sort(dataGridViewPriceview.Columns[0], ListSortDirection.Ascending);
-                    foreach (DataGridViewColumn column in dataGridViewPriceview.Columns)
-                    {
-                        column.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        column.SortMode = DataGridViewColumnSortMode.Automatic;
-                    }
-                    foreach (DataGridViewRow row in dataGridViewPriceview.Rows) row.Visible = true;
-                    dataGridViewPriceview.FirstDisplayedScrollingRowIndex = 0;
-                    dataGridViewPriceview.ClearSelection();
-                    labelRowCountPriceview.Text = "Количество записей: " + dataGridViewPriceview.RowCount.ToString();
+                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    column.SortMode = DataGridViewColumnSortMode.Automatic;
                 }
-                else
-                {
-                    MessageBox.Show("Отсутствуют данные, сначала обновите таблицу.", "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                foreach (DataGridViewRow row in dataGridViewPriceview.Rows) row.Visible = true;
+                dataGridViewPriceview.FirstDisplayedScrollingRowIndex = 0;
+                dataGridViewPriceview.ClearSelection();
             }
-            catch (Exception err)
+            else
             {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных из представления Priceview", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Отсутствуют данные, сначала обновите таблицу.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1282,7 +782,7 @@ namespace DB
             {
                 if (textBoxSearchPriceview.Text != "")
                 {
-                    SearchPriceview(comboboxSearchByPriceview.Text, textBoxSearchPriceview.Text);
+                    Search(dataGridViewPriceview, comboboxSearchByPriceview, textBoxSearchPriceview.Text);
                 }
                 else
                 {
@@ -1302,11 +802,8 @@ namespace DB
         private void buttonSelectRowPriceview_Click(object sender, EventArgs e)
         {
             var selectedCells = dataGridViewPriceview.SelectedCells;
-
             foreach (DataGridViewCell cell in selectedCells)
-            {
                 dataGridViewPriceview.Rows[cell.RowIndex].Selected = true;
-            }
         }
 
         private void buttonAddPriceview_Click(object sender, EventArgs e)
@@ -1355,50 +852,25 @@ namespace DB
             }
 
             foreach (DataGridViewCell cell in selectedCells)
-            {
                 dataGridViewPriceview.Rows[cell.RowIndex].Selected = true;
-            }
 
             if (MessageBox.Show("Выбранные строки удалятся из базы данных. Продолжить?", "Удалить запись", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
             {
                 try
                 {
-                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    foreach (DataGridViewRow selectedRow in dataGridViewPriceview.SelectedRows)
                     {
-                        connection.Open();
+                        int id = int.Parse(selectedRow.Cells[0].Value.ToString());
+                        repository.DeletePriceHistoryById(id);
 
-                        foreach (DataGridViewRow selectedRow in dataGridViewPriceview.SelectedRows)
-                        {
-                            if (selectedRow.Cells[0].Value.ToString() == "")
-                            {
-                                MessageBox.Show("Для данной запчасти отсутствуют записи в таблице priceHistory, нечего удалять.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
-
-                            string expression = "delete from priceHistory where price_id = " + selectedRow.Cells[0].Value.ToString() + ";";
-
-                            SqlCommand request = new SqlCommand(expression, connection);
-                            request.ExecuteNonQuery();
-
-                            if (dataGridViewPriceview.SelectedRows.Count <= 1) break;
-                        }
-
-                        this.refreshAfterDeletePriceview();
-                        connection.Close();
+                        if (dataGridViewPriceview.SelectedRows.Count <= 1) break;
                     }
+
+                    refreshPriceview(true);
                 }
-                catch (SqlException err)
+                catch (Exception err)
                 {
-                    if (err.Number == 547)
-                    {
-                        MessageBox.Show("Невозможно удалить выбранную строку (строки) из представления priceview, так как от нее зависимы другие таблицы. " +
-                            "Сначала удалите связанные строки в них.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        if (dataGridViewStorehouse.SelectedRows.Count > 1) return;
-                    }
-                    else
-                    {
-                        MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -1414,10 +886,10 @@ namespace DB
         private void buttonToProvidersStorehouse_Click(object sender, EventArgs e)
         {
             tabs.SelectTab(providersTab);
-            comboboxSearchByProviders.Text = "Название";
+            comboboxSearchByProviders.SelectedIndex = 2; // "Название"
             textBoxSearchProviders.Focus();
             textBoxSearchProviders_Enter(sender, e);
-            textBoxSearchProviders.Text = dataGridViewStorehouse.CurrentRow.Cells[8].Value.ToString();
+            textBoxSearchProviders.Text = dataGridViewStorehouse.CurrentRow.Cells[7].Value.ToString();
             SendKeys.Send("{ENTER}");
             textBoxSearchProviders_Leave(sender, e);
         }
@@ -1425,10 +897,10 @@ namespace DB
         private void buttonPricehistoryStorehouse_Click(object sender, EventArgs e)
         {
             tabs.SelectTab(pricehistoryTab);
-            comboboxSearchByPriceview.Text = "Все";
+            comboboxSearchByPriceview.SelectedIndex = 2; // "Код детали"
             textBoxSearchPriceview.Focus();
             textBoxSearchPriceview_Enter(sender, e);
-            textBoxSearchPriceview.Text = dataGridViewStorehouse.CurrentRow.Cells[1].Value.ToString();
+            textBoxSearchPriceview.Text = dataGridViewStorehouse.CurrentRow.Cells[2].Value.ToString();
             SendKeys.Send("{ENTER}");
             textBoxSearchPriceview_Leave(sender, e);
         }

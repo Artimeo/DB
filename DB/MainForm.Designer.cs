@@ -40,8 +40,6 @@
             this.textBoxSearchStorehouse = new System.Windows.Forms.TextBox();
             this.dataGridViewStorehouse = new System.Windows.Forms.DataGridView();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.storehouseBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.autoPartsDataSet = new DB.AutoPartsDataSet();
             this.buttonDeleteStorehouse = new System.Windows.Forms.Button();
             this.buttonAddStorehouse = new System.Windows.Forms.Button();
             this.buttonPricehistoryStorehouse = new System.Windows.Forms.Button();
@@ -57,8 +55,6 @@
             this.buttonSearchCleanParts = new System.Windows.Forms.Button();
             this.textBoxSearchParts = new System.Windows.Forms.TextBox();
             this.dataGridViewParts = new System.Windows.Forms.DataGridView();
-            this.partsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.autoPartsDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.buttonDeleteParts = new System.Windows.Forms.Button();
             this.buttonAddParts = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
@@ -74,7 +70,6 @@
             this.buttonSearchCleanProviders = new System.Windows.Forms.Button();
             this.textBoxSearchProviders = new System.Windows.Forms.TextBox();
             this.dataGridViewProviders = new System.Windows.Forms.DataGridView();
-            this.providersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.buttonDeleteProviders = new System.Windows.Forms.Button();
             this.buttonAddProviders = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
@@ -90,7 +85,6 @@
             this.buttonSearchCleanPriceview = new System.Windows.Forms.Button();
             this.textBoxSearchPriceview = new System.Windows.Forms.TextBox();
             this.dataGridViewPriceview = new System.Windows.Forms.DataGridView();
-            this.priceviewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.buttonDeletePriceveiw = new System.Windows.Forms.Button();
             this.buttonAddPriceview = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
@@ -98,6 +92,12 @@
             this.comboboxSearchByPriceview = new System.Windows.Forms.ComboBox();
             this.buttonCleanPriceview = new System.Windows.Forms.Button();
             this.buttonRefreshPriceview = new System.Windows.Forms.Button();
+            this.storehouseBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.autoPartsDataSet = new DB.AutoPartsDataSet();
+            this.partsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.autoPartsDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.providersBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.priceviewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.storehouseTableAdapter = new DB.AutoPartsDataSetTableAdapters.storehouseTableAdapter();
             this.providersTableAdapter = new DB.AutoPartsDataSetTableAdapters.providersTableAdapter();
@@ -111,20 +111,20 @@
             this.storehouseTab.SuspendLayout();
             this.flowLayoutPanelRowCountStorehouse.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStorehouse)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.storehouseBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).BeginInit();
             this.partsTab.SuspendLayout();
             this.flowLayoutPanelParts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewParts)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSetBindingSource)).BeginInit();
             this.providersTab.SuspendLayout();
             this.flowLayoutPanelProviders.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProviders)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).BeginInit();
             this.pricehistoryTab.SuspendLayout();
             this.flowLayoutPanelPriceview.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPriceview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.storehouseBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSetBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceviewBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dealsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bridgeproviderspartsBindingSource)).BeginInit();
@@ -263,18 +263,6 @@
             this.id.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.id.Width = 40;
             // 
-            // storehouseBindingSource
-            // 
-            this.storehouseBindingSource.AllowNew = false;
-            this.storehouseBindingSource.DataMember = "storehouse";
-            this.storehouseBindingSource.DataSource = this.autoPartsDataSet;
-            // 
-            // autoPartsDataSet
-            // 
-            this.autoPartsDataSet.DataSetName = "AutoPartsDataSet";
-            this.autoPartsDataSet.EnforceConstraints = false;
-            this.autoPartsDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // buttonDeleteStorehouse
             // 
             this.buttonDeleteStorehouse.Image = ((System.Drawing.Image)(resources.GetObject("buttonDeleteStorehouse.Image")));
@@ -332,17 +320,6 @@
             this.comboboxSearchByStorehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboboxSearchByStorehouse.FormattingEnabled = true;
             this.comboboxSearchByStorehouse.ItemHeight = 13;
-            this.comboboxSearchByStorehouse.Items.AddRange(new object[] {
-            "Все",
-            "id",
-            "Название",
-            "Код",
-            "Цена",
-            "Количество",
-            "Производитель",
-            "Цена закупки",
-            "Дата закупки",
-            "Поставщик"});
             this.comboboxSearchByStorehouse.Location = new System.Drawing.Point(526, 11);
             this.comboboxSearchByStorehouse.Name = "comboboxSearchByStorehouse";
             this.comboboxSearchByStorehouse.Size = new System.Drawing.Size(81, 21);
@@ -484,16 +461,6 @@
             this.dataGridViewParts.Size = new System.Drawing.Size(797, 327);
             this.dataGridViewParts.TabIndex = 21;
             // 
-            // partsBindingSource
-            // 
-            this.partsBindingSource.DataMember = "parts";
-            this.partsBindingSource.DataSource = this.autoPartsDataSetBindingSource;
-            // 
-            // autoPartsDataSetBindingSource
-            // 
-            this.autoPartsDataSetBindingSource.DataSource = this.autoPartsDataSet;
-            this.autoPartsDataSetBindingSource.Position = 0;
-            // 
             // buttonDeleteParts
             // 
             this.buttonDeleteParts.Image = ((System.Drawing.Image)(resources.GetObject("buttonDeleteParts.Image")));
@@ -546,19 +513,13 @@
             // 
             // comboboxSearchByParts
             // 
+            this.comboboxSearchByParts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboboxSearchByParts.FormattingEnabled = true;
             this.comboboxSearchByParts.ItemHeight = 13;
-            this.comboboxSearchByParts.Items.AddRange(new object[] {
-            "Все",
-            "Название",
-            "Код",
-            "Производитель",
-            "Цена"});
             this.comboboxSearchByParts.Location = new System.Drawing.Point(526, 11);
             this.comboboxSearchByParts.Name = "comboboxSearchByParts";
             this.comboboxSearchByParts.Size = new System.Drawing.Size(81, 21);
             this.comboboxSearchByParts.TabIndex = 16;
-            this.comboboxSearchByParts.Text = "Все";
             this.comboboxSearchByParts.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxSearchByParts_KeyDown);
             // 
             // buttonCleanParts
@@ -695,11 +656,6 @@
             this.dataGridViewProviders.Size = new System.Drawing.Size(797, 327);
             this.dataGridViewProviders.TabIndex = 34;
             // 
-            // providersBindingSource
-            // 
-            this.providersBindingSource.DataMember = "providers";
-            this.providersBindingSource.DataSource = this.autoPartsDataSetBindingSource;
-            // 
             // buttonDeleteProviders
             // 
             this.buttonDeleteProviders.Image = ((System.Drawing.Image)(resources.GetObject("buttonDeleteProviders.Image")));
@@ -754,18 +710,13 @@
             // 
             // comboboxSearchByProviders
             // 
+            this.comboboxSearchByProviders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboboxSearchByProviders.FormattingEnabled = true;
             this.comboboxSearchByProviders.ItemHeight = 13;
-            this.comboboxSearchByProviders.Items.AddRange(new object[] {
-            "Все",
-            "Название",
-            "Адрес",
-            "Телефон"});
             this.comboboxSearchByProviders.Location = new System.Drawing.Point(526, 11);
             this.comboboxSearchByProviders.Name = "comboboxSearchByProviders";
             this.comboboxSearchByProviders.Size = new System.Drawing.Size(81, 21);
             this.comboboxSearchByProviders.TabIndex = 29;
-            this.comboboxSearchByProviders.Text = "Все";
             this.comboboxSearchByProviders.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxSearchByProviders_KeyDown);
             // 
             // buttonCleanProviders
@@ -901,11 +852,6 @@
             this.dataGridViewPriceview.Size = new System.Drawing.Size(797, 327);
             this.dataGridViewPriceview.TabIndex = 47;
             // 
-            // priceviewBindingSource
-            // 
-            this.priceviewBindingSource.DataMember = "priceview";
-            this.priceviewBindingSource.DataSource = this.autoPartsDataSet;
-            // 
             // buttonDeletePriceveiw
             // 
             this.buttonDeletePriceveiw.Image = ((System.Drawing.Image)(resources.GetObject("buttonDeletePriceveiw.Image")));
@@ -960,21 +906,13 @@
             // 
             // comboboxSearchByPriceview
             // 
+            this.comboboxSearchByPriceview.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboboxSearchByPriceview.FormattingEnabled = true;
             this.comboboxSearchByPriceview.ItemHeight = 13;
-            this.comboboxSearchByPriceview.Items.AddRange(new object[] {
-            "Все",
-            "id",
-            "Код детали",
-            "Название",
-            "Текущая цена",
-            "Старая цена",
-            "Действовала до"});
             this.comboboxSearchByPriceview.Location = new System.Drawing.Point(526, 11);
             this.comboboxSearchByPriceview.Name = "comboboxSearchByPriceview";
             this.comboboxSearchByPriceview.Size = new System.Drawing.Size(81, 21);
             this.comboboxSearchByPriceview.TabIndex = 42;
-            this.comboboxSearchByPriceview.Text = "Все";
             this.comboboxSearchByPriceview.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxSearchByPriceview_KeyDown);
             // 
             // buttonCleanPriceview
@@ -1004,6 +942,38 @@
             this.buttonRefreshPriceview.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonRefreshPriceview.UseVisualStyleBackColor = true;
             this.buttonRefreshPriceview.Click += new System.EventHandler(this.buttonRefreshPriceview_Click);
+            // 
+            // storehouseBindingSource
+            // 
+            this.storehouseBindingSource.AllowNew = false;
+            this.storehouseBindingSource.DataMember = "storehouse";
+            this.storehouseBindingSource.DataSource = this.autoPartsDataSet;
+            // 
+            // autoPartsDataSet
+            // 
+            this.autoPartsDataSet.DataSetName = "AutoPartsDataSet";
+            this.autoPartsDataSet.EnforceConstraints = false;
+            this.autoPartsDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // partsBindingSource
+            // 
+            this.partsBindingSource.DataMember = "parts";
+            this.partsBindingSource.DataSource = this.autoPartsDataSetBindingSource;
+            // 
+            // autoPartsDataSetBindingSource
+            // 
+            this.autoPartsDataSetBindingSource.DataSource = this.autoPartsDataSet;
+            this.autoPartsDataSetBindingSource.Position = 0;
+            // 
+            // providersBindingSource
+            // 
+            this.providersBindingSource.DataMember = "providers";
+            this.providersBindingSource.DataSource = this.autoPartsDataSetBindingSource;
+            // 
+            // priceviewBindingSource
+            // 
+            this.priceviewBindingSource.DataMember = "priceview";
+            this.priceviewBindingSource.DataSource = this.autoPartsDataSet;
             // 
             // storehouseTableAdapter
             // 
@@ -1054,26 +1024,26 @@
             this.flowLayoutPanelRowCountStorehouse.ResumeLayout(false);
             this.flowLayoutPanelRowCountStorehouse.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStorehouse)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.storehouseBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).EndInit();
             this.partsTab.ResumeLayout(false);
             this.partsTab.PerformLayout();
             this.flowLayoutPanelParts.ResumeLayout(false);
             this.flowLayoutPanelParts.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewParts)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSetBindingSource)).EndInit();
             this.providersTab.ResumeLayout(false);
             this.providersTab.PerformLayout();
             this.flowLayoutPanelProviders.ResumeLayout(false);
             this.flowLayoutPanelProviders.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProviders)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).EndInit();
             this.pricehistoryTab.ResumeLayout(false);
             this.pricehistoryTab.PerformLayout();
             this.flowLayoutPanelPriceview.ResumeLayout(false);
             this.flowLayoutPanelPriceview.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPriceview)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.storehouseBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSetBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceviewBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dealsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bridgeproviderspartsBindingSource)).EndInit();

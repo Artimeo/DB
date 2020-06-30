@@ -130,13 +130,13 @@ namespace DB
                 }
                 MessageBox.Show("Запись успешно добавлена", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                if (parentMainForm != null) parentMainForm.refreshAfterInsertProviders();
-                else if (parentAddDealsForm != null)
-                {
-                    parentAddDealsForm.parentForm.refreshAfterInsertProviders(parentAddDealsForm);
-                    parentAddDealsForm.Activate();
-                    this.Close();
-                }
+                //if (parentMainForm != null) parentMainForm.refreshAfterInsertProviders();
+                //else if (parentAddDealsForm != null)
+                //{
+                //    parentAddDealsForm.parentForm.refreshAfterInsertProviders(parentAddDealsForm);
+                //    parentAddDealsForm.Activate();
+                //    this.Close();
+                //}
             }
         }
 

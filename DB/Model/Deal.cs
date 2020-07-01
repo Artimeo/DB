@@ -11,9 +11,9 @@ namespace DB.Model
     public class Deal
     {
         public int Id { get; set; }
-
-        public DateTime Date { get; set; }
         
+        public DateTime Date { get; set; }
+        //[ForeignKey("ProviderPart")]
         public int ProviderPartId { get; set; }
         
         public ProviderPart ProviderPart { get; set; }

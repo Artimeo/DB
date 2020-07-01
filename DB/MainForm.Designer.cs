@@ -116,13 +116,15 @@
             this.comboboxSearchByPriceview = new System.Windows.Forms.ComboBox();
             this.buttonCleanPriceview = new System.Windows.Forms.Button();
             this.buttonRefreshPriceview = new System.Windows.Forms.Button();
-            this.storehouseBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.autoPartsDataSet = new DB.AutoPartsDataSet();
             this.partsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.autoPartsDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.providersBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.priceviewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.autoPartsDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.autoPartsDataSet = new DB.AutoPartsDataSet();
+            this.storehouseBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.priceviewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.storehouseTableAdapter = new DB.AutoPartsDataSetTableAdapters.storehouseTableAdapter();
             this.providersTableAdapter = new DB.AutoPartsDataSetTableAdapters.providersTableAdapter();
             this.partsTableAdapter = new DB.AutoPartsDataSetTableAdapters.partsTableAdapter();
@@ -131,8 +133,6 @@
             this.bridgeproviderspartsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.bridge_providers_partsTableAdapter = new DB.AutoPartsDataSetTableAdapters.bridge_providers_partsTableAdapter();
             this.priceviewTableAdapter = new DB.AutoPartsDataSetTableAdapters.priceviewTableAdapter();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.tabs.SuspendLayout();
             this.storehouseTab.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -144,16 +144,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProviders)).BeginInit();
             this.pricehistoryTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPriceview)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.storehouseBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).BeginInit();
+            this.tableLayoutPanel3.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSetBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.storehouseBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceviewBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dealsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bridgeproviderspartsBindingSource)).BeginInit();
-            this.tableLayoutPanel3.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabs
@@ -1197,71 +1197,15 @@
             this.buttonRefreshPriceview.UseVisualStyleBackColor = true;
             this.buttonRefreshPriceview.Click += new System.EventHandler(this.buttonRefreshPriceview_Click);
             // 
-            // storehouseBindingSource
-            // 
-            this.storehouseBindingSource.AllowNew = false;
-            this.storehouseBindingSource.DataMember = "storehouse";
-            this.storehouseBindingSource.DataSource = this.autoPartsDataSet;
-            // 
-            // autoPartsDataSet
-            // 
-            this.autoPartsDataSet.DataSetName = "AutoPartsDataSet";
-            this.autoPartsDataSet.EnforceConstraints = false;
-            this.autoPartsDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // partsBindingSource
             // 
             this.partsBindingSource.DataMember = "parts";
             this.partsBindingSource.DataSource = this.autoPartsDataSetBindingSource;
             // 
-            // autoPartsDataSetBindingSource
-            // 
-            this.autoPartsDataSetBindingSource.DataSource = this.autoPartsDataSet;
-            this.autoPartsDataSetBindingSource.Position = 0;
-            // 
             // providersBindingSource
             // 
             this.providersBindingSource.DataMember = "providers";
             this.providersBindingSource.DataSource = this.autoPartsDataSetBindingSource;
-            // 
-            // priceviewBindingSource
-            // 
-            this.priceviewBindingSource.DataMember = "priceview";
-            this.priceviewBindingSource.DataSource = this.autoPartsDataSet;
-            // 
-            // storehouseTableAdapter
-            // 
-            this.storehouseTableAdapter.ClearBeforeFill = true;
-            // 
-            // providersTableAdapter
-            // 
-            this.providersTableAdapter.ClearBeforeFill = true;
-            // 
-            // partsTableAdapter
-            // 
-            this.partsTableAdapter.ClearBeforeFill = true;
-            // 
-            // dealsBindingSource
-            // 
-            this.dealsBindingSource.DataMember = "deals";
-            this.dealsBindingSource.DataSource = this.autoPartsDataSet;
-            // 
-            // dealsTableAdapter
-            // 
-            this.dealsTableAdapter.ClearBeforeFill = true;
-            // 
-            // bridgeproviderspartsBindingSource
-            // 
-            this.bridgeproviderspartsBindingSource.DataMember = "bridge_providers_parts";
-            this.bridgeproviderspartsBindingSource.DataSource = this.autoPartsDataSet;
-            // 
-            // bridge_providers_partsTableAdapter
-            // 
-            this.bridge_providers_partsTableAdapter.ClearBeforeFill = true;
-            // 
-            // priceviewTableAdapter
-            // 
-            this.priceviewTableAdapter.ClearBeforeFill = true;
             // 
             // tableLayoutPanel3
             // 
@@ -1329,6 +1273,62 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(792, 421);
             this.tableLayoutPanel4.TabIndex = 53;
             // 
+            // autoPartsDataSetBindingSource
+            // 
+            this.autoPartsDataSetBindingSource.DataSource = this.autoPartsDataSet;
+            this.autoPartsDataSetBindingSource.Position = 0;
+            // 
+            // autoPartsDataSet
+            // 
+            this.autoPartsDataSet.DataSetName = "AutoPartsDataSet";
+            this.autoPartsDataSet.EnforceConstraints = false;
+            this.autoPartsDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // storehouseBindingSource
+            // 
+            this.storehouseBindingSource.AllowNew = false;
+            this.storehouseBindingSource.DataMember = "storehouse";
+            this.storehouseBindingSource.DataSource = this.autoPartsDataSet;
+            // 
+            // priceviewBindingSource
+            // 
+            this.priceviewBindingSource.DataMember = "priceview";
+            this.priceviewBindingSource.DataSource = this.autoPartsDataSet;
+            // 
+            // storehouseTableAdapter
+            // 
+            this.storehouseTableAdapter.ClearBeforeFill = true;
+            // 
+            // providersTableAdapter
+            // 
+            this.providersTableAdapter.ClearBeforeFill = true;
+            // 
+            // partsTableAdapter
+            // 
+            this.partsTableAdapter.ClearBeforeFill = true;
+            // 
+            // dealsBindingSource
+            // 
+            this.dealsBindingSource.DataMember = "deals";
+            this.dealsBindingSource.DataSource = this.autoPartsDataSet;
+            // 
+            // dealsTableAdapter
+            // 
+            this.dealsTableAdapter.ClearBeforeFill = true;
+            // 
+            // bridgeproviderspartsBindingSource
+            // 
+            this.bridgeproviderspartsBindingSource.DataMember = "bridge_providers_parts";
+            this.bridgeproviderspartsBindingSource.DataSource = this.autoPartsDataSet;
+            // 
+            // bridge_providers_partsTableAdapter
+            // 
+            this.bridge_providers_partsTableAdapter.ClearBeforeFill = true;
+            // 
+            // priceviewTableAdapter
+            // 
+            this.priceviewTableAdapter.ClearBeforeFill = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1351,18 +1351,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProviders)).EndInit();
             this.pricehistoryTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPriceview)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.storehouseBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.partsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSetBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.providersBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.priceviewBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dealsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bridgeproviderspartsBindingSource)).EndInit();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSetBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.autoPartsDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.storehouseBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.priceviewBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dealsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bridgeproviderspartsBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }

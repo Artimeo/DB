@@ -73,22 +73,22 @@ namespace DB
         {
             comboboxSearchByStorehouse.Items.Add("Все");
             for (int i = 0; i < dataGridViewStorehouse.ColumnCount; i++)
-                comboboxSearchByStorehouse.Items.Add(dataGridViewStorehouse.Columns[i].Name);
+                comboboxSearchByStorehouse.Items.Add(dataGridViewStorehouse.Columns[i].HeaderText);
             comboboxSearchByStorehouse.SelectedIndex = 0;
 
             comboboxSearchByParts.Items.Add("Все");
             for (int i = 0; i < dataGridViewParts.ColumnCount; i++)
-                comboboxSearchByParts.Items.Add(dataGridViewParts.Columns[i].Name);
+                comboboxSearchByParts.Items.Add(dataGridViewParts.Columns[i].HeaderText);
             comboboxSearchByParts.SelectedIndex = 0;
             
             comboboxSearchByProviders.Items.Add("Все");
             for (int i = 0; i < dataGridViewProviders.ColumnCount; i++)
-                comboboxSearchByProviders.Items.Add(dataGridViewProviders.Columns[i].Name);
+                comboboxSearchByProviders.Items.Add(dataGridViewProviders.Columns[i].HeaderText);
             comboboxSearchByProviders.SelectedIndex = 0;
             
             comboboxSearchByPriceview.Items.Add("Все");
             for (int i = 0; i < dataGridViewPriceview.ColumnCount; i++)
-                comboboxSearchByPriceview.Items.Add(dataGridViewPriceview.Columns[i].Name);
+                comboboxSearchByPriceview.Items.Add(dataGridViewPriceview.Columns[i].HeaderText);
             comboboxSearchByPriceview.SelectedIndex = 0;
         }
 

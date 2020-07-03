@@ -78,6 +78,7 @@ namespace DB.Model.Repository
             public int Price { get; set; }
         }
 
+
         public List<PartItem> GetParts()
         {
             var query = from part in Parts
@@ -143,5 +144,48 @@ namespace DB.Model.Repository
             context.SaveChanges();
         }
 
+        public List<StorehouseItem> GetDealsByPartId(int selectedId)
+        {
+            var query = (from deal in context.Deals
+                        join providerPart in context.ProvidersParts on deal.ProviderPartId equals providerPart.Id
+                        join part in context.Parts on providerPart.PartId equals part.Id
+                        join provider in context.Providers on providerPart.ProviderId equals provider.Id
+                        where providerPart.PartId == selectedId
+                        select new StorehouseItem
+                        {
+                            Id = deal.Id,
+                            PartId = part.Id,
+                            Title = part.Title,
+                            Price = part.Price,
+                            Count = deal.Count,
+                            Manufacturer = part.Manufacturer,
+                            Date = deal.Date,
+                            ProviderTitle = provider.Title
+                        }).OrderBy(item => item.Id);
+            return query.ToList();
+        }
+
+        public List<StorehouseItem> GetDealsByProviderTitle(string providerTitle)
+        {
+            var pr = Providers.Where(p => p.Title == providerTitle).SingleOrDefault();
+
+            var query = (from deal in context.Deals
+                         join providerPart in context.ProvidersParts on deal.ProviderPartId equals providerPart.Id
+                         join part in context.Parts on providerPart.PartId equals part.Id
+                         join provider in context.Providers on providerPart.ProviderId equals provider.Id
+                         where providerPart.ProviderId == pr.Id
+                         select new StorehouseItem
+                         {
+                             Id = deal.Id,
+                             PartId = part.Id,
+                             Title = part.Title,
+                             Price = part.Price,
+                             Count = deal.Count,
+                             Manufacturer = part.Manufacturer,
+                             Date = deal.Date,
+                             ProviderTitle = provider.Title
+                         }).OrderBy(item => item.Id);
+            return query.ToList();
+        }
     }
 }

@@ -273,6 +273,11 @@ namespace DB
             }
         }
 
+        private void buttonInfoStorehouse_Click(object sender, EventArgs e)
+        {
+            
+        }
+
         private void buttonCleanStorehouse_Click(object sender, EventArgs e)
         {
             if (dataGridViewStorehouse.RowCount > 0)
@@ -701,14 +706,29 @@ namespace DB
             comboboxSearchByProviders.SelectedIndex = 2; // "Название"
             textBoxSearchProviders.Focus();
             textBoxSearchProviders_Enter(sender, e);
-            textBoxSearchProviders.Text = dataGridViewStorehouse.CurrentRow.Cells[7].Value.ToString();
+            textBoxSearchProviders.Text = dataGridViewStorehouse.CurrentRow.Cells[6].Value.ToString();
             SendKeys.Send("{ENTER}");
             textBoxSearchProviders_Leave(sender, e);
         }
 
-        private void buttonInfoStorehouse_Click(object sender, EventArgs e)
+        private void buttonInfoParts_Click(object sender, EventArgs e)
         {
+            var textForm = new TextForm();
+            textForm.textBox1.Clear();
+            var selectedId = int.Parse(dataGridViewParts.CurrentRow.Cells[0].Value.ToString());
+            foreach (Repository.StorehouseItem item in repository.GetDealsByPartId(selectedId))
+                textForm.textBox1.Text += string.Format("{0},{1},{2},{3},{4},{5},{6},{7}\r\n", item.Id, item.PartId, item.Title, item.Price, item.Count, item.Manufacturer, item.Date, item.ProviderTitle);
+            textForm.ShowDialog();
+        }
 
+        private void buttonInfoProviders_Click(object sender, EventArgs e)
+        {
+            var textForm = new TextForm();
+            textForm.textBox1.Clear();
+            var providerTitle = dataGridViewProviders.CurrentRow.Cells[1].Value.ToString();
+            foreach (Repository.StorehouseItem item in repository.GetDealsByProviderTitle(providerTitle))
+                textForm.textBox1.Text += string.Format("{0},{1},{2},{3},{4},{5},{6},{7}\r\n", item.Id, item.PartId, item.Title, item.Price, item.Count, item.Manufacturer, item.Date, item.ProviderTitle);
+            textForm.ShowDialog();
         }
     }
 }

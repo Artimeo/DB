@@ -195,6 +195,12 @@
     <Compile Include="Model\ProviderPart.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextForm.Designer.cs">
+      <DependentUpon>TextForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AddDealsForm.resx">
       <DependentUpon>AddDealsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -223,6 +229,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TextForm.resx">
+      <DependentUpon>TextForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="AutoPartsDataSet.xsc">
       <DependentUpon>AutoPartsDataSet.xsd</DependentUpon>
     </None>

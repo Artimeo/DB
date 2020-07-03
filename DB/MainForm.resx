@@ -132,6 +132,31 @@
   <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>253, 41</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="buttonCleanStorehouse.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
+        WQAAAFkBqp2phgAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAFNSURBVDhPjZMx
+        TsNAEEVNBdyCIqLzuvFaSoO4Ry5BEwoUCSofgR4pPQXKafAmhaPIJ0hlxfl/dhdPTMApvuTsnzc7OzNJ
+        uq47kSuye1eYN2fNl7PpzgvfPIM3jO9/JMmVy80TgvdQ4/Lsc52bl6pIn53NljirxUMMY08TEC7MCgEt
+        VH5PJtc/iYM2j3c3TChJEBuTiBlubtc2fdDQUHjOLFxykEpw5t/syy6HgJaC3yubLoQBiwTSsOZc2VEa
+        Zun1dHqL7y2qeIWJDqNh50BqCMdz9OODLAN2bI6Gov6CqSo3c7KSgKPSJvUfTPmJSAIuTLbU5hgsMXg2
+        2djEmnMW4wKYDYePZWMTwxhDSaMwBb8kI2OUg36FR2Eum8TFRRIDQFjlA5eEc9YQFcrmze2vVRYxSV/J
+        lnPmqORpvmGNeLxZVdgnCJKeXPx37pIjZbtKE3+fGNoAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="buttonRequestStorehouse.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJ
+        TUUH4gocDgoFRzzRoAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEMSURBVDhP
+        Y8AHnp0x5npxzNLn+VHzkBcHzRShwsSDl0etlJ8fteh9cdTiAxD/e3HUfNmTk2bCUGniAcigl0ct3gEN
+        +Q805P3L4xbWUCniwfMj5gshBoDxq+fHzLOhUoQB0PYiqMa/SIYAseUEqBLc4OUx8xKohk/PjlrZAenL
+        MAOAgZsFVYYdAAOwDKb55TFLK5DYyxPmekD+GyDOBSvCBp4dMTN5ccxiJVTzxxdHzC2gUmCANyZeHDVz
+        Amr6CtX8DxgDllApwgBNM9CPFoehUoQBumYgvv3khLkMVBo/oEjz88MWDmRrBgFgaF8lWzMIAFPTXrI1
+        g8DjY5acL4+Yu97e5skOFSIBMDAAALZt37RWeh21AAAAAElFTkSuQmCC
+</value>
+  </data>
   <metadata name="storehouseBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>577, -2</value>
   </metadata>
@@ -162,7 +187,6 @@
   <metadata name="priceviewTableAdapter.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>364, 79</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="buttonRefreshProviders.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
@@ -371,30 +395,6 @@
         pZPRCcAgDERdwjE6VH50yi7UJaxXTlCaRMUDUZP3An4YRCTmnO+U0hUWAxYO3EC51PWsDAFDtsAdCtzN
         ISZrNrpMGQ/wekM0UKsR16MI63ILwE7ckxHAlPYHAKTQxP68/X7cfzXiYzzQ632ZAjUmYzaUqOzxZzr7
         zhJfcBX43fKkdqgAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="buttonRequestStorehouse.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJ
-        TUUH4gocDgoFRzzRoAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEMSURBVDhP
-        Y8AHnp0x5npxzNLn+VHzkBcHzRShwsSDl0etlJ8fteh9cdTiAxD/e3HUfNmTk2bCUGniAcigl0ct3gEN
-        +Q805P3L4xbWUCniwfMj5gshBoDxq+fHzLOhUoQB0PYiqMa/SIYAseUEqBLc4OUx8xKohk/PjlrZAenL
-        MAOAgZsFVYYdAAOwDKb55TFLK5DYyxPmekD+GyDOBSvCBp4dMTN5ccxiJVTzxxdHzC2gUmCANyZeHDVz
-        Amr6CtX8DxgDllApwgBNM9CPFoehUoQBumYgvv3khLkMVBo/oEjz88MWDmRrBgFgaF8lWzMIAFPTXrI1
-        g8DjY5acL4+Yu97e5skOFSIBMDAAALZt37RWeh21AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="buttonCleanStorehouse.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
-        WQAAAFkBqp2phgAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAFNSURBVDhPjZMx
-        TsNAEEVNBdyCIqLzuvFaSoO4Ry5BEwoUCSofgR4pPQXKafAmhaPIJ0hlxfl/dhdPTMApvuTsnzc7OzNJ
-        uq47kSuye1eYN2fNl7PpzgvfPIM3jO9/JMmVy80TgvdQ4/Lsc52bl6pIn53NljirxUMMY08TEC7MCgEt
-        VH5PJtc/iYM2j3c3TChJEBuTiBlubtc2fdDQUHjOLFxykEpw5t/syy6HgJaC3yubLoQBiwTSsOZc2VEa
-        Zun1dHqL7y2qeIWJDqNh50BqCMdz9OODLAN2bI6Gov6CqSo3c7KSgKPSJvUfTPmJSAIuTLbU5hgsMXg2
-        2djEmnMW4wKYDYePZWMTwxhDSaMwBb8kI2OUg36FR2Eum8TFRRIDQFjlA5eEc9YQFcrmze2vVRYxSV/J
-        lnPmqORpvmGNeLxZVdgnCJKeXPx37pIjZbtKE3+fGNoAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="buttonDeleteStorehouse.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

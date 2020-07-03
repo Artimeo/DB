@@ -11,7 +11,7 @@ namespace DB.Model
     public class PriceHistory
     {
         public int Id { get; set; }
-
+        //[ForeignKey("Part")]
         public int PartId { get; set; }
 
         public Part Part { get; set; }

@@ -11,10 +11,10 @@ namespace DB.Model
     public class ProviderPart
     {
         public int Id { get; set; }
-        
+        [ForeignKey("Provider")]
         public int ProviderId { get; set; }        
         public Provider Provider { get; set; }
-        
+        [ForeignKey("Part")]
         public int PartId { get; set; }
         public Part Part { get; set; }
     }

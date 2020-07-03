@@ -25,70 +25,70 @@ namespace DB
 
         private void InitiallizeDataGridViews()
         {
-            DataGridViewCellStyle columnHeaderStyle = new DataGridViewCellStyle();
-            columnHeaderStyle.BackColor = Color.Aqua;
-            columnHeaderStyle.Font = new Font("Verdana", 10, FontStyle.Bold);
+            //DataGridViewCellStyle columnHeaderStyle = new DataGridViewCellStyle();
+            //columnHeaderStyle.BackColor = Color.Aqua;
+            //columnHeaderStyle.Font = new Font("Verdana", 10, FontStyle.Bold);
 
-            //Storehouse
-            dataGridViewStorehouse.ColumnCount = 9;
-            dataGridViewStorehouse.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
-            dataGridViewStorehouse.Columns[0].Name = "id";
-            dataGridViewStorehouse.Columns[1].Name = "Название";
-            dataGridViewStorehouse.Columns[2].Name = "Код";
-            dataGridViewStorehouse.Columns[3].Name = "Количество";
-            dataGridViewStorehouse.Columns[4].Name = "Производитель";
-            dataGridViewStorehouse.Columns[5].Name = "Цена закупки";
-            dataGridViewStorehouse.Columns[6].Name = "Дата закупки";
-            dataGridViewStorehouse.Columns[7].Name = "Поставщик";
-            dataGridViewStorehouse.Columns[8].Name = "Цена";
+            ////Storehouse
+            //dataGridViewStorehouse.ColumnCount = 9;
+            //dataGridViewStorehouse.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
+            //dataGridViewStorehouse.Columns[0].Name = "id";
+            //dataGridViewStorehouse.Columns[1].Name = "Название";
+            //dataGridViewStorehouse.Columns[2].Name = "Код";
+            //dataGridViewStorehouse.Columns[3].Name = "Количество";
+            //dataGridViewStorehouse.Columns[4].Name = "Производитель";
+            //dataGridViewStorehouse.Columns[5].Name = "Цена закупки";
+            //dataGridViewStorehouse.Columns[6].Name = "Дата закупки";
+            //dataGridViewStorehouse.Columns[7].Name = "Поставщик";
+            //dataGridViewStorehouse.Columns[8].Name = "Цена";
 
-            //Parts
-            dataGridViewParts.ColumnCount = 4;
-            dataGridViewParts.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
-            dataGridViewParts.Columns[0].Name = "id";
-            dataGridViewParts.Columns[1].Name = "Название";
-            dataGridViewParts.Columns[2].Name = "Производитель";
-            dataGridViewParts.Columns[3].Name = "Цена";
+            ////Parts
+            //dataGridViewParts.ColumnCount = 4;
+            //dataGridViewParts.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
+            //dataGridViewParts.Columns[0].Name = "id";
+            //dataGridViewParts.Columns[1].Name = "Название";
+            //dataGridViewParts.Columns[2].Name = "Производитель";
+            //dataGridViewParts.Columns[3].Name = "Цена";
 
-            //Providers
-            dataGridViewProviders.ColumnCount = 4;
-            dataGridViewProviders.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
-            dataGridViewProviders.Columns[0].Name = "id";
-            dataGridViewProviders.Columns[1].Name = "Название";
-            dataGridViewProviders.Columns[2].Name = "Адрес";
-            dataGridViewProviders.Columns[3].Name = "Телефон";
+            ////Providers
+            //dataGridViewProviders.ColumnCount = 4;
+            //dataGridViewProviders.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
+            //dataGridViewProviders.Columns[0].Name = "id";
+            //dataGridViewProviders.Columns[1].Name = "Название";
+            //dataGridViewProviders.Columns[2].Name = "Адрес";
+            //dataGridViewProviders.Columns[3].Name = "Телефон";
 
-            //PriceView
-            dataGridViewPriceview.ColumnCount = 6;
-            dataGridViewPriceview.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
-            dataGridViewPriceview.Columns[0].Name = "id";
-            dataGridViewPriceview.Columns[1].Name = "Код детали";
-            dataGridViewPriceview.Columns[2].Name = "Название";
-            dataGridViewPriceview.Columns[3].Name = "Текущая цена";
-            dataGridViewPriceview.Columns[4].Name = "Старая цена";
-            dataGridViewPriceview.Columns[5].Name = "Действовала до";
+            ////PriceView
+            //dataGridViewPriceview.ColumnCount = 6;
+            //dataGridViewPriceview.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
+            //dataGridViewPriceview.Columns[0].Name = "id";
+            //dataGridViewPriceview.Columns[1].Name = "Код детали";
+            //dataGridViewPriceview.Columns[2].Name = "Название";
+            //dataGridViewPriceview.Columns[3].Name = "Текущая цена";
+            //dataGridViewPriceview.Columns[4].Name = "Старая цена";
+            //dataGridViewPriceview.Columns[5].Name = "Действовала до";
         }
 
         private void InitiallizeSearchComboboxes()
         {
             comboboxSearchByStorehouse.Items.Add("Все");
             for (int i = 0; i < dataGridViewStorehouse.ColumnCount; i++)
-                comboboxSearchByStorehouse.Items.Add(dataGridViewStorehouse.Columns[i].Name);
+                comboboxSearchByStorehouse.Items.Add(dataGridViewStorehouse.Columns[i].HeaderText);
             comboboxSearchByStorehouse.SelectedIndex = 0;
 
             comboboxSearchByParts.Items.Add("Все");
             for (int i = 0; i < dataGridViewParts.ColumnCount; i++)
-                comboboxSearchByParts.Items.Add(dataGridViewParts.Columns[i].Name);
+                comboboxSearchByParts.Items.Add(dataGridViewParts.Columns[i].HeaderText);
             comboboxSearchByParts.SelectedIndex = 0;
             
             comboboxSearchByProviders.Items.Add("Все");
             for (int i = 0; i < dataGridViewProviders.ColumnCount; i++)
-                comboboxSearchByProviders.Items.Add(dataGridViewProviders.Columns[i].Name);
+                comboboxSearchByProviders.Items.Add(dataGridViewProviders.Columns[i].HeaderText);
             comboboxSearchByProviders.SelectedIndex = 0;
             
             comboboxSearchByPriceview.Items.Add("Все");
             for (int i = 0; i < dataGridViewPriceview.ColumnCount; i++)
-                comboboxSearchByPriceview.Items.Add(dataGridViewPriceview.Columns[i].Name);
+                comboboxSearchByPriceview.Items.Add(dataGridViewPriceview.Columns[i].HeaderText);
             comboboxSearchByPriceview.SelectedIndex = 0;
         }
 
@@ -808,6 +808,11 @@ namespace DB
 
         private void buttonAddPriceview_Click(object sender, EventArgs e)
         {
+            if (dataGridViewPriceview.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("Выберите хотя бы одну строку для изменения цены", "Ошибка выбора", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (dataGridViewPriceview.SelectedRows.Count > 1)
             {
                 MessageBox.Show("Выберите только одну строку для изменения цены", "Ошибка выбора", MessageBoxButtons.OK, MessageBoxIcon.Warning);

@@ -21,7 +21,6 @@ namespace DB.Model.Repository
         public DbSet<Part> Parts { get; set; }
         public DbSet<ProviderPart> ProvidersParts { get; set; }
         public DbSet<Deal> Deals { get; set; }
-        public DbSet<PriceHistory> PriceHistories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,10 +32,6 @@ namespace DB.Model.Repository
         {
             modelBuilder.Entity<Deal>().
                 Property(d => d.Date)
-                .HasColumnType("date");
-
-            modelBuilder.Entity<PriceHistory>().
-                Property(ph => ph.Date)
                 .HasColumnType("date");
 
             List<Part> parts = new List<Part>

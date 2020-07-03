@@ -21,7 +21,6 @@ namespace DB.Model.Repository
         public IEnumerable<Part> Parts { get { return context.Parts; } }
         public IEnumerable<Provider> Providers { get { return context.Providers; } }
         public IEnumerable<Deal> Deals { get { return context.Deals; } }
-        public IEnumerable<PriceHistory> PriceHistories { get { return context.PriceHistories; } }
 
         public class StorehouseItem {
             public int Id { get; set; }               //id
@@ -30,7 +29,6 @@ namespace DB.Model.Repository
             public int Price { get; set; }            //цена
             public int Count { get; set; }            //количество
             public string Manufacturer { get; set; }  //производитель
-            public int OriginalPrice { get; set; }    //цена закупки
             public DateTime Date { get; set; }        //дата закупки
             public string ProviderTitle { get; set; } //поставщик
 
@@ -42,11 +40,10 @@ namespace DB.Model.Repository
                                          "цена: {3},\n" +
                                          "количество: {4}, \n" +
                                          "производитель: {5}\n" +
-                                         "цена закупки: {6}\n" +
-                                         "дата закупки: {7}\n" +
-                                         "поставщик: {8}",
+                                         "дата закупки: {6}\n" +
+                                         "поставщик: {7}",
 
-                                         Id, PartId, Title, Price, Count, Manufacturer, OriginalPrice, Date, ProviderTitle);
+                                         Id, PartId, Title, Price, Count, Manufacturer, Date, ProviderTitle);
             }
         }
 
@@ -57,7 +54,6 @@ namespace DB.Model.Repository
                                   join providerPart in context.ProvidersParts on deal.ProviderPartId equals providerPart.Id
                                   join part in context.Parts on providerPart.PartId equals part.Id
                                   join provider in context.Providers on providerPart.ProviderId equals provider.Id
-                                  let price = context.PriceHistories.OrderByDescending(p => p.Id).Where(p => p.PartId == part.Id).Select(p => p.Price).SingleOrDefault()
                                   //where ...
                                   select new StorehouseItem
                                   {
@@ -67,7 +63,6 @@ namespace DB.Model.Repository
                                       Price = part.Price,
                                       Count = deal.Count,
                                       Manufacturer = part.Manufacturer,
-                                      OriginalPrice = price,
                                       Date = deal.Date,
                                       ProviderTitle = provider.Title
                                   }).OrderBy(item => item.Id);
@@ -127,21 +122,6 @@ namespace DB.Model.Repository
             public DateTime ActualBefore { get; set; }
         }
 
-        public List<PriceHistoryItem> GetPriceHistories()
-        {
-            var query = from priceHistory in PriceHistories
-                        select new PriceHistoryItem
-                        {
-                            Id = priceHistory.Id,
-                            PartId = priceHistory.PartId,
-                            Title = priceHistory.Part.Title,
-                            CurrentPrice = priceHistory.Part.Price,
-                            OldPrice = priceHistory.Price,
-                            ActualBefore = priceHistory.Date
-                        };
-            return query.ToList();
-        }
-
         public void DeleteDealById(int id)
         {
             var deal = Deals.Where(d => d.Id == id).SingleOrDefault();
@@ -163,11 +143,5 @@ namespace DB.Model.Repository
             context.SaveChanges();
         }
 
-        public void DeletePriceHistoryById(int id)
-        {
-            var priceHistory = PriceHistories.Where(p => p.Id == id).SingleOrDefault();
-            context.PriceHistories.Remove(priceHistory);
-            context.SaveChanges();
-        }
     }
 }

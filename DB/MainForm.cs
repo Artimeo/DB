@@ -85,11 +85,6 @@ namespace DB
             for (int i = 0; i < dataGridViewProviders.ColumnCount; i++)
                 comboboxSearchByProviders.Items.Add(dataGridViewProviders.Columns[i].HeaderText);
             comboboxSearchByProviders.SelectedIndex = 0;
-            
-            comboboxSearchByPriceview.Items.Add("Все");
-            for (int i = 0; i < dataGridViewPriceview.ColumnCount; i++)
-                comboboxSearchByPriceview.Items.Add(dataGridViewPriceview.Columns[i].HeaderText);
-            comboboxSearchByPriceview.SelectedIndex = 0;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -102,7 +97,6 @@ namespace DB
                 refreshStorehouse();
                 refreshParts();
                 refreshProviders();
-                refreshPriceview();
             }
             catch (Exception err)
             {
@@ -116,7 +110,7 @@ namespace DB
             foreach (Repository.StorehouseItem item in repository.Storehouse())
                 dataGridViewStorehouse.Rows.Add(
                     item.Id, item.Title, item.PartId, item.Count,
-                    item.Manufacturer, item.OriginalPrice, item.Date.ToString("dd.MM.yyyy"), item.ProviderTitle, item.Price
+                    item.Manufacturer, item.Date.ToString("dd.MM.yyyy"), item.ProviderTitle, item.Price
                 );
             if (saveScrollPosition == true)
                 dataGridViewStorehouse.FirstDisplayedScrollingRowIndex = dataGridViewStorehouse.RowCount - 1;
@@ -162,18 +156,6 @@ namespace DB
             //    updateForm.comboBoxProvider.Items.Add(
             //        row.ItemArray[0].ToString());
             //}
-        }
-        
-        public void refreshPriceview(bool saveScrollPosition = false)
-        {
-            dataGridViewPriceview.Rows.Clear();
-            foreach (Repository.PriceHistoryItem item in repository.GetPriceHistories())
-                dataGridViewProviders.Rows.Add(
-                    item.Id, item.PartId, item.Title, item.CurrentPrice, item.OldPrice, item.ActualBefore.ToString("dd.MM.yyyy")
-                );
-            if (saveScrollPosition == true)
-                dataGridViewPriceview.FirstDisplayedScrollingRowIndex = dataGridViewPriceview.RowCount - 1;
-            labelRowCountPriceview.Text = "Количество записей: " + dataGridViewPriceview.RowCount.ToString();
         }
 
         private int Search(DataGridView view, ComboBox comboboxSearchBy, string searchText)
@@ -706,181 +688,6 @@ namespace DB
             }
         }
 
-
-        //priceview
-        private void buttonRefreshPriceview_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                refreshPriceview();
-                foreach (DataGridViewColumn column in dataGridViewPriceview.Columns)
-                {
-                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    column.SortMode = DataGridViewColumnSortMode.Automatic;
-                }
-                dataGridViewPriceview.ClearSelection();
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.ToString(), "Ошибка загрузки данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void buttonCleanPriceview_Click(object sender, EventArgs e)
-        {
-            
-            if (dataGridViewPriceview.RowCount > 0)
-            {
-                dataGridViewPriceview.Sort(dataGridViewPriceview.Columns[0], ListSortDirection.Ascending);
-                foreach (DataGridViewColumn column in dataGridViewPriceview.Columns)
-                {
-                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    column.SortMode = DataGridViewColumnSortMode.Automatic;
-                }
-                foreach (DataGridViewRow row in dataGridViewPriceview.Rows) row.Visible = true;
-                dataGridViewPriceview.FirstDisplayedScrollingRowIndex = 0;
-                dataGridViewPriceview.ClearSelection();
-            }
-            else
-            {
-                MessageBox.Show("Отсутствуют данные, сначала обновите таблицу.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        private void comboBoxSearchByPriceview_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter) textBoxSearchPriceview_KeyDown(sender, e);
-        }
-
-        private void textBoxSearchPriceview_Enter(object sender, EventArgs e)
-        {
-            if (textBoxSearchActivePriceview == false)
-            {
-                textBoxSearchPriceview.Text = "";
-                textBoxSearchPriceview.ForeColor = Color.Black;
-                textBoxSearchActivePriceview = true;
-            }
-        }
-
-        private void textBoxSearchPriceview_Leave(object sender, EventArgs e)
-        {
-            if (textBoxSearchPriceview.Text == "")
-            {
-                textBoxSearchPriceview.ForeColor = Color.Gray;
-                textBoxSearchPriceview.Text = "Поиск🔍";
-                textBoxSearchActivePriceview = false;
-            }
-            else
-            {
-                textBoxSearchActivePriceview = true;
-            }
-        }
-
-        private void textBoxSearchPriceview_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                if (textBoxSearchPriceview.Text != "")
-                {
-                    Search(dataGridViewPriceview, comboboxSearchByPriceview, textBoxSearchPriceview.Text);
-                }
-                else
-                {
-                    MessageBox.Show("Введите данные для поиска", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                e.Handled = e.SuppressKeyPress = true;
-            }
-        }
-
-        private void buttonSearchCleanPriceview_Click(object sender, EventArgs e)
-        {
-            textBoxSearchPriceview.ForeColor = Color.Gray;
-            textBoxSearchPriceview.Text = "Поиск🔍";
-            textBoxSearchActivePriceview = false;
-        }
-
-        private void buttonSelectRowPriceview_Click(object sender, EventArgs e)
-        {
-            var selectedCells = dataGridViewPriceview.SelectedCells;
-            foreach (DataGridViewCell cell in selectedCells)
-                dataGridViewPriceview.Rows[cell.RowIndex].Selected = true;
-        }
-
-        private void buttonAddPriceview_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewPriceview.SelectedRows.Count < 1)
-            {
-                MessageBox.Show("Выберите хотя бы одну строку для изменения цены", "Ошибка выбора", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (dataGridViewPriceview.SelectedRows.Count > 1)
-            {
-                MessageBox.Show("Выберите только одну строку для изменения цены", "Ошибка выбора", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            else
-            {
-                var selectedCells = dataGridViewPriceview.SelectedCells;
-
-                foreach (DataGridViewCell cell in selectedCells)
-                {
-                    dataGridViewPriceview.Rows[cell.RowIndex].Selected = true;
-                }
-            }
-
-            AddPriceHistoryForm addPriceHistoryForm = new AddPriceHistoryForm(this);
-
-            addPriceHistoryForm.textBoxTitle.Text = dataGridViewPriceview.SelectedCells[2].Value.ToString();
-
-            if (dataGridViewPriceview.SelectedCells[3].ToString() != "")
-                addPriceHistoryForm.textBoxOldPrice.Text = dataGridViewPriceview.SelectedCells[3].Value.ToString();
-
-            foreach (DataRow row in this.autoPartsDataSet.priceview.Select())
-            {
-                addPriceHistoryForm.textBoxTitle.AutoCompleteCustomSource.Add(
-                    row.ItemArray[2].ToString());
-            }
-
-            addPriceHistoryForm.Show();
-            addPriceHistoryForm.partsAutocompleteСhanged();
-            addPriceHistoryForm.isAllowedRecordRow();
-        }
-
-        private void buttonDeletePriceview_Click(object sender, EventArgs e)
-        {
-            var selectedCells = dataGridViewPriceview.SelectedCells;
-
-            if (selectedCells.Count == 0)
-            {
-                MessageBox.Show("Не выбраны строки для удаления", "Ошибка удаления", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            foreach (DataGridViewCell cell in selectedCells)
-                dataGridViewPriceview.Rows[cell.RowIndex].Selected = true;
-
-            if (MessageBox.Show("Выбранные строки удалятся из базы данных. Продолжить?", "Удалить запись", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
-            {
-                try
-                {
-                    foreach (DataGridViewRow selectedRow in dataGridViewPriceview.SelectedRows)
-                    {
-                        int id = int.Parse(selectedRow.Cells[0].Value.ToString());
-                        repository.DeletePriceHistoryById(id);
-
-                        if (dataGridViewPriceview.SelectedRows.Count <= 1) break;
-                    }
-
-                    refreshPriceview(true);
-                }
-                catch (Exception err)
-                {
-                    MessageBox.Show(err.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-
         //additional functions
         private void buttonRequest_Click(object sender, EventArgs e)
         {
@@ -899,15 +706,9 @@ namespace DB
             textBoxSearchProviders_Leave(sender, e);
         }
 
-        private void buttonPricehistoryStorehouse_Click(object sender, EventArgs e)
+        private void buttonInfoStorehouse_Click(object sender, EventArgs e)
         {
-            tabs.SelectTab(pricehistoryTab);
-            comboboxSearchByPriceview.SelectedIndex = 2; // "Код детали"
-            textBoxSearchPriceview.Focus();
-            textBoxSearchPriceview_Enter(sender, e);
-            textBoxSearchPriceview.Text = dataGridViewStorehouse.CurrentRow.Cells[2].Value.ToString();
-            SendKeys.Send("{ENTER}");
-            textBoxSearchPriceview_Leave(sender, e);
+
         }
     }
 }
